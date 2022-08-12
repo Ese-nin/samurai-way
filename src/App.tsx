@@ -6,9 +6,10 @@ const App = () => {
         <div className="App">
             <div>First div</div>
             <ul>
-                <li>1</li>
-                <li>4</li>
-                <li>35</li>
+                <li>CSS</li>
+                <li>html</li>
+                <li>js</li>
+                <li>React</li>
             </ul>
         </div>
     );
