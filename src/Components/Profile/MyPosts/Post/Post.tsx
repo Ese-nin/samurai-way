@@ -1,13 +1,15 @@
 import React from "react";
 import s from "./Post.module.css"
 
-const Post = () => {
+
+
+const Post = (props) => {
     return (
         <div className={s.item}>
             <img src={"https://proxys.io/files/blog/arbit/logo_1.png"} alt={''}/>
-            Post 1
+            {props.message}
             <div>
-                <span>like</span>
+                <span>{props.count} like</span>
             </div>
         </div>
     )
