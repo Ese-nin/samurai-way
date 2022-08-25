@@ -8,9 +8,13 @@ const MyPosts = () => {
             <div>
                 My posts
             </div>
-            <div>
-                <textarea></textarea>
-                <button>New post</button>
+            <div className={s.textareaBlock}>
+                <div>
+                    <textarea></textarea>
+                </div>
+                <div>
+                    <button>New post</button>
+                </div>
             </div>
         </div>
         <Post message={'Hallo, mein freund'} likesCount={3}/>
