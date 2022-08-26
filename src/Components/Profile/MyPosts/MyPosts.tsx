@@ -5,9 +5,7 @@ import Post from "./Post/Post";
 const MyPosts = () => {
     return <div className={s.content}>
         <div>
-            <div>
-                My posts
-            </div>
+            <h3>My posts</h3>
             <div className={s.textareaBlock}>
                 <div>
                     <textarea></textarea>
