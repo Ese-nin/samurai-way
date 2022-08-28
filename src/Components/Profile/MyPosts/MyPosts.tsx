@@ -2,7 +2,21 @@ import React from "react";
 import s from "./MyPosts.module.css"
 import Post from "./Post/Post";
 
+type PostType = {
+    id: number
+    message: string
+    likesCount: number
+}
+
+
 const MyPosts = () => {
+
+    const postsData: Array<PostType> = [
+        {id: 1, message: "Hallo, mein freund", likesCount: 3},
+        {id: 2, message: "It's my first post", likesCount: 45},
+        {id: 3, message: "Good bye", likesCount: 1792}
+    ]
+
     return <div className={s.content}>
         <div>
             <h3>My posts</h3>
@@ -15,9 +29,9 @@ const MyPosts = () => {
                 </div>
             </div>
         </div>
-        <Post message={'Hallo, mein freund'} likesCount={3}/>
-        <Post message={"It's my first post"} likesCount={27}/>
-        <Post message={"Good bye"} likesCount={999}/>
+        {postsData.map(p =>
+            <Post key={p.id} message={p.message} likesCount={p.likesCount}/>
+        )}
     </div>
 }
 
