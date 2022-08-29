@@ -2,20 +2,18 @@ import React from "react";
 import s from "./MyPosts.module.css"
 import Post from "./Post/Post";
 
-type PostType = {
+type MyPostsPropsType = {
+    postsData: Array<PostType>
+}
+
+export type PostType = {
     id: number
     message: string
     likesCount: number
 }
 
 
-const MyPosts = () => {
-
-    const postsData: Array<PostType> = [
-        {id: 1, message: "Hallo, mein freund", likesCount: 3},
-        {id: 2, message: "It's my first post", likesCount: 45},
-        {id: 3, message: "Good bye", likesCount: 1792}
-    ]
+const MyPosts = (props: MyPostsPropsType) => {
 
     return <div className={s.content}>
         <div>
@@ -29,7 +27,7 @@ const MyPosts = () => {
                 </div>
             </div>
         </div>
-        {postsData.map(p =>
+        {props.postsData.map(p =>
             <Post key={p.id} message={p.message} likesCount={p.likesCount}/>
         )}
     </div>
