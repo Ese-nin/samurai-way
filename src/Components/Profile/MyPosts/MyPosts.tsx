@@ -7,13 +7,17 @@ type MyPostsPropsType = {
 }
 
 export type PostType = {
-    id: number
+    id: string
     message: string
     likesCount: number
 }
 
 
 const MyPosts = (props: MyPostsPropsType) => {
+
+    const posts = props.postsData.map(p =>
+        <Post key={p.id} message={p.message} likesCount={p.likesCount}/>
+    )
 
     return <div className={s.content}>
         <div>
@@ -27,9 +31,7 @@ const MyPosts = (props: MyPostsPropsType) => {
                 </div>
             </div>
         </div>
-        {props.postsData.map(p =>
-            <Post key={p.id} message={p.message} likesCount={p.likesCount}/>
-        )}
+        {posts}
     </div>
 }
 

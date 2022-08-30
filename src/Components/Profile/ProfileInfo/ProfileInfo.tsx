@@ -12,7 +12,7 @@ const ProfileInfo = () => {
             <div className={s.descriptionBlock}>
                 <div>
                     <img className={s.avatar}
-                         src={'https://trainghiemso.vn/wp-content/uploads/2020/05/%C3%B4m-ti%E1%BB%81n.png'} alt={''}/>
+                         src={'https://proxys.io/files/blog/arbit/logo_1.png'} alt={''}/>
                 </div>
                 <div>
                     description
