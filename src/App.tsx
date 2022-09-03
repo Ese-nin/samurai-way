@@ -11,7 +11,7 @@ import Settings from "./Components/Settings/Settings";
 import {RootStateType} from "./Redux/State";
 
 type AppPropsType = {
-    appState: RootStateType
+    state: RootStateType
 }
 
 const App = (props: AppPropsType) => {
@@ -19,10 +19,10 @@ const App = (props: AppPropsType) => {
         <BrowserRouter>
             <div className={'app-wrapper'}>
                 <Header/>
-                <Navbar/>
+                <Navbar />
                 <div className={"app-wrapper-content"}>
-                    <Route path='/profile' render={() => <Profile state={props.appState.profilePage}/>}/>
-                    <Route path='/dialogs' render={() => <Dialogs state={props.appState.messagesPage}/>}/>
+                    <Route path='/profile' render={() => <Profile state={props.state.profilePage}/>}/>
+                    <Route path='/dialogs' render={() => <Dialogs state={props.state.messagesPage}/>}/>
                     <Route path='/music' render={() => <Music/>}/>
                     <Route path='/news' render={() => <News/>}/>
                     <Route path='/settings' render={() => <Settings/>}/>

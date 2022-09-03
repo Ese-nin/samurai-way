@@ -29,6 +29,7 @@ export type messagesPageType = {
 export type RootStateType = {
     profilePage: profilePageType
     messagesPage: messagesPageType
+    sidebar: {}
 }
 
 const state = {
@@ -55,7 +56,8 @@ const state = {
             {id: v1(), name: "Kate"},
             {id: v1(), name: "Maria"}
         ]
-    }
+    },
+    sidebar: {}
 }
 
 export default state;

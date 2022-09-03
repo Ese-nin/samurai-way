@@ -1,4 +1,4 @@
-import React from "react";
+import React, {createRef} from "react";
 import s from "./MyPosts.module.css"
 import Post from "./Post/Post";
 
@@ -19,15 +19,22 @@ const MyPosts = (props: MyPostsPropsType) => {
         <Post key={p.id} message={p.message} likesCount={p.likesCount}/>
     )
 
+    const newPostElement = createRef<HTMLTextAreaElement>();
+
+    const addPost = () => {
+        const text = newPostElement.current?.value
+        alert(text)
+    }
+
     return <div className={s.content}>
         <div>
             <h3>My posts</h3>
             <div className={s.textareaBlock}>
                 <div>
-                    <textarea></textarea>
+                    <textarea ref={newPostElement}></textarea>
                 </div>
                 <div>
-                    <button>New post</button>
+                    <button onClick={addPost}>New post</button>
                 </div>
             </div>
         </div>
