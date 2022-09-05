@@ -1,4 +1,5 @@
 import {v1} from "uuid";
+import {rerenderEntireTree} from "../render";
 
 type messagesDataType = {
     id: string
@@ -58,6 +59,16 @@ const state = {
         ]
     },
     sidebar: {}
+}
+
+export const addPost = (postMessage: string) => {
+    const newPost = {
+        id: v1(),
+        message: postMessage,
+        likesCount: 0
+    };
+    state.profilePage.posts.push(newPost);
+    rerenderEntireTree(state);
 }
 
 export default state;
