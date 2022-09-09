@@ -1,5 +1,4 @@
 import {v1} from "uuid";
-import {rerenderEntireTree} from "../render";
 
 type messagesDataType = {
     id: string
@@ -21,6 +20,7 @@ type messagesType = Array<messagesDataType>
 
 export type profilePageType = {
     posts: postsType
+    newPostText: string
 }
 export type messagesPageType = {
     messages: messagesType
@@ -33,6 +33,10 @@ export type RootStateType = {
     sidebar: {}
 }
 
+let rerenderEntireTree = (state: RootStateType) => {
+    console.log("state want to change")
+}
+
 const state = {
     profilePage: {
         posts: [
@@ -40,6 +44,7 @@ const state = {
             {id: v1(), message: "It's my first post", likesCount: 45},
             {id: v1(), message: "Good bye", likesCount: 1792}
         ],
+        newPostText: /*"IT-Kamasutra"*/ "Эщельбе бещельме"
     },
     messagesPage: {
         messages: [
@@ -61,14 +66,25 @@ const state = {
     sidebar: {}
 }
 
-export const addPost = (postMessage: string) => {
+export const addPost = () => {
     const newPost = {
         id: v1(),
-        message: postMessage,
+        message: state.profilePage.newPostText,
         likesCount: 0
     };
     state.profilePage.posts.push(newPost);
+    state.profilePage.newPostText = "";
     rerenderEntireTree(state);
+}
+
+export const updateNewPostText = (newText: string) => {
+    state.profilePage.newPostText = newText;
+    rerenderEntireTree(state);
+}
+
+export const subscribe = (observer: any) => {
+    debugger
+    rerenderEntireTree = observer
 }
 
 export default state;

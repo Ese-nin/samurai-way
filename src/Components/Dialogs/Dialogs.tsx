@@ -21,8 +21,10 @@ const Dialogs = (props: DialogsPropsType) => {
     const newMessage = createRef<HTMLTextAreaElement>()
 
     const sendMessage = () => {
-        const text = newMessage.current?.value
-        alert(text + "? No, I don't sent it")
+        if (newMessage.current) {
+            const text = newMessage.current.value
+            alert(text + "? No, I don't sent it")
+        }
     }
 
     return (

@@ -1,10 +1,13 @@
 import React, {createRef} from "react";
 import s from "./MyPosts.module.css"
 import Post from "./Post/Post";
+import {updateNewPostText} from "../../../Redux/State";
 
 type MyPostsPropsType = {
     postsData: Array<PostType>
+    newPostText: string
     addPost: (message: string) => void
+    updateNewPostText: (newText: string) => void
 }
 
 export type PostType = {
@@ -25,7 +28,12 @@ const MyPosts = (props: MyPostsPropsType) => {
     const addPost = () => {
         if (newPostElement.current) {
             props.addPost(newPostElement.current.value);
-            newPostElement.current.value = "";
+        }
+    }
+
+    const textareaChange = () => {
+        if (newPostElement.current) {
+            props.updateNewPostText(newPostElement.current.value);
         }
     }
 
@@ -34,7 +42,9 @@ const MyPosts = (props: MyPostsPropsType) => {
             <h3>My posts</h3>
             <div className={s.textareaBlock}>
                 <div>
-                    <textarea ref={newPostElement}></textarea>
+                    <textarea onChange={textareaChange}
+                              ref={newPostElement}
+                              value={props.newPostText}/>
                 </div>
                 <div>
                     <button onClick={addPost}>New post</button>
