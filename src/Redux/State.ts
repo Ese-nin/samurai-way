@@ -33,10 +33,6 @@ export type RootStateType = {
     sidebar: {}
 }
 
-let rerenderEntireTree = (state: RootStateType) => {
-    console.log("state want to change")
-}
-
 const state = {
     profilePage: {
         posts: [
@@ -74,17 +70,18 @@ export const addPost = () => {
     };
     state.profilePage.posts.push(newPost);
     state.profilePage.newPostText = "";
-    rerenderEntireTree(state);
+    onChange();
 }
 
 export const updateNewPostText = (newText: string) => {
     state.profilePage.newPostText = newText;
-    rerenderEntireTree(state);
+    onChange();
 }
 
-export const subscribe = (observer: any) => {
-    debugger
-    rerenderEntireTree = observer
+let onChange = () => {}
+
+export const subscribe = (observer: () => void) => {
+    onChange = observer
 }
 
 export default state;
