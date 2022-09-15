@@ -2,7 +2,7 @@ import React from "react";
 import s from "./Profile.module.css"
 import MyPosts from "./MyPosts/MyPosts";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import {profilePageType, updateNewPostText} from "../../Redux/State";
+import {profilePageType} from "../../Redux/State";
 
 type ProfilePropsType = {
     profileState: profilePageType
@@ -17,7 +17,7 @@ const Profile = (props: ProfilePropsType) => {
         <MyPosts postsData={props.profileState.posts}
                  addPost={props.addPost}
                  newPostText={props.profileState.newPostText}
-                 updateNewPostText={updateNewPostText}/>
+                 updateNewPostText={props.updateNewPostText}/>
     </div>
 }
 
