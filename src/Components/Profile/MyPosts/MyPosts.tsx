@@ -1,12 +1,12 @@
 import React, {createRef} from "react";
 import s from "./MyPosts.module.css"
 import Post from "./Post/Post";
+import {ActionTypes} from "../../../Redux/State";
 
 type MyPostsPropsType = {
     postsData: Array<PostType>
     newPostText: string
-    addPost: (message: string) => void
-    updateNewPostText: (newText: string) => void
+    dispatch: (action: ActionTypes) => void
 }
 
 export type PostType = {
@@ -26,16 +26,15 @@ const MyPosts = (props: MyPostsPropsType) => {
 
     const addPost = () => {
         if (newPostElement.current) {
-            props.addPost(newPostElement.current.value);
+            props.dispatch({type: "ADD-POST", newPostText: newPostElement.current.value});
         }
     }
 
     const textareaChange = () => {
         if (newPostElement.current) {
-            props.updateNewPostText(newPostElement.current.value);
+            props.dispatch({type: "UPDATE-NEW-POST-TEXT", newText: newPostElement.current.value});
         }
     }
-
     return <div className={s.content}>
         <div>
             <h3>My posts</h3>
@@ -53,5 +52,4 @@ const MyPosts = (props: MyPostsPropsType) => {
         {posts}
     </div>
 }
-
 export default MyPosts;
