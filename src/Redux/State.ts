@@ -39,14 +39,24 @@ export type StoreType = {
     getState: () => RootStateType
     dispatch: (action: ActionTypes) => void
 }
-export type ActionTypes = AddPostActionType | ChangeNewTextActionType
-type AddPostActionType = {
-    type: "ADD-POST"
-    newPostText: string
+
+export type ActionTypes = ReturnType<typeof addPostAC> | ReturnType<typeof textareaChangeAC>
+
+const ADD_POST = "ADD-POST";
+const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
+
+export const addPostAC = (postText: string) => {
+    return {
+        type: ADD_POST,
+        newPostText: postText,
+    } as const
 }
-type ChangeNewTextActionType = {
-    type: "UPDATE-NEW-POST-TEXT"
-    newText: string
+
+export const textareaChangeAC = (postText: string) => {
+    return {
+        type: UPDATE_NEW_POST_TEXT,
+        newText: postText,
+    } as const
 }
 
 /*/!*const state = {
