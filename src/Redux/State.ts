@@ -1,4 +1,7 @@
 import {v1} from "uuid";
+import profileReducer, {addPostAC, textareaChangeAC} from "./profile-reducer";
+import dialogsReducer, {addMessageAC, textareaMessageChangeAC} from "./dialogs-reducer";
+import sidebarReducer from "./sidebar-reducer";
 
 type messagesDataType = {
     id: string
@@ -44,38 +47,7 @@ export type StoreType = {
 export type ActionTypes = ReturnType<typeof addPostAC> | ReturnType<typeof textareaChangeAC> |
     ReturnType<typeof textareaMessageChangeAC> | ReturnType<typeof addMessageAC>
 
-const ADD_POST = "ADD-POST";
-const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
-const UPDATE_MESSAGE_TEXT = "UPDATE-MESSAGE-TEXT";
-const ADD_MESSAGE = "ADD-MESSAGE";
 
-export const addPostAC = (postText: string) => {
-    return {
-        type: ADD_POST,
-        newPostText: postText,
-    } as const
-}
-
-export const addMessageAC = (messageText: string) => {
-    return {
-        type: ADD_MESSAGE,
-        newMessageText: messageText,
-    } as const
-}
-
-export const textareaChangeAC = (postText: string) => {
-    return {
-        type: UPDATE_NEW_POST_TEXT,
-        newText: postText,
-    } as const
-}
-
-export const textareaMessageChangeAC = (messageText: string) => {
-    return {
-        type: UPDATE_MESSAGE_TEXT,
-        newMessageText: messageText,
-    } as const
-}
 
 /*/!*const state = {
     profilePage: {
@@ -169,30 +141,12 @@ const store: StoreType = {
     },
 
     dispatch(action) {
-        if (action.type === "ADD-POST") {
-            const newPost = {
-                id: v1(),
-                message: action.newPostText,
-                likesCount: 0
-            };
-            this._state.profilePage.posts.push(newPost);
-            this._state.profilePage.newPostText = "";
-            this._onChange();
-        } else if (action.type === "UPDATE-NEW-POST-TEXT") {
-            this._state.profilePage.newPostText = action.newText;
-            this._onChange();
-        } else if (action.type === "UPDATE-MESSAGE-TEXT") {
-            this._state.messagesPage.newMessageText = action.newMessageText;
-            this._onChange();
-        } else if (action.type === "ADD-MESSAGE") {
-            const newMessage = {
-                id: v1(),
-                message: action.newMessageText,
-            };
-            this._state.messagesPage.messages.push(newMessage);
-            this._state.messagesPage.newMessageText = "";
-            this._onChange();
-        }
+
+        this._state.profilePage = profileReducer(this._state.profilePage, action);
+        this._state.messagesPage = dialogsReducer(this._state.messagesPage, action);
+        this._state.sidebar = sidebarReducer(this._state.sidebar, action);
+
+        this._onChange();
     },
 }
 
