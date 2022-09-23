@@ -2,10 +2,11 @@ import React, {createRef} from "react";
 import s from "./Dialogs.module.css"
 import DialogItem, {DialogItemPropsType} from "./DialogItem/DialogItem";
 import Message, {MessagePropsType} from "./Message/Message";
-import {messagesPageType} from "../../Redux/State";
+import {ActionTypes, addMessageAC, messagesPageType, textareaMessageChangeAC} from "../../Redux/State";
 
 type DialogsPropsType = {
     state: messagesPageType
+    dispatch: (action: ActionTypes) => void
 }
 
 const Dialogs = (props: DialogsPropsType) => {
@@ -22,8 +23,13 @@ const Dialogs = (props: DialogsPropsType) => {
 
     const sendMessage = () => {
         if (newMessage.current) {
-            const text = newMessage.current.value
-            alert(text + "? No, I don't sent it")
+            props.dispatch(addMessageAC(newMessage.current.value))
+        }
+    }
+
+    const textareaChange = () => {
+        if (newMessage.current) {
+            props.dispatch(textareaMessageChangeAC(newMessage.current.value))
         }
     }
 
@@ -34,7 +40,10 @@ const Dialogs = (props: DialogsPropsType) => {
             </div>
             <div className={s.messages}>
                 {message}
-                <textarea ref={newMessage}/>
+                <textarea
+                    onChange={textareaChange}
+                    value={props.state.newMessageText}
+                    ref={newMessage}/>
                 <div>
                     <button onClick={sendMessage}>send</button>
                 </div>

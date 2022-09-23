@@ -25,6 +25,7 @@ export type profilePageType = {
 export type messagesPageType = {
     messages: messagesType
     dialogs: dialogsType
+    newMessageText: string
 }
 
 export type RootStateType = {
@@ -40,10 +41,13 @@ export type StoreType = {
     dispatch: (action: ActionTypes) => void
 }
 
-export type ActionTypes = ReturnType<typeof addPostAC> | ReturnType<typeof textareaChangeAC>
+export type ActionTypes = ReturnType<typeof addPostAC> | ReturnType<typeof textareaChangeAC> |
+    ReturnType<typeof textareaMessageChangeAC> | ReturnType<typeof addMessageAC>
 
 const ADD_POST = "ADD-POST";
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
+const UPDATE_MESSAGE_TEXT = "UPDATE-MESSAGE-TEXT";
+const ADD_MESSAGE = "ADD-MESSAGE";
 
 export const addPostAC = (postText: string) => {
     return {
@@ -52,10 +56,24 @@ export const addPostAC = (postText: string) => {
     } as const
 }
 
+export const addMessageAC = (messageText: string) => {
+    return {
+        type: ADD_MESSAGE,
+        newMessageText: messageText,
+    } as const
+}
+
 export const textareaChangeAC = (postText: string) => {
     return {
         type: UPDATE_NEW_POST_TEXT,
         newText: postText,
+    } as const
+}
+
+export const textareaMessageChangeAC = (messageText: string) => {
+    return {
+        type: UPDATE_MESSAGE_TEXT,
+        newMessageText: messageText,
     } as const
 }
 
@@ -127,6 +145,7 @@ const store: StoreType = {
                 {id: v1(), message: "Where you from?"},
                 {id: v1(), message: "A-a-a-a-a-a"}
             ],
+            newMessageText: "it-incubator",
             dialogs: [
                 {id: v1(), name: "Leonid"},
                 {id: v1(), name: "Victoria"},
@@ -135,7 +154,7 @@ const store: StoreType = {
                 {id: v1(), name: "George"},
                 {id: v1(), name: "Kate"},
                 {id: v1(), name: "Maria"}
-            ]
+            ],
         },
         sidebar: {}
     },
@@ -161,6 +180,17 @@ const store: StoreType = {
             this._onChange();
         } else if (action.type === "UPDATE-NEW-POST-TEXT") {
             this._state.profilePage.newPostText = action.newText;
+            this._onChange();
+        } else if (action.type === "UPDATE-MESSAGE-TEXT") {
+            this._state.messagesPage.newMessageText = action.newMessageText;
+            this._onChange()
+        } else if (action.type === "ADD-MESSAGE") {
+            const newMessage = {
+                id: v1(),
+                message: action.newMessageText,
+            };
+            this._state.messagesPage.messages.push(newMessage);
+            this._state.messagesPage.newMessageText = "";
             this._onChange();
         }
     },
