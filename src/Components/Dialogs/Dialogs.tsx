@@ -1,7 +1,7 @@
-import React, {createRef} from "react";
+import React, {ChangeEvent, createRef} from "react";
 import s from "./Dialogs.module.css"
-import DialogItem, {DialogItemPropsType} from "./DialogItem/DialogItem";
-import Message, {MessagePropsType} from "./Message/Message";
+import DialogItem from "./DialogItem/DialogItem";
+import Message from "./Message/Message";
 import {ActionTypes, addMessageAC, messagesPageType, textareaMessageChangeAC} from "../../Redux/State";
 
 type DialogsPropsType = {
@@ -19,18 +19,12 @@ const Dialogs = (props: DialogsPropsType) => {
         <Message key={m.id} message={m.message} id={m.id}/>
     )
 
-    const newMessage = createRef<HTMLTextAreaElement>()
-
     const sendMessage = () => {
-        if (newMessage.current) {
-            props.dispatch(addMessageAC(newMessage.current.value))
-        }
+        props.dispatch(addMessageAC(props.state.newMessageText))
     }
 
-    const textareaChange = () => {
-        if (newMessage.current) {
-            props.dispatch(textareaMessageChangeAC(newMessage.current.value))
-        }
+    const textareaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        props.dispatch(textareaMessageChangeAC(e.currentTarget.value))
     }
 
     return (
@@ -42,10 +36,12 @@ const Dialogs = (props: DialogsPropsType) => {
                 {message}
                 <textarea
                     onChange={textareaChange}
-                    value={props.state.newMessageText}
-                    ref={newMessage}/>
+                    value={props.state.newMessageText}/>
                 <div>
-                    <button onClick={sendMessage}>send</button>
+                    <button onClick={sendMessage}>
+                        <img width={"17px"}
+                             src={"https://toppng.com/uploads/preview/paper-airplane-symbol-11549404798w6cibysc3j.png"}/>
+                    </button>
                 </div>
             </div>
         </div>

@@ -139,13 +139,6 @@ const store: StoreType = {
             newPostText: "IT-Kamasutra"
         },
         messagesPage: {
-            messages: [
-                {id: v1(), message: "Hi, how are you?"},
-                {id: v1(), message: "I'm busy"},
-                {id: v1(), message: "Where you from?"},
-                {id: v1(), message: "A-a-a-a-a-a"}
-            ],
-            newMessageText: "it-incubator",
             dialogs: [
                 {id: v1(), name: "Leonid"},
                 {id: v1(), name: "Victoria"},
@@ -155,6 +148,13 @@ const store: StoreType = {
                 {id: v1(), name: "Kate"},
                 {id: v1(), name: "Maria"}
             ],
+            messages: [
+                {id: v1(), message: "Hi, how are you?"},
+                {id: v1(), message: "I'm busy"},
+                {id: v1(), message: "Where you from?"},
+                {id: v1(), message: "A-a-a-a-a-a"}
+            ],
+            newMessageText: "it-incubator",
         },
         sidebar: {}
     },
@@ -183,7 +183,7 @@ const store: StoreType = {
             this._onChange();
         } else if (action.type === "UPDATE-MESSAGE-TEXT") {
             this._state.messagesPage.newMessageText = action.newMessageText;
-            this._onChange()
+            this._onChange();
         } else if (action.type === "ADD-MESSAGE") {
             const newMessage = {
                 id: v1(),
