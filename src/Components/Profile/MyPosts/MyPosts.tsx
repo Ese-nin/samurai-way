@@ -1,13 +1,12 @@
 import React, {createRef} from "react";
 import s from "./MyPosts.module.css"
 import Post from "./Post/Post";
-import {ActionTypes} from "../../../Redux/store";
-import {addPostAC, textareaChangeAC} from "../../../Redux/Reducers/profile-reducer";
 
 type MyPostsPropsType = {
     postsData: Array<PostType>
     newPostText: string
-    dispatch: (action: ActionTypes) => void
+    addPost: (text: string) => void
+    onChangePost: (text: string)=>void
 }
 
 export type PostType = {
@@ -26,13 +25,15 @@ const MyPosts = (props: MyPostsPropsType) => {
 
     const addPost = () => {
         if (newPostElement.current) {
-            props.dispatch(addPostAC(newPostElement.current.value));
+            let text = newPostElement.current.value
+            props.addPost(text);
         }
     }
 
     const textareaChange = () => {
         if (newPostElement.current) {
-            props.dispatch(textareaChangeAC(newPostElement.current.value));
+            let text = newPostElement.current.value
+            props.onChangePost(text);
         }
     }
 

@@ -17,8 +17,8 @@ type postsDataType = {
 }
 
 type postsType = Array<postsDataType>
-type dialogsType = Array<dialogsDataType>
-type messagesType = Array<messagesDataType>
+export type dialogsType = Array<dialogsDataType>
+export type messagesType = Array<messagesDataType>
 
 export type profilePageType = {
     posts: postsType

@@ -1,31 +1,33 @@
-import React, {ChangeEvent, createRef} from "react";
+import React, {ChangeEvent} from "react";
 import s from "./Dialogs.module.css"
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
-import {ActionTypes, messagesPageType} from "../../Redux/store";
-import {addMessageAC, textareaMessageChangeAC} from "../../Redux/Reducers/dialogs-reducer";
+import {dialogsType, messagesType} from "../../Redux/store";
 
 type DialogsPropsType = {
-    state: messagesPageType
-    dispatch: (action: ActionTypes) => void
+    dialogs: dialogsType
+    messages: messagesType
+    newMessageText: string
+    sendMessage: (text: string) => void
+    textareaChange: (value: string) => void
 }
 
 const Dialogs = (props: DialogsPropsType) => {
 
-    const dialogItem = props.state.dialogs.map(d =>
+    const dialogItem = props.dialogs.map(d =>
         <DialogItem key={d.id} name={d.name} id={d.id}/>
     )
 
-    const message = props.state.messages.map(m =>
+    const message = props.messages.map(m =>
         <Message key={m.id} message={m.message} id={m.id}/>
     )
 
     const sendMessage = () => {
-        props.dispatch(addMessageAC(props.state.newMessageText))
+        props.sendMessage(props.newMessageText)
     }
 
     const textareaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.dispatch(textareaMessageChangeAC(e.currentTarget.value))
+        props.textareaChange(e.currentTarget.value)
     }
 
     return (
@@ -37,7 +39,7 @@ const Dialogs = (props: DialogsPropsType) => {
                 {message}
                 <textarea
                     onChange={textareaChange}
-                    value={props.state.newMessageText}/>
+                    value={props.newMessageText}/>
                 <div>
                     <button onClick={sendMessage}>
                         <img width={"17px"}
