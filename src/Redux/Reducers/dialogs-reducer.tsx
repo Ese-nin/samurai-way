@@ -1,7 +1,6 @@
 import React from "react";
-import {ActionTypes, messagesPageType, RootStateType} from "./State";
+import {ActionTypes, messagesPageType} from "../store";
 import {v1} from "uuid";
-import profileReducer from "./profile-reducer";
 
 const UPDATE_MESSAGE_TEXT = "UPDATE-MESSAGE-TEXT";
 const ADD_MESSAGE = "ADD-MESSAGE";
@@ -19,7 +18,26 @@ export const textareaMessageChangeAC = (messageText: string) => {
     } as const
 }
 
-const dialogsReducer = (state: messagesPageType, action: ActionTypes) => {
+const initialState = {
+        dialogs: [
+            {id: v1(), name: "Leonid"},
+            {id: v1(), name: "Victoria"},
+            {id: v1(), name: "Tamara"},
+            {id: v1(), name: "Stepan"},
+            {id: v1(), name: "George"},
+            {id: v1(), name: "Kate"},
+            {id: v1(), name: "Maria"}
+        ],
+        messages: [
+            {id: v1(), message: "Hi, how are you?"},
+            {id: v1(), message: "I'm busy"},
+            {id: v1(), message: "Where you from?"},
+            {id: v1(), message: "A-a-a-a-a-a"}
+        ],
+        newMessageText: "it-incubator",
+    };
+
+const dialogsReducer = (state: messagesPageType = initialState, action: ActionTypes) => {
 
     switch (action.type) {
         case UPDATE_MESSAGE_TEXT:
