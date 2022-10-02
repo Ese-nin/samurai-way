@@ -3,15 +3,18 @@ import store from "./Redux/redux-store";
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
-import { Provider } from "react-redux";
+import {Provider} from "./StoreContext";
+import {BrowserRouter} from "react-router-dom";
 
 
 export const renderEntireTree = () => {
 
     ReactDOM.render(
-        /*<Provider store={store}>*/
-            <App store={store}/>
-        /*</Provider>*/
+        <BrowserRouter>
+            <Provider store={store}>
+                <App/>
+            </Provider>
+        </BrowserRouter>
         ,
 
         document.getElementById('root')

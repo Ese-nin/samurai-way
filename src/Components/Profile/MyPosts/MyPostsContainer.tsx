@@ -1,27 +1,31 @@
 import React from "react";
-import {ActionTypes} from "../../../Redux/store";
 import {addPostAC, textareaChangeAC} from "../../../Redux/Reducers/profile-reducer";
-import MyPosts, {PostType} from "./MyPosts";
+import MyPosts from "./MyPosts";
+import StoreContext from "../../../StoreContext";
 
-type MyPostsContainerPropsType = {
-    postsData: Array<PostType>
-    dispatch: (action: ActionTypes) => void
-    newPostText: string
-}
 
-const MyPostsContainer = (props: MyPostsContainerPropsType) => {
 
-    const addPost = (text: string) => {
-            props.dispatch(addPostAC(text));
-        }
+const MyPostsContainer = () => {
 
-    const textareaChange = (text: string) => {
-            props.dispatch(textareaChangeAC(text));
-        }
+    return (
+        <StoreContext.Consumer>
+            { (store) => {
+               let state = store.getState()
 
-    return <MyPosts addPost={addPost}
-                    onChangePost={textareaChange}
-                    postsData={props.postsData}
-                    newPostText={props.newPostText}/>
+                const addPost = (text: string) => {
+                    store.dispatch(addPostAC(text));
+                }
+
+                const textareaChange = (text: string) => {
+                    store.dispatch(textareaChangeAC(text));
+                }
+
+               return <MyPosts addPost={addPost}
+                         onChangePost={textareaChange}
+                         postsData={state.profilePage.posts}
+                         newPostText={state.profilePage.newPostText}/>
+            }}
+        </StoreContext.Consumer>
+    )
 }
 export default MyPostsContainer;

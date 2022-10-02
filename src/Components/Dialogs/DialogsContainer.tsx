@@ -1,28 +1,34 @@
 import React from "react";
-import {ActionTypes, messagesPageType} from "../../Redux/store";
 import {addMessageAC, textareaMessageChangeAC} from "../../Redux/Reducers/dialogs-reducer";
 import Dialogs from "./Dialogs";
+import StoreContext from "../../StoreContext";
 
-type DialogsPropsType = {
-    state: messagesPageType
-    dispatch: (action: ActionTypes) => void
-}
 
-const DialogsContainer = (props: DialogsPropsType) => {
+const DialogsContainer = () => {
 
-    const sendMessage = (text: string) => {
-        props.dispatch(addMessageAC(text))
-    }
+    return (
+        <StoreContext.Consumer>
+            {
+                (store) => {
+                    const state = store.getState()
 
-    const textareaChange = (value: string) => {
-        props.dispatch(textareaMessageChangeAC(value))
-    }
+                    const sendMessage = (text: string) => {
+                        store.dispatch(addMessageAC(text))
+                    }
 
-    return <Dialogs dialogs={props.state.dialogs}
-                    messages={props.state.messages}
-                    newMessageText={props.state.newMessageText}
-                    sendMessage={sendMessage}
-                    textareaChange={textareaChange}/>
+                    const textareaChange = (value: string) => {
+                        store.dispatch(textareaMessageChangeAC(value))
+                    }
+
+                    return <Dialogs dialogs={state.messagesPage.dialogs}
+                                    messages={state.messagesPage.messages}
+                                    newMessageText={state.messagesPage.newMessageText}
+                                    sendMessage={sendMessage}
+                                    textareaChange={textareaChange}/>
+                }
+            }
+        </StoreContext.Consumer>
+    )
 }
 
 export default DialogsContainer;
