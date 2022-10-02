@@ -1,6 +1,6 @@
 import {v1} from "uuid";
-import profileReducer, {addPostAC, textareaChangeAC} from "./Reducers/profile-reducer";
-import dialogsReducer, {addMessageAC, textareaMessageChangeAC} from "./Reducers/dialogs-reducer";
+import {addPostAC, textareaChangeAC} from "./Reducers/profile-reducer";
+import {addMessageAC, textareaMessageChangeAC} from "./Reducers/dialogs-reducer";
 
 type messagesDataType = {
     id: string
@@ -17,24 +17,25 @@ type postsDataType = {
 }
 
 type postsType = Array<postsDataType>
-export type dialogsType = Array<dialogsDataType>
-export type messagesType = Array<messagesDataType>
+type dialogsType = Array<dialogsDataType>
+type messagesType = Array<messagesDataType>
 
-export type profilePageType = {
+type profilePageType = {
     posts: postsType
     newPostText: string
 }
-export type messagesPageType = {
+
+type messagesPageType = {
     messages: messagesType
     dialogs: dialogsType
     newMessageText: string
 }
 
-export type RootStateType = {
+type RootStateType = {
     profilePage: profilePageType
     messagesPage: messagesPageType
 }
-export type StoreType = {
+type StoreType = {
     _state: RootStateType
     _onChange: () => void
     subscribe: (callback: () => void) => void
@@ -87,12 +88,9 @@ const store: StoreType = {
 
     dispatch(action) {
 
-        this._state.profilePage = profileReducer(this._state.profilePage, action);
-        this._state.messagesPage = dialogsReducer(this._state.messagesPage, action);
+       // this._state.profilePage = profileReducer(this._state.profilePage, action);
+       // this._state.messagesPage = dialogsReducer(this._state.messagesPage, action);
 
         this._onChange();
     },
 }
-
-
-export default store;

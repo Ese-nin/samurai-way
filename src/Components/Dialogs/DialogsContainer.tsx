@@ -1,34 +1,41 @@
 import React from "react";
-import {addMessageAC, textareaMessageChangeAC} from "../../Redux/Reducers/dialogs-reducer";
+import {addMessageAC, dialogsType, messagesType, textareaMessageChangeAC} from "../../Redux/Reducers/dialogs-reducer";
 import Dialogs from "./Dialogs";
-import StoreContext from "../../StoreContext";
+import {connect} from "react-redux";
+import {ReduxStateType} from "../../Redux/redux-store";
+import {Dispatch} from "redux";
 
 
-const DialogsContainer = () => {
-
-    return (
-        <StoreContext.Consumer>
-            {
-                (store) => {
-                    const state = store.getState()
-
-                    const sendMessage = (text: string) => {
-                        store.dispatch(addMessageAC(text))
-                    }
-
-                    const textareaChange = (value: string) => {
-                        store.dispatch(textareaMessageChangeAC(value))
-                    }
-
-                    return <Dialogs dialogs={state.messagesPage.dialogs}
-                                    messages={state.messagesPage.messages}
-                                    newMessageText={state.messagesPage.newMessageText}
-                                    sendMessage={sendMessage}
-                                    textareaChange={textareaChange}/>
-                }
-            }
-        </StoreContext.Consumer>
-    )
+type MapStatePropsType = {
+    dialogs: dialogsType
+    messages: messagesType
+    newMessageText: string
 }
+type MapDispatchPropsType = {
+    sendMessage: (text: string) => void
+    textareaChange: (value: string) => void
+}
+
+export type DialogsPropsType = MapStatePropsType & MapDispatchPropsType
+
+const mapStateToProps = (state: ReduxStateType): MapStatePropsType => {
+    return {
+        dialogs: state.messagesPage.dialogs,
+        messages: state.messagesPage.messages,
+        newMessageText: state.messagesPage.newMessageText
+    }
+}
+const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
+    return {
+        sendMessage: (text: string) => {
+            dispatch(addMessageAC(text))
+        },
+        textareaChange: (value: string) => {
+            dispatch(textareaMessageChangeAC(value))
+        }
+    }
+}
+
+const DialogsContainer = connect (mapStateToProps, mapDispatchToProps) (Dialogs);
 
 export default DialogsContainer;

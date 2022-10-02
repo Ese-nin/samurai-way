@@ -2,15 +2,8 @@ import React, {ChangeEvent} from "react";
 import s from "./Dialogs.module.css"
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
-import {dialogsType, messagesType} from "../../Redux/store";
+import {DialogsPropsType} from "./DialogsContainer";
 
-type DialogsPropsType = {
-    dialogs: dialogsType
-    messages: messagesType
-    newMessageText: string
-    sendMessage: (text: string) => void
-    textareaChange: (value: string) => void
-}
 
 const Dialogs = (props: DialogsPropsType) => {
 
@@ -43,7 +36,7 @@ const Dialogs = (props: DialogsPropsType) => {
                 <div>
                     <button onClick={sendMessage}>
                         <img width={"17px"}
-                             src={"https://toppng.com/uploads/preview/paper-airplane-symbol-11549404798w6cibysc3j.png"}/>
+                             src={"https://toppng.com/uploads/preview/paper-airplane-symbol-11549404798w6cibysc3j.png"} alt={""}/>
                     </button>
                 </div>
             </div>

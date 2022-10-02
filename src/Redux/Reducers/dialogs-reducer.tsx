@@ -1,6 +1,25 @@
 import React from "react";
-import {ActionTypes, messagesPageType} from "../store";
 import {v1} from "uuid";
+
+type messagesDataType = {
+    id: string
+    message: string
+}
+type dialogsDataType = {
+    id: string
+    name: string
+}
+
+export type dialogsType = Array<dialogsDataType>
+export type messagesType = Array<messagesDataType>
+
+export type messagesPageType = {
+    messages: messagesType
+    dialogs: dialogsType
+    newMessageText: string
+}
+
+type ActionTypes = ReturnType<typeof addMessageAC> | ReturnType<typeof textareaMessageChangeAC>
 
 const UPDATE_MESSAGE_TEXT = "UPDATE-MESSAGE-TEXT";
 const ADD_MESSAGE = "ADD-MESSAGE";
@@ -37,12 +56,12 @@ const initialState = {
         newMessageText: "it-incubator",
     };
 
-const dialogsReducer = (state: messagesPageType = initialState, action: ActionTypes) => {
+const dialogsReducer = (state: messagesPageType = initialState, action: ActionTypes): messagesPageType => {
 
     switch (action.type) {
         case UPDATE_MESSAGE_TEXT:
             state.newMessageText = action.newMessageText;
-            return state;
+            return {...state};
         case ADD_MESSAGE:
             const newMessage = {
                 id: v1(),
@@ -50,7 +69,7 @@ const dialogsReducer = (state: messagesPageType = initialState, action: ActionTy
             };
             state.messages.push(newMessage);
             state.newMessageText = "";
-            return state;
+            return {...state};
         default:
             return state;
     }

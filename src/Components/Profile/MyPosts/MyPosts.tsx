@@ -1,13 +1,7 @@
 import React, {createRef} from "react";
 import s from "./MyPosts.module.css"
 import Post from "./Post/Post";
-
-type MyPostsPropsType = {
-    postsData: Array<PostType>
-    newPostText: string
-    addPost: (text: string) => void
-    onChangePost: (text: string)=>void
-}
+import {MyPostPropsType} from "./MyPostsContainer";
 
 export type PostType = {
     id: string
@@ -15,7 +9,7 @@ export type PostType = {
     likesCount: number
 }
 
-const MyPosts = (props: MyPostsPropsType) => {
+const MyPosts = (props: MyPostPropsType) => {
 
     const posts = props.postsData.map(p =>
         <Post key={p.id} message={p.message} likesCount={p.likesCount}/>

@@ -1,6 +1,19 @@
 import React from "react";
-import {ActionTypes, profilePageType} from "../store";
 import {v1} from "uuid";
+
+type postsDataType = {
+    id: string
+    message: string
+    likesCount: number
+}
+type postsType = Array<postsDataType>
+
+export type profilePageType = {
+    posts: postsType
+    newPostText: string
+}
+
+type ActionTypes = ReturnType<typeof addPostAC> | ReturnType<typeof textareaChangeAC>
 
 const ADD_POST = "ADD-POST";
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
@@ -27,7 +40,7 @@ const initialState = {
         newPostText: "IT-Kamasutra"
     };
 
-const profileReducer = (state: profilePageType = initialState, action: ActionTypes) => {
+const profileReducer = (state: profilePageType = initialState, action: ActionTypes): profilePageType => {
 
     switch (action.type) {
         case ADD_POST:
@@ -38,10 +51,10 @@ const profileReducer = (state: profilePageType = initialState, action: ActionTyp
             };
             state.posts.push(newPost);
             state.newPostText = "";
-            return state;
+            return {...state};
         case UPDATE_NEW_POST_TEXT:
             state.newPostText = action.newText;
-            return state;
+            return {...state};
         default:
             return state;
     }
