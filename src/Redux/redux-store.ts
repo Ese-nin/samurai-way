@@ -2,6 +2,7 @@ import dialogsReducer from "./Reducers/dialogs-reducer";
 import profileReducer from "./Reducers/profile-reducer";
 import {combineReducers, legacy_createStore as createStore, Store} from "redux";
 import {ActionTypes} from "./store";
+import usersReducer from "./Reducers/users-reducer";
 
 export type ActionsType = ActionTypes
 export type RootState = typeof rootReducer
@@ -12,8 +13,9 @@ export type StoreType = Store<ReduxStateType, ActionsType>
 const rootReducer = combineReducers({
     profilePage: profileReducer,
     messagesPage: dialogsReducer,
+    usersPage: usersReducer,
 })
 
-let store = createStore(rootReducer);
+const store = createStore(rootReducer);
 
 export default store

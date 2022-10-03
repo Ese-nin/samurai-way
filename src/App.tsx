@@ -8,6 +8,7 @@ import Music from "./Components/Music/Music";
 import News from './Components/News/News';
 import Settings from "./Components/Settings/Settings";
 import DialogsContainer from "./Components/Dialogs/DialogsContainer";
+import UsersContainer from "./Components/Users/UsersContainer";
 
 
 const App = () => {
@@ -19,11 +20,18 @@ const App = () => {
             <Header/>
             <Navbar/>
             <div className={"app-wrapper-content"}>
-                <Route path='/profile' render={() => <Profile/>}/>
-                <Route path='/dialogs' render={() => <DialogsContainer/>}/>
-                <Route path='/music' render={() => <Music/>}/>
-                <Route path='/news' render={() => <News/>}/>
-                <Route path='/settings' render={() => <Settings/>}/>
+                <Route path='/profile'
+                       render={() => <Profile/>}/>
+                <Route path='/dialogs'
+                       render={() => <DialogsContainer/>}/>
+                <Route path='/users'
+                       render={() => <UsersContainer/>}/>
+                <Route path='/music'
+                       render={() => <Music/>}/>
+                <Route path='/news'
+                       render={() => <News/>}/>
+                <Route path='/settings'
+                       render={() => <Settings/>}/>
             </div>
         </div>
     );
