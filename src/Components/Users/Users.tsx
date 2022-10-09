@@ -5,12 +5,15 @@ import axios from "axios";
 import userPhoto from '../../assets/images/user.png'
 
 export const Users = (props: MapStatePropsType & MapDispatchPropsType) => {
-if (!props.users.length) {
-    axios.get('https://social-network.samuraijs.com/api/1.0/users')
-        .then(response => {
-        props.setUsers(response.data.items);
-    });
-}
+
+    const getUsers = () => {
+        if (!props.users.length) {
+            axios.get('https://social-network.samuraijs.com/api/1.0/users')
+                .then(response => {
+                    props.setUsers(response.data.items);
+                });
+        }
+    }
 
     /*props.setUsers(
         [{
@@ -61,11 +64,13 @@ if (!props.users.length) {
 
     return (
         <div>
+            <button onClick={getUsers}>Get Users</button>
             {props.users.map(el =>
                 <div key={el.id}>
                 <span>
                     <div>
-                        <img className={s.userPhoto} src={el.photos.small !== null ? el.photos.small : userPhoto} alt=""/>
+                        <img className={s.userPhoto} src={el.photos.small !== null ? el.photos.small : userPhoto}
+                             alt=""/>
                     </div>
                     <div>
                         {el.followed
@@ -74,7 +79,7 @@ if (!props.users.length) {
                         }
                     </div>
                 </span>
-                <span>
+                    <span>
                     <span>
                         <div>{el.name}</div>
                         <div>{el.status}</div>
@@ -84,7 +89,7 @@ if (!props.users.length) {
                         <div>{"el.location.city"}</div>
                     </span>
                 </span>
-            </div>)}
+                </div>)}
         </div>
     );
 };
