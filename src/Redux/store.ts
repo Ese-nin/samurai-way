@@ -1,4 +1,3 @@
-import {v1} from "uuid";
 import {addPostAC, textareaChangeAC} from "./Reducers/profile-reducer";
 import {addMessageAC, textareaMessageChangeAC} from "./Reducers/dialogs-reducer";
 
@@ -47,6 +46,7 @@ export type ActionTypes = ReturnType<typeof addPostAC> | ReturnType<typeof texta
     ReturnType<typeof textareaMessageChangeAC> | ReturnType<typeof addMessageAC>
 
 
+/*
 const store: StoreType = {
     _state: {
         profilePage: {
@@ -93,4 +93,4 @@ const store: StoreType = {
 
         this._onChange();
     },
-}
+}*/
