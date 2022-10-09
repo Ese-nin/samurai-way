@@ -2,9 +2,13 @@
 type InitialStateType = {
     users: Array<UsersType>
 }
+type PhotosType = {
+    small: string
+    large: string
+}
 export type UsersType = {
-    _id: string
-    photoURL: string
+    id: string
+    photos: PhotosType
     followed: boolean
     name: string
     status: string
@@ -23,13 +27,13 @@ const usersReducer = (state: InitialStateType = initialState, action: ActionType
         case FOLLOW: {
             return {
                 ...state,
-                users: state.users.map(el => el._id === action.payload.userID ? {...el, followed: true} : el)
+                users: state.users.map(el => el.id === action.payload.userID ? {...el, followed: true} : el)
             }
         }
         case UNFOLLOW: {
             return {
                 ...state,
-                users: state.users.map(el => el._id === action.payload.userID ? {...el, followed: false} : el)
+                users: state.users.map(el => el.id === action.payload.userID ? {...el, followed: false} : el)
             }
         }
         case SET_USERS: {
