@@ -8,6 +8,9 @@ export class Users extends React.Component {
 
     constructor(props: MapDispatchPropsType & MapStatePropsType) {
         super(props);
+    }
+
+    componentDidMount() {
         if (!this.props.users.length) {
             axios.get('https://social-network.samuraijs.com/api/1.0/users')
                 .then(response => {
@@ -15,10 +18,6 @@ export class Users extends React.Component {
                 });
         }
     }
-
-    /*getUsers = () => {
-
-    }*/
 
     render() {
         return (
