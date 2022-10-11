@@ -4,19 +4,17 @@ import s from "./users.module.css"
 import axios from "axios";
 import userPhoto from '../../assets/images/user.png'
 
-export class Users extends React.Component {
+export class Users extends React.Component<MapDispatchPropsType, MapStatePropsType> {
 
-    constructor(props: MapDispatchPropsType & MapStatePropsType) {
+    constructor(props: MapDispatchPropsType) {
         super(props);
     }
 
     componentDidMount() {
-        if (!this.props.users.length) {
             axios.get('https://social-network.samuraijs.com/api/1.0/users')
                 .then(response => {
                     this.props.setUsers(response.data.items);
                 });
-        }
     }
 
     render() {
