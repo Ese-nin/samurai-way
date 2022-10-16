@@ -1,6 +1,8 @@
-
 type InitialStateType = {
     users: Array<UsersType>
+    pageSize: number
+    totalUsersCount: number
+    currentPage: number
 }
 type PhotosType = {
     small: string
@@ -16,10 +18,17 @@ export type UsersType = {
 }
 
 const initialState = {
-    users: []
+    users: [],
+    pageSize: 5,
+    totalUsersCount: 0,
+    currentPage: 1
 }
 
-type ActionTypes = ReturnType<typeof followAC> | ReturnType<typeof unfollowAC> | ReturnType<typeof setUsersAC>
+type ActionTypes = ReturnType<typeof followAC>
+    | ReturnType<typeof unfollowAC>
+    | ReturnType<typeof setUsersAC>
+    | ReturnType<typeof setCurrentPageAC>
+    | ReturnType<typeof setUsersTotalCountAC>
 
 
 const usersReducer = (state: InitialStateType = initialState, action: ActionTypes): InitialStateType => {
@@ -37,8 +46,12 @@ const usersReducer = (state: InitialStateType = initialState, action: ActionType
             }
         }
         case SET_USERS: {
-            return {...state, users: [...state.users, ...action.payload.users]}
+            return {...state, users: action.payload.users}
         }
+        case SET_CURRENT_PAGE:
+            return {...state, currentPage: action.currentPage}
+        case SET_USERS_TOTAL_COUNT:
+            return {...state, totalUsersCount: action.count}
 
         default:
             return state
@@ -48,6 +61,8 @@ const usersReducer = (state: InitialStateType = initialState, action: ActionType
 const FOLLOW = "FOLLOW";
 const UNFOLLOW = "UNFOLLOW";
 const SET_USERS = "SET_USERS";
+const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
+const SET_USERS_TOTAL_COUNT = 'SET_USERS_TOTAL_COUNT'
 
 export const followAC = (userID: string) => {
     return {
@@ -71,6 +86,16 @@ export const setUsersAC = (users: Array<UsersType>) => {
         payload: {
             users: users
         },
+    } as const
+}
+export const setCurrentPageAC = (currentPage: number) => {
+    return {
+        type: SET_CURRENT_PAGE, currentPage
+    } as const
+}
+export const setUsersTotalCountAC = (totalUsersCount: number) => {
+    return {
+        type: SET_USERS_TOTAL_COUNT, count: totalUsersCount
     } as const
 }
 
