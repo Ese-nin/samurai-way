@@ -4,11 +4,7 @@ import s from "./users.module.css"
 import axios from "axios";
 import userPhoto from '../../assets/images/user.png'
 
-export class Users extends React.Component<MapDispatchPropsType, MapStatePropsType> {
-
-    constructor(props: MapDispatchPropsType) {
-        super(props);
-    }
+export class Users extends React.Component<MapDispatchPropsType & MapStatePropsType> {
 
     componentDidMount() {
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)

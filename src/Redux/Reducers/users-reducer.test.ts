@@ -34,7 +34,11 @@ test('users should be added', () => {
             status: "Don't touch me, please",
             location: {country: "Ukraine", city: "Kiev"},
         }
-    ]}
+    ],
+        pageSize: 3,
+        totalUsersCount: 25,
+        currentPage: 1
+    }
 
     const newUsers: Array<UsersType> = [
         {
@@ -96,7 +100,11 @@ test('"follow" should be "unfollow"', () => {
                 status: "Don't touch me, please",
                 location: {country: "Ukraine", city: "Kiev"},
             }
-        ]}
+        ],
+        pageSize: 3,
+        totalUsersCount: 25,
+        currentPage: 1
+    }
 
     const endState1 = usersReducer(startState, unfollowAC('1'))
     const endState2 = usersReducer(startState, unfollowAC('3'))
@@ -147,7 +155,11 @@ test('"unfollow" should be "follow"', () => {
                 status: "Don't touch me, please",
                 location: {country: "Ukraine", city: "Kiev"},
             }
-        ]}
+        ],
+        pageSize: 3,
+        totalUsersCount: 25,
+        currentPage: 1
+    }
 
     const endState1 = usersReducer(startState, followAC('2'))
     const endState2 = usersReducer(startState, followAC('4'))
