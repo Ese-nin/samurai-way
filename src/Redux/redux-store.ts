@@ -1,14 +1,14 @@
 import dialogsReducer from "./Reducers/dialogs-reducer";
 import profileReducer from "./Reducers/profile-reducer";
 import {combineReducers, legacy_createStore as createStore, Store} from "redux";
-import {ActionTypes} from "./store";
+//import {ActionTypes} from "./store";
 import usersReducer from "./Reducers/users-reducer";
 
-export type ActionsType = ActionTypes
+/*export type ActionsType = ActionTypes*/
 export type RootState = typeof rootReducer
 export type ReduxStateType = ReturnType<RootState>
 
-export type StoreType = Store<ReduxStateType, ActionsType>
+/*export type StoreType = Store<ReduxStateType, ActionsType>*/
 
 const rootReducer = combineReducers({
     profilePage: profileReducer,
@@ -16,6 +16,10 @@ const rootReducer = combineReducers({
     usersPage: usersReducer,
 })
 
-const store = createStore(rootReducer);
+export const store = createStore(rootReducer);
 
-export default store
+// @ts-ignore
+window.store = store
+
+
+
