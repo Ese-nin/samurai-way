@@ -37,7 +37,8 @@ test('users should be added', () => {
     ],
         pageSize: 3,
         totalUsersCount: 25,
-        currentPage: 1
+        currentPage: 1,
+        isFetching: false,
     }
 
     const newUsers: Array<UsersType> = [
@@ -103,7 +104,8 @@ test('"follow" should be "unfollow"', () => {
         ],
         pageSize: 3,
         totalUsersCount: 25,
-        currentPage: 1
+        currentPage: 1,
+        isFetching: false,
     }
 
     const endState1 = usersReducer(startState, unfollowAC('1'))
@@ -158,7 +160,8 @@ test('"unfollow" should be "follow"', () => {
         ],
         pageSize: 3,
         totalUsersCount: 25,
-        currentPage: 1
+        currentPage: 1,
+        isFetching: false
     }
 
     const endState1 = usersReducer(startState, followAC('2'))
