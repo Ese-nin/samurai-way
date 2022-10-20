@@ -1,4 +1,4 @@
-type InitialStateType = {
+export type InitialStateType = {
     users: Array<UsersType>
     pageSize: number
     totalUsersCount: number
