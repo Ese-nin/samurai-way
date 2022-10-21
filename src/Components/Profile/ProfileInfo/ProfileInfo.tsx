@@ -9,7 +9,9 @@ type ProfileInfoPropsType = {
 
 const ProfileInfo = (props: ProfileInfoPropsType) => {
 
-    if (!props.profile) {
+    const {profile} = props
+
+    if (!profile) {
         return <Preloader/>
     }
 
@@ -23,11 +25,11 @@ const ProfileInfo = (props: ProfileInfoPropsType) => {
             <div className={s.descriptionBlock}>
                 <div>
                     <img className={s.avatar}
-                         src={props.profile ? props.profile.photos.large : 'https://proxys.io/files/blog/arbit/logo_1.png'} alt={''}/>
+                         src={profile.photos ? profile.photos.large : 'https://proxys.io/files/blog/arbit/logo_1.png'} alt={''}/>
                 </div>
                 <div>
-                    <strong>{props.profile.fullName}</strong> <br/>
-                    {props.profile.aboutMe}
+                    <strong>{profile.fullName}</strong> <br/>
+                    {profile.aboutMe}
                 </div>
             </div>
         </div>

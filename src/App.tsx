@@ -12,15 +12,13 @@ import ProfileContainer from "./Components/Profile/ProfileContainer";
 
 
 const App = () => {
-    /*const state = useSelector(state => state)*/
-
 
     return (
         <div className={'app-wrapper'}>
             <Header/>
             <Navbar/>
             <div className={"app-wrapper-content"}>
-                <Route path='/profile'
+                <Route path='/profile/:userId?'
                        render={() => <ProfileContainer/>}/>
                 <Route path='/dialogs'
                        render={() => <DialogsContainer/>}/>
