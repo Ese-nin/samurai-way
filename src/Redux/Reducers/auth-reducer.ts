@@ -24,7 +24,6 @@ type ActionTypes = ReturnType<typeof setUserData>
 const authReducer = (state = initialState, action: ActionTypes): InitialStateType => {
     switch (action.type) {
         case SET_USER_DATA: {
-            debugger
             return {
                 ...state,
                 ...action.payload
@@ -48,7 +47,7 @@ const SET_USER_DATA = "SET_USER_DATA";
 const SET_IS_AUTH = 'SET_IS_AUTH';
 
 
-export const setUserData = (userID: string, email: string, login: string) => {
+export const setUserData = (userID: string, login: string, email: string) => {
     return {
         type: SET_USER_DATA,
         payload: {

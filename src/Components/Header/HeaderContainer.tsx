@@ -15,7 +15,7 @@ class HeaderContainer extends React.Component<MapStatePropsType & MapDispatchPro
             .then(response => {
                 if (response.data.resultCode === 0) {
                     this.props.setIsAuth(true)
-                    const {id, email, login} = response.data.data
+                    const {id, login, email} = response.data.data
                     this.props.setUserData(id, login, email)
                 }
 
