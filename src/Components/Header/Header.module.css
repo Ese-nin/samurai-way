@@ -3,7 +3,15 @@
     background-color: darkgoldenrod;
 }
 
-
 .header img {
     width: 60px;
+}
+
+.loginBlock {
+    float: right;
+}
+
+.loginBlock a {
+    color: #e7fdd8;
+    text-decoration: none;
 }

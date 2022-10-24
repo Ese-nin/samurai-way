@@ -70,7 +70,7 @@ const UNFOLLOW = "UNFOLLOW";
 const SET_USERS = "SET_USERS";
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 const SET_USERS_TOTAL_COUNT = 'SET_USERS_TOTAL_COUNT'
-const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
+export const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
 
 export const follow = (userID: string) => {
     return {
