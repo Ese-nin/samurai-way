@@ -28,7 +28,7 @@ export const authMe = () => {
         .then(res => res.data)
 }
 
-export const getProfile = (userID: string) => {
+export const getProfile = (userID: string = '26111') => {
     return instance.get(`profile/` + userID)
         .then(res => res.data)
 }

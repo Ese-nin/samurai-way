@@ -15,7 +15,6 @@ class ProfileContainer extends Component<ProfileContainerPropsType> {
 
     componentDidMount() {
         let userId = this.props.match.params.userId
-        if (!userId) {userId = '26111'}
         getProfile(userId)
             .then(data => {
                 this.props.setUserProfile(data);
