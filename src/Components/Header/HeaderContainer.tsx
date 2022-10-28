@@ -3,19 +3,17 @@ import Header from "./Header";
 import {connect} from "react-redux";
 import {ReduxStateType} from "../../Redux/redux-store";
 import {setIsAuth, setUserData} from "../../Redux/Reducers/auth-reducer";
-import axios from "axios";
 import {toggleIsFetching} from "../../Redux/Reducers/users-reducer";
+import {authMe} from "../../api/api";
 
 class HeaderContainer extends React.Component<MapStatePropsType & MapDispatchPropsType> {
 
     componentDidMount() {
-        axios.get(`https://social-network.samuraijs.com/api/1.0/auth/me`, {
-            withCredentials: true
-        })
-            .then(response => {
-                if (response.data.resultCode === 0) {
+        authMe()
+            .then(data => {
+                if (data.resultCode === 0) {
                     this.props.setIsAuth(true)
-                    const {id, login, email} = response.data.data
+                    const {id, login, email} = data.data
                     this.props.setUserData(id, login, email)
                 }
 
