@@ -3,7 +3,7 @@ import usersReducer, {
     setCurrentPage,
     setTotalUsersCount,
     setUsers,
-    toggleIsFetching,
+    toggleIsFetching, toggleIsFollowing,
     unfollow,
     UsersType
 } from "./users-reducer";
@@ -48,7 +48,8 @@ beforeEach(()=>{
         pageSize: 3,
         totalUsersCount: 25,
         currentPage: 1,
-        isFetching: false
+        isFetching: false,
+        followingInProgress: []
     }
 })
 
@@ -149,4 +150,15 @@ test('"isFetching" should be changed', () => {
 
     expect(endState.isFetching).toBe(newIsFetching)
     expect(startState.isFetching).toBe(false)
+})
+
+
+test('array should be changed', () => {
+
+    const folowingUser = '5';
+
+    const endState = usersReducer(startState, toggleIsFollowing(true, folowingUser))
+
+    expect(endState.followingInProgress.length).toBe(1)
+    expect(endState.followingInProgress[0]).toBe(folowingUser)
 })
