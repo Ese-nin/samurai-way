@@ -4,12 +4,12 @@ import {connect} from "react-redux";
 import {ReduxStateType} from "../../Redux/redux-store";
 import {setIsAuth, setUserData} from "../../Redux/Reducers/auth-reducer";
 import {toggleIsFetching} from "../../Redux/Reducers/users-reducer";
-import {authMe} from "../../api/api";
+import {authAPI} from "../../api/api";
 
 class HeaderContainer extends React.Component<MapStatePropsType & MapDispatchPropsType> {
 
     componentDidMount() {
-        authMe()
+        authAPI.authMe()
             .then(data => {
                 if (data.resultCode === 0) {
                     this.props.setIsAuth(true)
