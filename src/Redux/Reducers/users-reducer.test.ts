@@ -155,10 +155,26 @@ test('"isFetching" should be changed', () => {
 
 test('array should be changed', () => {
 
-    const folowingUser = '5';
+    const followingUser = '5';
 
-    const endState = usersReducer(startState, toggleIsFollowing(true, folowingUser))
+    const endState = usersReducer(startState, toggleIsFollowing(true, followingUser))
 
     expect(endState.followingInProgress.length).toBe(1)
-    expect(endState.followingInProgress[0]).toBe(folowingUser)
+    expect(endState.followingInProgress[0]).toBe(followingUser)
+
+    const followingUser2 = '22'
+
+    const endState2 = usersReducer(endState, toggleIsFollowing(true, followingUser2))
+
+    expect(endState2.followingInProgress.length).toBe(2)
+    expect(endState2.followingInProgress[0]).toBe(followingUser)
+    expect(endState2.followingInProgress[1]).toBe(followingUser2)
+
+    const unfollowingUser = '5';
+
+    const endState3 = usersReducer(endState2, toggleIsFollowing(false, unfollowingUser))
+
+    expect(endState3.followingInProgress.length).toBe(1)
+    expect(endState3.followingInProgress[0]).toBe(followingUser2)
+    expect(endState2.followingInProgress.length).toBe(2)
 })
