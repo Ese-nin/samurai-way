@@ -83,6 +83,11 @@ test('users should be added', () => {
 
 test('"follow" should be "unfollow"', () => {
 
+    startState = {
+        ...startState,
+        users: startState.users.map(el => ({...el, followed: true}))
+    }
+
 
     const endState1 = usersReducer(startState, unfollow('1'))
     const endState2 = usersReducer(startState, unfollow('3'))
@@ -92,9 +97,9 @@ test('"follow" should be "unfollow"', () => {
     expect(endState1.users[2].followed).toBe(true)
     expect(endState1.users[3].followed).toBe(true)
 
-    expect(endState2.users[2].followed).toBe(false)
     expect(endState2.users[0].followed).toBe(true)
     expect(endState2.users[1].followed).toBe(true)
+    expect(endState2.users[2].followed).toBe(false)
     expect(endState2.users[3].followed).toBe(true)
 })
 

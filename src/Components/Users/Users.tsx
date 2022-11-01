@@ -46,8 +46,10 @@ export const Users = (props: UsersPropsType) => {
                              alt=""/>
                             </NavLink>
                     </div>
+
                     <div>
                         {el.followed
+
                             ? <button disabled={props.followingInProgress.some(f => f === el.id)} onClick={() => {
                                 props.toggleIsFollowing(true, el.id)
                                 followAPI.unfollow(el.id)
@@ -59,6 +61,7 @@ export const Users = (props: UsersPropsType) => {
                                     });
                             }
                             }>Unfollow</button>
+
                             : <button disabled={props.followingInProgress.some(f => f === el.id)} onClick={() => {
                                 props.toggleIsFollowing(true, el.id)
                                 followAPI.follow(el.id)
@@ -72,6 +75,7 @@ export const Users = (props: UsersPropsType) => {
                             }>Follow</button>
                         }
                     </div>
+
                 </span>
 
                     <span>
