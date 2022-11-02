@@ -1,4 +1,6 @@
 import {v1} from "uuid";
+import {Dispatch} from "redux";
+import {profileAPI} from "../../api/api";
 
 type postsDataType = {
     id: string
@@ -83,6 +85,15 @@ const profileReducer = (state: profilePageType = initialState, action: ActionTyp
             return {...state, profile: action.profile}
         default:
             return state;
+    }
+}
+
+export const getProfile = (userID: string) => {
+    return (dispatch: Dispatch) => {
+        profileAPI.getProfile(userID)
+            .then(data => {
+                dispatch(setUserProfile(data));
+            });
     }
 }
 

@@ -1,10 +1,10 @@
 import usersReducer, {
-    follow, InitialStateType,
+    followSuccess, InitialStateType,
     setCurrentPage,
     setTotalUsersCount,
     setUsers,
     toggleIsFetching, toggleIsFollowing,
-    unfollow,
+    unfollowSuccess,
     UsersType
 } from "./users-reducer";
 
@@ -89,8 +89,8 @@ test('"follow" should be "unfollow"', () => {
     }
 
 
-    const endState1 = usersReducer(startState, unfollow('1'))
-    const endState2 = usersReducer(startState, unfollow('3'))
+    const endState1 = usersReducer(startState, unfollowSuccess('1'))
+    const endState2 = usersReducer(startState, unfollowSuccess('3'))
 
     expect(endState1.users[0].followed).toBe(false)
     expect(endState1.users[1].followed).toBe(true)
@@ -106,8 +106,8 @@ test('"follow" should be "unfollow"', () => {
 
 test('"unfollow" should be "follow"', () => {
 
-    const endState1 = usersReducer(startState, follow('2'))
-    const endState2 = usersReducer(startState, follow('4'))
+    const endState1 = usersReducer(startState, followSuccess('2'))
+    const endState2 = usersReducer(startState, followSuccess('4'))
 
     expect(endState1.users[0].followed).toBe(false)
     expect(endState1.users[1].followed).toBe(true)

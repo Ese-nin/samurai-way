@@ -1,4 +1,6 @@
 import {TOGGLE_IS_FETCHING, toggleIsFetching} from "./users-reducer";
+import {authAPI} from "../../api/api";
+import {Dispatch} from "redux";
 
 type InitialStateType = {
     id: number | null
@@ -62,6 +64,19 @@ export const setIsAuth = (isAuth: boolean) => {
             isAuth
         }
     } as const
+}
+
+export const authMe = () => {
+    return (dispatch: Dispatch) => {
+        authAPI.authMe()
+            .then(data => {
+                if (data.resultCode === 0) {
+                    dispatch(setIsAuth(true))
+                    const {id, login, email} = data.data
+                    dispatch(setUserData(id, login, email))
+                }
+            });
+    }
 }
 
 export default authReducer;

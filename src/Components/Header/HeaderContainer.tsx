@@ -2,22 +2,12 @@ import React from "react";
 import Header from "./Header";
 import {connect} from "react-redux";
 import {ReduxStateType} from "../../Redux/redux-store";
-import {setIsAuth, setUserData} from "../../Redux/Reducers/auth-reducer";
-import {toggleIsFetching} from "../../Redux/Reducers/users-reducer";
-import {authAPI} from "../../api/api";
+import {authMe} from "../../Redux/Reducers/auth-reducer";
 
 class HeaderContainer extends React.Component<MapStatePropsType & MapDispatchPropsType> {
 
     componentDidMount() {
-        authAPI.authMe()
-            .then(data => {
-                if (data.resultCode === 0) {
-                    this.props.setIsAuth(true)
-                    const {id, login, email} = data.data
-                    this.props.setUserData(id, login, email)
-                }
-
-            });
+        this.props.authMe()
     }
 
     render() {
@@ -33,9 +23,7 @@ export type MapStatePropsType = {
     isAuth: boolean
 }
 type MapDispatchPropsType = {
-    setUserData: (userID: string, email: string, login: string) => void
-    toggleIsFetching: (isFetching: boolean) => void
-    setIsAuth: (isAuth: boolean) => void
+    authMe: () => void
 }
 
 const mapStateToProps = (state: ReduxStateType): MapStatePropsType => {
@@ -48,4 +36,4 @@ const mapStateToProps = (state: ReduxStateType): MapStatePropsType => {
     }
 }
 
-export default connect(mapStateToProps, {setUserData, toggleIsFetching, setIsAuth})(HeaderContainer)
+export default connect(mapStateToProps, {authMe})(HeaderContainer)
