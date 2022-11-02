@@ -4,7 +4,6 @@ import {NavLink} from "react-router-dom";
 import {MapStatePropsType} from "./HeaderContainer";
 
 
-
 const Header = (props: MapStatePropsType) => {
     return <div className={s.header}>
         <img
@@ -12,7 +11,9 @@ const Header = (props: MapStatePropsType) => {
             alt={''}/>
 
         <div className={s.loginBlock}>
-            { props.isAuth ? props.login : <NavLink to={'/auth/me'}>Login</NavLink>}
+            {props.isAuth
+                ? props.login
+                : <NavLink to={'/auth/me'}>Login</NavLink>}
         </div>
 
     </div>
