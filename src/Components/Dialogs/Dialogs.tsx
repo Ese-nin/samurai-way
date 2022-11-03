@@ -3,6 +3,7 @@ import s from "./Dialogs.module.css"
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 import {DialogsPropsType} from "./DialogsContainer";
+import {Redirect} from "react-router-dom";
 
 
 const Dialogs = (props: DialogsPropsType) => {
@@ -23,6 +24,8 @@ const Dialogs = (props: DialogsPropsType) => {
         props.textareaChange(e.currentTarget.value)
     }
 
+    if (!props.isAuth) return <Redirect to='/login'/>
+
     return (
         <div className={s.dialogs}>
             <div className={s.dialogItem}>
@@ -36,7 +39,8 @@ const Dialogs = (props: DialogsPropsType) => {
                 <div>
                     <button onClick={sendMessage}>
                         <img width={"17px"}
-                             src={"https://toppng.com/uploads/preview/paper-airplane-symbol-11549404798w6cibysc3j.png"} alt={""}/>
+                             src={"https://toppng.com/uploads/preview/paper-airplane-symbol-11549404798w6cibysc3j.png"}
+                             alt={""}/>
                     </button>
                 </div>
             </div>

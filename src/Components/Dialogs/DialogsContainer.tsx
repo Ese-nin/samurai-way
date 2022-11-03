@@ -10,6 +10,7 @@ type MapStatePropsType = {
     dialogs: dialogsType
     messages: messagesType
     newMessageText: string
+    isAuth: boolean
 }
 type MapDispatchPropsType = {
     sendMessage: (text: string) => void
@@ -22,7 +23,8 @@ const mapStateToProps = (state: ReduxStateType): MapStatePropsType => {
     return {
         dialogs: state.messagesPage.dialogs,
         messages: state.messagesPage.messages,
-        newMessageText: state.messagesPage.newMessageText
+        newMessageText: state.messagesPage.newMessageText,
+        isAuth: state.auth.isAuth
     }
 }
 const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {

@@ -13,7 +13,7 @@ const Header = (props: MapStatePropsType) => {
         <div className={s.loginBlock}>
             {props.isAuth
                 ? props.login
-                : <NavLink to={'/auth/me'}>Login</NavLink>}
+                : <NavLink to={'/login'}>Login</NavLink>}
         </div>
 
     </div>

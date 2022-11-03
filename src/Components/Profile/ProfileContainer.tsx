@@ -19,7 +19,9 @@ class ProfileContainer extends Component<ProfileContainerPropsType> {
 
     render() {
         return (
-            <Profile {...this.props} profile={this.props.profile}/>
+            <Profile {...this.props}
+                     profile={this.props.profile}
+                     isAuth={this.props.isAuth}/>
         )
     }
 }
@@ -28,6 +30,7 @@ type allPropsType = mapStateToPropsType & mapDispatchToPropsType
 
 type mapStateToPropsType = {
     profile: ProfileType | null
+    isAuth: boolean
 }
 
 type mapDispatchToPropsType = {
@@ -36,7 +39,8 @@ type mapDispatchToPropsType = {
 
 
 const mapStateToProps = (state: ReduxStateType): mapStateToPropsType => ({
-    profile: state.profilePage.profile
+    profile: state.profilePage.profile,
+    isAuth: state.auth.isAuth
 });
 
 
