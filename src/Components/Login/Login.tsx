@@ -15,7 +15,7 @@ export const LoginPage = (props: LoginPagePropsType) => {
             <input type='password'/>
         </div>
         <button>
-            <NavLink to={''}>Submit</NavLink>
+            <NavLink to={'/profile'}>Login</NavLink>
         </button>
     </>
 }
