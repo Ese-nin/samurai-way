@@ -42,11 +42,6 @@ const mapStateToProps = (state: ReduxStateType): mapStateToPropsType => ({
     profile: state.profilePage.profile,
 });
 
-
-/*export default withAuthRedirect(withRouter(
-    connect(mapStateToProps, {getProfile})(ProfileContainer)
-))*/
-
 export default compose<ComponentType>(
     connect(mapStateToProps, {getProfile}),
     withRouter,
