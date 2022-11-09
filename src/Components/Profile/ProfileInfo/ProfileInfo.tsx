@@ -1,22 +1,25 @@
 import React from 'react';
 import s from "./ProfileInfo.module.css";
+import profileLogo from "../../../assets/images/logo_1.png"
 import {ProfileType} from "../../../Redux/Reducers/profile-reducer";
 import {Preloader} from "../../Preloader/Preloader";
 import {ProfileStatus} from "./ProfileStatus";
 
 type ProfileInfoPropsType = {
     profile: ProfileType | null
+    status: string
+    updateStatus: (status: string) => void
 }
 
 const ProfileInfo = (props: ProfileInfoPropsType) => {
 
     const {profile} = props
 
-    if (!profile) {
+    if (profile === null) {
         return <Preloader/>
     }
 
-    const profilePhoto = profile.photos ? profile.photos.large : 'https://proxys.io/files/blog/arbit/logo_1.png'
+    const profilePhoto = profile.photos.large ? profile.photos.large : profileLogo
 
     return (
         <div>
@@ -26,7 +29,8 @@ const ProfileInfo = (props: ProfileInfoPropsType) => {
                          src={profilePhoto} alt={''}/>
                 </div>
                 <span><strong>{props.profile?.fullName}</strong></span>
-                <ProfileStatus status="I'm a boss"/>
+                <ProfileStatus status={props.status}
+                               updateStatus={props.updateStatus}/>
             </div>
         </div>
     );

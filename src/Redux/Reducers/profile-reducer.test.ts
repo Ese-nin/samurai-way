@@ -31,7 +31,8 @@ beforeEach(()=>{
             {id: v1(), message: "It's my first post", likesCount: 45},
             {id: v1(), message: "Good bye", likesCount: 1792}
         ],
-        newPostText: "IT-Kamasutra"
+        newPostText: "IT-Kamasutra",
+        status: ''
     };
 })
 

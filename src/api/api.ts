@@ -22,7 +22,22 @@ export const usersAPI = {
             .then(res => res.data)
     },
     getProfile: (userID: string = '26111') => {
+        console.warn('Method is outdated. Please, use profileAPI')
+        return profileAPI.getProfile(userID)
+    }
+}
+
+export const profileAPI = {
+    getProfile: (userID: string = '26111') => {
         return instance.get(`profile/` + userID)
+            .then(res => res.data)
+    },
+    getProfileStatus: (userID: string = '26111') => {
+        return instance.get(`profile/status/` + userID)
+            .then(res => res.data)
+    },
+    updateProfileStatus: (status: string) => {
+        return instance.put(`profile/status`, {status: status})
             .then(res => res.data)
     }
 }
