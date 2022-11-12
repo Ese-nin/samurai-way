@@ -1,21 +1,43 @@
 import React from 'react'
-import {NavLink} from "react-router-dom";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 
-type LoginPagePropsType = {}
-
-export const LoginPage = (props: LoginPagePropsType) => {
-
-    return <>
-        <div>
-            <span>login</span> <br/>
-            <input/>
-        </div>
-        <div>
-            <span>password</span> <br/>
-            <input type='password'/>
-        </div>
-        <button>
-            <NavLink to={'/profile'}>Login</NavLink>
-        </button>
-    </>
+type FormDataType = {
+    login: string
+    password: string
+    rememberMe: boolean
 }
+
+export const Login = () => {
+
+    const onSubmit = (formData: FormDataType) => {
+        console.log(formData)
+    }
+
+    return <div>
+        <h2>Login</h2>
+        <LoginFormRedux onSubmit={onSubmit}/>
+    </div>
+}
+
+const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props ) => {
+    return (
+        <form onSubmit={props.handleSubmit}>
+            <div>
+                <Field name={'login'} placeholder={'Login'} component={'input'}/>
+            </div>
+            <div>
+                <Field name={'password'} placeholder={'Password'} component={'input'}/>
+            </div>
+            <div>
+                <Field name={'rememberMe'} type='checkbox' component={'input'}/> Remember me
+            </div>
+            <div>
+                <button type={"submit"}>Login</button>
+            </div>
+        </form>
+    )
+}
+
+const LoginFormRedux = reduxForm<FormDataType>({
+    form: 'login'
+})(LoginForm)
