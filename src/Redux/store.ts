@@ -1,5 +1,5 @@
-import {addPostAC, textareaChangeAC} from "./Reducers/profile-reducer";
-import {addMessageAC, textareaMessageChangeAC} from "./Reducers/dialogs-reducer";
+import {addPostAC} from "./Reducers/profile-reducer";
+import {addMessageAC} from "./Reducers/dialogs-reducer";
 
 type messagesDataType = {
     id: string
@@ -42,8 +42,7 @@ type StoreType = {
     dispatch: (action: ActionTypes) => void
 }
 
-export type ActionTypes = ReturnType<typeof addPostAC> | ReturnType<typeof textareaChangeAC> |
-    ReturnType<typeof textareaMessageChangeAC> | ReturnType<typeof addMessageAC>
+export type ActionTypes = ReturnType<typeof addPostAC> | ReturnType<typeof addMessageAC>
 
 
 /*

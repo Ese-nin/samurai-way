@@ -1,6 +1,6 @@
 import {v1} from "uuid";
 import {Dispatch} from "redux";
-import {profileAPI, usersAPI} from "../../api/api";
+import {profileAPI} from "../../api/api";
 
 type postsDataType = {
     id: string
@@ -11,7 +11,6 @@ type postsType = Array<postsDataType>
 
 export type profilePageType = {
     posts: postsType
-    newPostText: string
     profile: ProfileType | null
     status: string
 }
@@ -31,23 +30,13 @@ export type ProfileType = {
 
 type ActionTypes =
     ReturnType<typeof addPostAC>
-    | ReturnType<typeof textareaChangeAC>
     | ReturnType<typeof setUserProfile>
     | ReturnType<typeof setUserStatus>
 
 const ADD_POST = "ADD_POST";
-const UPDATE_NEW_POST_TEXT = "UPDATE_NEW_POST_TEXT";
 const SET_USER_PROFILE = "SET_USER_PROFILE";
 const SET_USER_STATUS = "SET_USER_STATUS";
 
-export const textareaChangeAC = (postText: string) => {
-    return {
-        type: UPDATE_NEW_POST_TEXT,
-        payLoad: {
-            newText: postText
-        },
-    } as const
-}
 export const addPostAC = (postText: string) => {
     return {
         type: ADD_POST,
@@ -74,7 +63,6 @@ const initialState = {
         {id: v1(), message: "It's my first post", likesCount: 45},
         {id: v1(), message: "Good bye", likesCount: 1792}
     ],
-    newPostText: "IT-Kamasutra",
     status: ""
 };
 
@@ -87,9 +75,7 @@ const profileReducer = (state: profilePageType = initialState, action: ActionTyp
                 message: action.payLoad.newPostText,
                 likesCount: 0
             };
-            return {...state, posts: [...state.posts, newPost], newPostText: ""};
-        case UPDATE_NEW_POST_TEXT:
-            return {...state, newPostText: action.payLoad.newText};
+            return {...state, posts: [...state.posts, newPost]};
         case SET_USER_PROFILE:
             return {...state, profile: action.profile}
         case SET_USER_STATUS:
@@ -103,7 +89,7 @@ const profileReducer = (state: profilePageType = initialState, action: ActionTyp
 
 export const getProfile = (userID: string) => {
     return (dispatch: Dispatch) => {
-        usersAPI.getProfile(userID)
+        profileAPI.getProfile(userID)
             .then(data => {
                 dispatch(setUserProfile(data));
             });

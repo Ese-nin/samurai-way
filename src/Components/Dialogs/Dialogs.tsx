@@ -1,8 +1,9 @@
-import React, {ChangeEvent} from "react";
+import React from "react";
 import s from "./Dialogs.module.css"
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 import {DialogsPropsType} from "./DialogsContainer";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 
 
 const Dialogs = (props: DialogsPropsType) => {
@@ -11,16 +12,12 @@ const Dialogs = (props: DialogsPropsType) => {
         <DialogItem key={d.id} name={d.name} id={d.id}/>
     )
 
-    const message = props.messages.map(m =>
+    const messages = props.messages.map(m =>
         <Message key={m.id} message={m.message} id={m.id}/>
     )
 
-    const sendMessage = () => {
-        props.sendMessage(props.newMessageText)
-    }
-
-    const textareaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.textareaChange(e.currentTarget.value)
+    const addNewMessage = (formData: FormDataType) => {
+        props.sendMessage(formData.newMessageBody)
     }
 
     return (
@@ -29,20 +26,35 @@ const Dialogs = (props: DialogsPropsType) => {
                 {dialogItem}
             </div>
             <div className={s.messages}>
-                {message}
-                <textarea
-                    onChange={textareaChange}
-                    value={props.newMessageText}/>
-                <div>
-                    <button onClick={sendMessage}>
-                        <img width={"17px"}
-                             src={"https://toppng.com/uploads/preview/paper-airplane-symbol-11549404798w6cibysc3j.png"}
-                             alt={""}/>
-                    </button>
-                </div>
+                {messages}
+                <AddMessageFormRedux onSubmit={addNewMessage}/>
             </div>
         </div>
     )
 }
+
+type FormDataType = {
+    newMessageBody: string
+}
+
+const AddMessageForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
+
+    return (
+        <form onSubmit={props.handleSubmit}>
+            <div>
+                <Field component='textarea' name='newMessageBody' placeholder='Enter your message'/>
+            </div>
+            <div>
+                <button type='submit'>
+                    <img width={"17px"}
+                         src={"https://toppng.com/uploads/preview/paper-airplane-symbol-11549404798w6cibysc3j.png"}
+                         alt={""}/>
+                </button>
+            </div>
+        </form>
+    )
+}
+
+const AddMessageFormRedux = reduxForm<FormDataType>({form: 'AddMessageForm'})(AddMessageForm)
 
 export default Dialogs;

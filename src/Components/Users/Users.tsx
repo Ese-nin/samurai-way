@@ -66,10 +66,6 @@ export const Users = (props: UsersPropsType) => {
                         <div>{el.name}</div>
                         <div>{el.status}</div>
                     </span>
-                    <span>
-                        <div>{"country"}</div>
-                        <div>{"city"}</div>
-                    </span>
                 </span>
                 </div>)}
         </div>

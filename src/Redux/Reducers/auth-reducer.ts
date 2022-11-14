@@ -79,4 +79,16 @@ export const authMe = () => {
     }
 }
 
+// export const logIn = (email: string, password: string, rememberMe: boolean) => {
+//     return (dispatch: Dispatch) => {
+//         authAPI.login(email, password, rememberMe)
+//             .then((data) => {
+//                 if (data.resultCode === 0) {
+//                     authMe()
+//                 }
+//             })
+//     }
+// }
+
+
 export default authReducer;

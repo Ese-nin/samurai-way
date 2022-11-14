@@ -2,7 +2,7 @@ import React from 'react'
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
 
 type FormDataType = {
-    login: string
+    email: string
     password: string
     rememberMe: boolean
 }
@@ -10,7 +10,8 @@ type FormDataType = {
 export const Login = () => {
 
     const onSubmit = (formData: FormDataType) => {
-        console.log(formData)
+        const {email, password, rememberMe} = formData
+
     }
 
     return <div>
@@ -19,14 +20,14 @@ export const Login = () => {
     </div>
 }
 
-const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props ) => {
+const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
-                <Field name={'login'} placeholder={'Login'} component={'input'}/>
+                <Field name={'email'} placeholder={'e-mail'} component={'input'}/>
             </div>
             <div>
-                <Field name={'password'} placeholder={'Password'} component={'input'}/>
+                <Field name={'password'} type={'password'} placeholder={'password'} component={'input'}/>
             </div>
             <div>
                 <Field name={'rememberMe'} type='checkbox' component={'input'}/> Remember me
