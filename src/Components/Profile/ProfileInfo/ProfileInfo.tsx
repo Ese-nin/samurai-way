@@ -2,7 +2,7 @@ import React from 'react';
 import s from "./ProfileInfo.module.css";
 import profileLogo from "../../../assets/images/logo_1.png"
 import {ProfileType} from "../../../Redux/Reducers/profile-reducer";
-import {Preloader} from "../../Preloader/Preloader";
+import {Preloader} from "../../common/Preloader/Preloader";
 import {ProfileStatus} from "./ProfileStatus";
 
 type ProfileInfoPropsType = {

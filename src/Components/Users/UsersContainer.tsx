@@ -8,7 +8,7 @@ import {
     UsersType, toggleIsFollowing, getUsers
 } from "../../Redux/Reducers/users-reducer";
 import {Users} from "./Users";
-import {Preloader} from "../Preloader/Preloader";
+import {Preloader} from "../common/Preloader/Preloader";
 
 class UsersAPIComponent extends React.Component<MapDispatchPropsType & MapStatePropsType> {
 
