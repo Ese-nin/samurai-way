@@ -2,7 +2,7 @@ import {TOGGLE_IS_FETCHING, toggleIsFetching} from "./users-reducer";
 import {authAPI} from "../../api/api";
 import {Dispatch} from "redux";
 import {ThunkAction} from "redux-thunk";
-import {ReduxStateType} from "../redux-store";
+import {ReduxStateType, ThunkAppDispatchType} from "../redux-store";
 
 type InitialStateType = {
     id: number | null
@@ -66,17 +66,11 @@ export const authMe = () => {
 
 
 export const logIn = (email: string, password: string, rememberMe: boolean): ThunkAction<void, ReduxStateType, unknown, ActionTypes> => {
-    return (dispatch: Dispatch<ActionTypes>) => {
+    return (dispatch: ThunkAppDispatchType) => {
         authAPI.logIn(email, password, rememberMe)
             .then((data) => {
                 if (data.resultCode === 0) {
-                    authAPI.authMe()
-                        .then(data => {
-                            if (data.resultCode === 0) {
-                                const {id, login, email} = data.data
-                                dispatch(setUserData(id, login, email, true))
-                            }
-                        });
+                    dispatch(authMe())
                 }
             })
     }
