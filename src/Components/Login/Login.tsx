@@ -2,6 +2,10 @@ import React from 'react'
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {minLengthCreator, required} from "../../utils/validators/validators";
 import {Input} from "../common/FormsControls/FormsControls";
+import {connect} from "react-redux";
+import {logIn} from "../../Redux/Reducers/auth-reducer";
+import {ReduxStateType} from "../../Redux/redux-store";
+import {Redirect} from "react-router-dom";
 
 type FormDataType = {
     email: string
@@ -9,10 +13,15 @@ type FormDataType = {
     rememberMe: boolean
 }
 
-export const Login = () => {
+const Login = (props: AllPropsType) => {
 
-    const onSubmit = () => {
+    const onSubmit = (formData: FormDataType) => {
+        const {email, password, rememberMe} = formData
+        props.logIn(email, password, rememberMe)
+    }
 
+    if (props.isAuth) {
+        return <Redirect to={'/profile'}/>
     }
 
     return <div>
@@ -54,3 +63,19 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
 const LoginFormRedux = reduxForm<FormDataType>({
     form: 'login'
 })(LoginForm)
+
+
+type AllPropsType = MDTPType & MSTPType
+
+type MDTPType = {
+    logIn: (email: string, password: string, rememberMe: boolean) => void
+}
+type MSTPType = {
+    isAuth: boolean
+}
+
+const mstp = (state: ReduxStateType): MSTPType => ({
+    isAuth: state.auth.isAuth
+})
+
+export default connect(mstp, {logIn})(Login)

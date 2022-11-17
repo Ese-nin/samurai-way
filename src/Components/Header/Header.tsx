@@ -1,10 +1,11 @@
 import React from "react";
 import s from "./Header.module.css"
 import {NavLink} from "react-router-dom";
-import {MapStatePropsType} from "./HeaderContainer";
+import {AllPropsType} from "./HeaderContainer";
 
 
-const Header = (props: MapStatePropsType) => {
+const Header = (props: AllPropsType) => {
+
     return <div className={s.header}>
         <img
             src={'https://playapkmod.com/files/2021/10/Download-Logo-Maker-Create-Logos-and-Icon-Design-Creator.png'}
@@ -12,7 +13,7 @@ const Header = (props: MapStatePropsType) => {
 
         <div className={s.loginBlock}>
             {props.isAuth
-                ? props.login
+                ? <div>{props.login} <button onClick={props.logOut}>LogOut</button></div>
                 : <NavLink to={'/login'}>Login</NavLink>}
         </div>
 
