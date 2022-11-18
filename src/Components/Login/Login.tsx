@@ -6,6 +6,7 @@ import {connect} from "react-redux";
 import {logIn} from "../../Redux/Reducers/auth-reducer";
 import {ReduxStateType} from "../../Redux/redux-store";
 import {Redirect} from "react-router-dom";
+import s from "../common/FormsControls/FormControl.module.css"
 
 type FormDataType = {
     email: string
@@ -48,6 +49,10 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
                        validate={[required, minLengthCreator6]}
                        component={Input}/>
             </div>
+            { props.error && <div className={s.commonErrorMessage}>
+                {props.error}
+            </div>
+            }
             <div>
                 <Field name={'rememberMe'}
                        type='checkbox'

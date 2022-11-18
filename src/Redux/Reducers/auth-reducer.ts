@@ -1,8 +1,8 @@
 import {TOGGLE_IS_FETCHING, toggleIsFetching} from "./users-reducer";
 import {authAPI} from "../../api/api";
 import {Dispatch} from "redux";
-import {ThunkAction} from "redux-thunk";
-import {ReduxStateType, ThunkAppDispatchType} from "../redux-store";
+import {ThunkAppDispatchType} from "../redux-store";
+import {stopSubmit} from "redux-form";
 
 type InitialStateType = {
     id: number | null
@@ -65,12 +65,15 @@ export const authMe = () => {
 }
 
 
-export const logIn = (email: string, password: string, rememberMe: boolean): ThunkAction<void, ReduxStateType, unknown, ActionTypes> => {
+export const logIn = (email: string, password: string, rememberMe: boolean) => {
     return (dispatch: ThunkAppDispatchType) => {
         authAPI.logIn(email, password, rememberMe)
             .then((data) => {
                 if (data.resultCode === 0) {
                     dispatch(authMe())
+                } else {
+                    const message = data.messages.length > 0 ? data.messages[0] : 'Some error'
+                    dispatch(stopSubmit('login', {_error: message}))
                 }
             })
     }

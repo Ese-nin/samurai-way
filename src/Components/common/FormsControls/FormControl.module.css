@@ -6,3 +6,8 @@
 .formControl.error span {
     color: red;
 }
+
+.commonErrorMessage {
+    color: crimson;
+    font-weight: bold;
+}

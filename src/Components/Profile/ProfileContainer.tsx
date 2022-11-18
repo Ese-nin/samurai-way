@@ -35,6 +35,8 @@ type allPropsType = mapStateToPropsType & mapDispatchToPropsType
 type mapStateToPropsType = {
     profile: ProfileType | null
     status: string
+    authorizedUserID: number | null
+    isAuth: boolean
 }
 
 type mapDispatchToPropsType = {
@@ -46,7 +48,9 @@ type mapDispatchToPropsType = {
 
 const mapStateToProps = (state: ReduxStateType): mapStateToPropsType => ({
     profile: state.profilePage.profile,
-    status: state.profilePage.status
+    status: state.profilePage.status,
+    authorizedUserID: state.auth.id,
+    isAuth: state.auth.isAuth,
 });
 
 export default compose<ComponentType>(
