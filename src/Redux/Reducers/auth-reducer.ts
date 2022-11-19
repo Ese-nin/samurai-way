@@ -52,42 +52,36 @@ export const setUserData = (userID: string | null, login: string | null, email: 
     } as const
 }
 
-export const authMe = () => {
-    return (dispatch: Dispatch) => {
-        authAPI.authMe()
-            .then(data => {
-                if (data.resultCode === 0) {
-                    const {id, login, email} = data.data
-                    dispatch(setUserData(id, login, email, true))
-                }
-            });
-    }
+export const authMe = () => (dispatch: Dispatch) => {
+    return authAPI.authMe()
+        .then(data => {
+            if (data.resultCode === 0) {
+                const {id, login, email} = data.data
+                dispatch(setUserData(id, login, email, true))
+            }
+        });
 }
 
 
-export const logIn = (email: string, password: string, rememberMe: boolean) => {
-    return (dispatch: ThunkAppDispatchType) => {
-        authAPI.logIn(email, password, rememberMe)
-            .then((data) => {
-                if (data.resultCode === 0) {
-                    dispatch(authMe())
-                } else {
-                    const message = data.messages.length > 0 ? data.messages[0] : 'Some error'
-                    dispatch(stopSubmit('login', {_error: message}))
-                }
-            })
-    }
+export const logIn = (email: string, password: string, rememberMe: boolean) => (dispatch: ThunkAppDispatchType) => {
+    authAPI.logIn(email, password, rememberMe)
+        .then((data) => {
+            if (data.resultCode === 0) {
+                dispatch(authMe())
+            } else {
+                const message = data.messages.length > 0 ? data.messages[0] : 'Some error'
+                dispatch(stopSubmit('login', {_error: message}))
+            }
+        })
 }
 
-export const logOut = () => {
-    return (dispatch: Dispatch) => {
-        authAPI.logOut()
-            .then((data) => {
-                if (data.resultCode === 0) {
-                    dispatch(setUserData(null, null, null, false))
-                }
-            })
-    }
+export const logOut = () => (dispatch: Dispatch) => {
+    authAPI.logOut()
+        .then((data) => {
+            if (data.resultCode === 0) {
+                dispatch(setUserData(null, null, null, false))
+            }
+        })
 }
 
 
