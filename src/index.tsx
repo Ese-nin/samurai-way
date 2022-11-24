@@ -7,7 +7,7 @@ import {Provider} from "react-redux";
 import {createRoot} from 'react-dom/client';
 
 
-const root = createRoot(document.getElementById('root')!); // createRoot(container!) if you use TypeScript
+const root = createRoot(document.getElementById('root') as HTMLElement);
 root.render(
     <BrowserRouter>
         <Provider store={store}>
