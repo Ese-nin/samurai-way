@@ -2,7 +2,7 @@ import React, {Component, ComponentType} from "react";
 import Profile from "./Profile";
 import {connect} from "react-redux";
 import {getProfile, getUserStatus, ProfileType, updateUserStatus} from "../../Redux/Reducers/profile-reducer";
-import {ReduxStateType} from "../../Redux/redux-store";
+import {AppRootStateType} from "../../Redux/redux-store";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {compose} from "redux";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
@@ -46,7 +46,7 @@ type mapDispatchToPropsType = {
 }
 
 
-const mapStateToProps = (state: ReduxStateType): mapStateToPropsType => ({
+const mapStateToProps = (state: AppRootStateType): mapStateToPropsType => ({
     profile: state.profilePage.profile,
     status: state.profilePage.status,
     authorizedUserID: state.auth.id,

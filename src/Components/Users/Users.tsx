@@ -27,7 +27,7 @@ export const Users = (props: UsersPropsType) => {
 
     return (
         <div>
-            <div>
+            <div className={s.pagination}>
                 {pages.map(el => {
                     return <span key={el}
                                  className={el === props.currentPage ? s.selectedPage : ''}

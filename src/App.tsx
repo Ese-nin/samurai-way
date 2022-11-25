@@ -13,7 +13,7 @@ import Login from "./Components/Login/Login";
 import {compose} from "redux";
 import {connect} from "react-redux";
 import {initializeAppTC} from "./Redux/Reducers/app-reducer";
-import {ReduxStateType} from "./Redux/redux-store";
+import {AppRootStateType} from "./Redux/redux-store";
 import {Preloader} from "./Components/common/Preloader/Preloader";
 
 class App extends React.Component<AllPropsType> {
@@ -61,7 +61,7 @@ type MSTPType = {
     initializedSuccess: boolean
 }
 
-const mstp = (state: ReduxStateType): MSTPType => {
+const mstp = (state: AppRootStateType): MSTPType => {
     return {
         initializedSuccess: state.app.initializedSuccess
     }

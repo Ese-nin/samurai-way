@@ -4,7 +4,7 @@ import {minLengthCreator, required} from "../../utils/validators/validators";
 import {Input} from "../common/FormsControls/FormsControls";
 import {connect} from "react-redux";
 import {logIn} from "../../Redux/Reducers/auth-reducer";
-import {ReduxStateType} from "../../Redux/redux-store";
+import {AppRootStateType} from "../../Redux/redux-store";
 import {Redirect} from "react-router-dom";
 import s from "../common/FormsControls/FormControl.module.css"
 
@@ -79,7 +79,7 @@ type MSTPType = {
     isAuth: boolean
 }
 
-const mstp = (state: ReduxStateType): MSTPType => ({
+const mstp = (state: AppRootStateType): MSTPType => ({
     isAuth: state.auth.isAuth
 })
 

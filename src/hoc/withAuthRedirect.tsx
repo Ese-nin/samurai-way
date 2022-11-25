@@ -1,13 +1,13 @@
 import React, {ComponentType} from 'react'
 import {Redirect} from "react-router-dom";
 import {connect} from "react-redux";
-import {ReduxStateType} from "../Redux/redux-store";
+import {AppRootStateType} from "../Redux/redux-store";
 
 type mstpType = {
     isAuth: boolean
 }
 
-const mstp = (state: ReduxStateType): mstpType => {
+const mstp = (state: AppRootStateType): mstpType => {
     return {
         isAuth: state.auth.isAuth
     }

@@ -9,7 +9,7 @@ import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 import appReducer from "./Reducers/app-reducer";
 
 export type RootState = typeof rootReducer
-export type ReduxStateType = ReturnType<RootState>
+export type AppRootStateType = ReturnType<RootState>
 
 const rootReducer = combineReducers({
     profilePage: profileReducer,
@@ -22,10 +22,10 @@ const rootReducer = combineReducers({
 
 export const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
 
-export type ThunkAppDispatchType = ThunkDispatch<ReduxStateType, any, AnyAction>
+export type ThunkAppDispatchType = ThunkDispatch<AppRootStateType, any, AnyAction>
 
 export const useAppDispatch = () => useDispatch<ThunkAppDispatchType>()
-export const useAppSelector: TypedUseSelectorHook<ReduxStateType> = useSelector
+export const useAppSelector: TypedUseSelectorHook<AppRootStateType> = useSelector
 
 // @ts-ignore
 window.store = store
