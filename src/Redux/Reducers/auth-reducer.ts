@@ -53,7 +53,7 @@ export const setUserData = (userID: string | null, login: string | null, email: 
 }
 
 export const authMe = () => (dispatch: Dispatch) => {
-    return authAPI.authMe()
+    authAPI.authMe()
         .then(data => {
             if (data.resultCode === 0) {
                 const {id, login, email} = data.data

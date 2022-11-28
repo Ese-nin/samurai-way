@@ -29,9 +29,7 @@ export const initializeApp = () => {
 
 export const initializeAppTC = () => (dispatch: ThunkAppDispatchType) => {
     dispatch(authMe())
-        .then(()=>{
-            dispatch(initializeApp())
-        })
+    dispatch(initializeApp())
 }
 
 export default appReducer;

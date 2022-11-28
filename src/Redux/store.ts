@@ -1,48 +1,48 @@
-import {addPostAC} from "./Reducers/profile-reducer";
-import {addMessageAC} from "./Reducers/dialogs-reducer";
+// import {addPostAC} from "./Reducers/profile-reducer";
+// import {addMessageAC} from "./Reducers/dialogs-reducer";
+//
+// type messagesDataType = {
+//     id: string
+//     message: string
+// }
+// type dialogsDataType = {
+//     id: string
+//     name: string
+// }
+// type postsDataType = {
+//     id: string
+//     message: string
+//     likesCount: number
+// }
+//
+// type postsType = Array<postsDataType>
+// type dialogsType = Array<dialogsDataType>
+// type messagesType = Array<messagesDataType>
+//
+// type profilePageType = {
+//     posts: postsType
+//     newPostText: string
+// }
+//
+// type messagesPageType = {
+//     messages: messagesType
+//     dialogs: dialogsType
+//     newMessageText: string
+// }
 
-type messagesDataType = {
-    id: string
-    message: string
-}
-type dialogsDataType = {
-    id: string
-    name: string
-}
-type postsDataType = {
-    id: string
-    message: string
-    likesCount: number
-}
+// type RootStateType = {
+//     profilePage: profilePageType
+//     messagesPage: messagesPageType
+// }
+// type StoreType = {
+//     _state: RootStateType
+//     _onChange: () => void
+//     subscribe: (callback: () => void) => void
+//     getState: () => RootStateType
+//     dispatch: (action: ActionTypes) => void
+// }
 
-type postsType = Array<postsDataType>
-type dialogsType = Array<dialogsDataType>
-type messagesType = Array<messagesDataType>
-
-type profilePageType = {
-    posts: postsType
-    newPostText: string
-}
-
-type messagesPageType = {
-    messages: messagesType
-    dialogs: dialogsType
-    newMessageText: string
-}
-
-type RootStateType = {
-    profilePage: profilePageType
-    messagesPage: messagesPageType
-}
-type StoreType = {
-    _state: RootStateType
-    _onChange: () => void
-    subscribe: (callback: () => void) => void
-    getState: () => RootStateType
-    dispatch: (action: ActionTypes) => void
-}
-
-export type ActionTypes = ReturnType<typeof addPostAC> | ReturnType<typeof addMessageAC>
+// type ActionTypes = ReturnType<typeof addPostAC> | ReturnType<typeof addMessageAC>
 
 
 /*
