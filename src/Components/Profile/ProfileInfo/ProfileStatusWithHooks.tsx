@@ -8,7 +8,7 @@ type ProfileStatusPropsType = {
 export const ProfileStatusWithHooks = (props: ProfileStatusPropsType) => {
 
     const [editMode, setEditMode] = useState(false)
-    const [localStatus, setLocalStatus] = useState(props.status)
+    const [localStatus, setLocalStatus] = useState('')
 
     const onChangeStatus = (e: ChangeEvent<HTMLInputElement>) => {
         setLocalStatus(e.currentTarget.value)
@@ -24,6 +24,7 @@ export const ProfileStatusWithHooks = (props: ProfileStatusPropsType) => {
     }
 
     useEffect(()=>{
+        console.log('I work')
         setLocalStatus(props.status)
     }, [props.status])
 
