@@ -5,7 +5,7 @@ import {ThunkAppDispatchType} from "../redux-store";
 import {stopSubmit} from "redux-form";
 
 type InitialStateType = {
-    id: number | null
+    id: string | null
     email: string | null
     login: string | null
     isFetching: boolean
@@ -43,11 +43,11 @@ const authReducer = (state = initialState, action: ActionTypes): InitialStateTyp
 
 const SET_USER_DATA = "SET_USER_DATA";
 
-export const setUserData = (userID: string | null, login: string | null, email: string | null, isAuth: boolean) => {
+export const setUserData = (id: string | null, login: string | null, email: string | null, isAuth: boolean) => {
     return {
         type: SET_USER_DATA,
         payload: {
-            userID, email, login, isAuth
+            id, email, login, isAuth
         }
     } as const
 }
@@ -57,9 +57,9 @@ export const authMe = () => (dispatch: Dispatch) => {
         .then(data => {
             if (data.resultCode === 0) {
                 const {id, login, email} = data.data
-                dispatch(setUserData(id, login, email, true))
+                dispatch(setUserData(id.toString(), login, email, true))
             }
-        });
+        })
 }
 
 

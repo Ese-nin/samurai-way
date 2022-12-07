@@ -24,7 +24,6 @@ export const ProfileStatusWithHooks = (props: ProfileStatusPropsType) => {
     }
 
     useEffect(()=>{
-        console.log('I work')
         setLocalStatus(props.status)
     }, [props.status])
 

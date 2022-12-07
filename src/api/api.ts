@@ -24,11 +24,11 @@ export const usersAPI = {
 }
 
 export const profileAPI = {
-    getProfile: (userID: string = '26111') => {
+    getProfile: (userID: string) => {
         return instance.get(`profile/` + userID)
             .then(res => res.data)
     },
-    getProfileStatus: (userID: string = '26111') => {
+    getProfileStatus: (userID: string) => {
         return instance.get(`profile/status/` + userID)
             .then(res => res.data)
     },

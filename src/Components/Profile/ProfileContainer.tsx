@@ -16,6 +16,9 @@ class ProfileContainer extends Component<ProfileContainerPropsType> {
 
     componentDidMount() {
         let userID = this.props.match.params.userId
+        if (this.props.authorizedUserID) {
+            userID = this.props.authorizedUserID
+        }
         this.props.getProfile(userID)
         this.props.getUserStatus(userID)
     }
@@ -35,7 +38,7 @@ type allPropsType = mapStateToPropsType & mapDispatchToPropsType
 type mapStateToPropsType = {
     profile: ProfileType | null
     status: string
-    authorizedUserID: number | null
+    authorizedUserID: string | null
     isAuth: boolean
 }
 

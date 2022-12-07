@@ -13,7 +13,7 @@ class HeaderContainer extends React.Component<AllPropsType> {
 
 export type AllPropsType = MapStatePropsType & MapDispatchPropsType
 type MapStatePropsType = {
-    id: number | null
+    id: string | null
     email: string | null
     login: string | null
     isFetching: boolean
