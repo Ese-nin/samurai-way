@@ -16,9 +16,9 @@ class ProfileContainer extends Component<ProfileContainerPropsType> {
 
     componentDidMount() {
         let userID = '';
-        let choosenUserID = this.props.match.params.userId
+        let chosenUserID = this.props.match.params.userId
         if (this.props.authorizedUserID) {
-            userID = choosenUserID ? choosenUserID : this.props.authorizedUserID
+            userID = chosenUserID ? chosenUserID : this.props.authorizedUserID
         }
         this.props.getProfile(userID)
         this.props.getUserStatus(userID)
