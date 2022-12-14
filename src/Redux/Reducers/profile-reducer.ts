@@ -75,7 +75,7 @@ const profileReducer = (state: profilePageType = initialState, action: ActionTyp
                 message: action.payLoad.newPostText,
                 likesCount: 0
             };
-            return {...state, posts: [...state.posts, newPost]};
+            return {...state, posts: [ newPost, ...state.posts]};
         case SET_USER_PROFILE:
             return {...state, profile: action.profile}
         case SET_USER_STATUS:

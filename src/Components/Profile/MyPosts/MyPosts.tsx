@@ -12,7 +12,7 @@ export type PostType = {
     likesCount: number
 }
 
-export const MyPosts = (props: MyPostPropsType) => {
+export const MyPosts = React.memo((props: MyPostPropsType) => {
 
     const posts = props.postsData.map(p =>
         <Post key={p.id} message={p.message} likesCount={p.likesCount}/>
@@ -31,7 +31,7 @@ export const MyPosts = (props: MyPostPropsType) => {
         </div>
         {posts}
     </div>
-}
+})
 
 export type FormDataType = {
     newPostBody: string
