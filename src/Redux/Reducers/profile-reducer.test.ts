@@ -46,6 +46,6 @@ test('new post should be added', () => {
 
     expect(endState1.posts.length).toBe(4)
     expect(endState2.posts.length).toBe(4)
-    expect(endState1.posts[3].message).toBe(message1)
-    expect(endState2.posts[3].message).toBe(message2)
+    expect(endState1.posts[0].message).toBe(message1)
+    expect(endState2.posts[0].message).toBe(message2)
 })

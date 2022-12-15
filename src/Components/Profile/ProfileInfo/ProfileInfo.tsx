@@ -11,9 +11,7 @@ type ProfileInfoPropsType = {
     updateStatus: (status: string) => void
 }
 
-const ProfileInfo = (props: ProfileInfoPropsType) => {
-
-    const {profile} = props
+const ProfileInfo: React.FC<ProfileInfoPropsType> = ({profile, status, updateStatus}) => {
 
     if (profile === null) {
         return <Preloader/>
@@ -28,9 +26,9 @@ const ProfileInfo = (props: ProfileInfoPropsType) => {
                     <img className={s.avatar}
                          src={profilePhoto} alt={''}/>
                 </div>
-                <span><strong>{props.profile?.fullName}</strong></span>
-                <ProfileStatusWithHooks status={props.status}
-                               updateStatus={props.updateStatus}/>
+                <span><strong>{profile?.fullName}</strong></span>
+                <ProfileStatusWithHooks status={status}
+                               updateStatus={updateStatus}/>
             </div>
         </div>
     );

@@ -1,15 +1,10 @@
 import {authMe} from "./auth-reducer";
 import {ThunkAppDispatchType} from "../redux-store";
 
-export type InitialStateType = {
-    initializedSuccess: boolean
-}
 
 const initialState: InitialStateType = {
     initializedSuccess: false
 }
-
-type ActionTypes = ReturnType<typeof initializeApp>
 
 
 const appReducer = (state = initialState, action: ActionTypes): InitialStateType => {
@@ -21,15 +16,29 @@ const appReducer = (state = initialState, action: ActionTypes): InitialStateType
     }
 }
 
-const INITIALIZE_APP = "INITIALIZE_APP";
+// actions
+
+const INITIALIZE_APP = "app/INITIALIZE_APP";
 
 export const initializeApp = () => {
     return {type: INITIALIZE_APP} as const
 }
 
-export const initializeAppTC = () => (dispatch: ThunkAppDispatchType) => {
-    dispatch(authMe())
+
+// thunks
+
+export const initializeAppTC = () => async (dispatch: ThunkAppDispatchType) => {
+    await dispatch(authMe())
     dispatch(initializeApp())
 }
+
+// types
+
+export type InitialStateType = {
+    initializedSuccess: boolean
+}
+
+type ActionTypes = ReturnType<typeof initializeApp>
+
 
 export default appReducer;

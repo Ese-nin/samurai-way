@@ -1,34 +1,5 @@
 import {v1} from "uuid";
 
-type messagesDataType = {
-    id: string
-    message: string
-}
-type dialogsDataType = {
-    id: string
-    name: string
-}
-
-export type dialogsType = Array<dialogsDataType>
-export type messagesType = Array<messagesDataType>
-
-export type messagesPageType = {
-    messages: messagesType
-    dialogs: dialogsType
-}
-
-type ActionTypes = ReturnType<typeof addMessageAC>
-
-const ADD_MESSAGE = "ADD-MESSAGE";
-
-export const addMessageAC = (messageText: string) => {
-    return {
-        type: ADD_MESSAGE,
-        payLoad: {
-            newMessageText: messageText
-        },
-    } as const
-}
 
 const initialState = {
     dialogs: [
@@ -48,7 +19,7 @@ const initialState = {
     ]
 };
 
-const dialogsReducer = (state: messagesPageType = initialState, action: ActionTypes): messagesPageType => {
+const dialogsReducer = (state: messagesPageType = initialState, action: ActionsType): messagesPageType => {
 
     switch (action.type) {
         case ADD_MESSAGE:
@@ -61,5 +32,40 @@ const dialogsReducer = (state: messagesPageType = initialState, action: ActionTy
             return state;
     }
 }
+
+// actions
+
+const ADD_MESSAGE = "dialogs/ADD-MESSAGE";
+
+export const addMessageAC = (messageText: string) => {
+    return {
+        type: ADD_MESSAGE,
+        payLoad: {
+            newMessageText: messageText
+        },
+    } as const
+}
+
+
+// types
+
+type messagesDataType = {
+    id: string
+    message: string
+}
+type dialogsDataType = {
+    id: string
+    name: string
+}
+
+export type dialogsType = Array<dialogsDataType>
+export type messagesType = Array<messagesDataType>
+
+export type messagesPageType = {
+    messages: messagesType
+    dialogs: dialogsType
+}
+
+type ActionsType = ReturnType<typeof addMessageAC>
 
 export default dialogsReducer;

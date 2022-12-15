@@ -52,3 +52,9 @@ export const authAPI = {
             .then(res => res.data)
     }
 }
+
+export enum ResultCodes {
+    SUCCESS = 0,
+    FAILED = 1,
+    CAPTCHA = 10
+}
