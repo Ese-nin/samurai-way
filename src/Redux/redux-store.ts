@@ -1,6 +1,6 @@
 import dialogsReducer from "./Reducers/dialogs-reducer";
 import profileReducer from "./Reducers/profile-reducer";
-import {AnyAction, applyMiddleware, combineReducers, legacy_createStore as createStore} from "redux";
+import {AnyAction, applyMiddleware, combineReducers, compose, legacy_createStore as createStore} from "redux";
 import usersReducer from "./Reducers/users-reducer";
 import authReducer from "./Reducers/auth-reducer";
 import thunkMiddleware, {ThunkDispatch} from "redux-thunk"
@@ -19,8 +19,9 @@ const rootReducer = combineReducers({
     form: formReducer,
     app: appReducer
 })
-
-export const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
+// @ts-ignore
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+export const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunkMiddleware)));
 
 export type ThunkAppDispatchType = ThunkDispatch<AppRootStateType, any, AnyAction>
 
