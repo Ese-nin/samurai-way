@@ -1,10 +1,10 @@
 import React from "react";
-import s from "./MyPosts.module.css"
+import s from "./MyPosts.module.css";
+import s2 from "../../common/FormsControls/FormControl.module.css";
 import Post from "./Post/Post";
 import {MyPostPropsType} from "./MyPostsContainer";
-import {Field, InjectedFormProps, reduxForm} from "redux-form";
-import {maxLengthCreator, required} from "../../../utils/validators/validators";
-import {Textarea} from "../../common/FormsControls/FormsControls";
+import {useFormik} from "formik";
+import * as Yup from 'yup';
 
 export type PostType = {
     id: string
@@ -19,14 +19,16 @@ export const MyPosts = React.memo((props: MyPostPropsType) => {
     )
 
     const addNewPost = (values: FormDataType) => {
-        props.addPost(values.newPostBody)
+        if (values.newPostBody.trim() !== '') {
+            props.addPost(values.newPostBody)
+        }
     }
 
     return <div className={s.content}>
         <div>
             <h3>My posts</h3>
             <div className={s.textareaBlock}>
-                <AddPostFormRedux onSubmit={addNewPost}/>
+                <AddPostForm addNewPost={addNewPost}/>
             </div>
         </div>
         {posts}
@@ -37,16 +39,31 @@ export type FormDataType = {
     newPostBody: string
 }
 
-const maxLength30 = maxLengthCreator(30)
+const AddPostForm: React.FC<{ addNewPost: (value: FormDataType) => void }> = ({addNewPost}) => {
 
-const AddPostForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
+    const formik = useFormik({
+        initialValues: {
+            newPost: ''
+        },
+        validationSchema: Yup.object({
+            newPost: Yup.string().max(30, 'Must be 30 characters or less')
+        }),
+        onSubmit: values => {
+            addNewPost({newPostBody: values.newPost})
+            formik.resetForm()
+        }
+    })
+
     return (
-        <form onSubmit={props.handleSubmit}>
+        <form onSubmit={formik.handleSubmit}>
             <div>
-                <Field name='newPostBody'
-                       component={Textarea}
-                       placeholder='Enter your text'
-                       validate={[required, maxLength30]}/>
+                <textarea
+                    id="newPost"
+                    placeholder={'Enter your text'}
+                    {...formik.getFieldProps('newPost')}
+                />
+                {formik.errors.newPost && formik.touched.newPost &&
+                    <div className={s2.commonErrorMessage}>{formik.errors.newPost}</div>}
             </div>
             <div>
                 <button type='submit'>New post</button>
@@ -54,5 +71,3 @@ const AddPostForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
         </form>
     )
 }
-
-const AddPostFormRedux = reduxForm<FormDataType>({form: 'AddPostForm'})(AddPostForm)

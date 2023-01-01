@@ -4,7 +4,6 @@ import {AnyAction, applyMiddleware, combineReducers, compose, legacy_createStore
 import usersReducer from "./Reducers/users-reducer";
 import authReducer from "./Reducers/auth-reducer";
 import thunkMiddleware, {ThunkDispatch} from "redux-thunk"
-import { reducer as formReducer } from 'redux-form'
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 import appReducer from "./Reducers/app-reducer";
 
@@ -16,7 +15,6 @@ const rootReducer = combineReducers({
     messagesPage: dialogsReducer,
     usersPage: usersReducer,
     auth: authReducer,
-    form: formReducer,
     app: appReducer
 })
 // @ts-ignore

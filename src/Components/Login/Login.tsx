@@ -1,27 +1,16 @@
 import React from 'react'
-import {InjectedFormProps, reduxForm} from "redux-form";
-import {minLengthCreator, required} from "../../utils/validators/validators";
-import {fieldCreator, Input} from "../common/FormsControls/FormsControls";
 import {connect} from "react-redux";
 import {logIn} from "../../Redux/Reducers/auth-reducer";
 import {AppRootStateType} from "../../Redux/redux-store";
 import {Redirect} from "react-router-dom";
-import s from "../common/FormsControls/FormControl.module.css"
+import {useFormik} from "formik";
+import s2 from '../common/FormsControls/FormControl.module.css'
+import * as Yup from 'yup';
 
-type FormDataType = {
-    email: string
-    password: string
-    rememberMe: boolean
-}
 
 const Login = (props: AllPropsType) => {
 
     const {logIn, isAuth} = props
-
-    const onSubmit = (formData: FormDataType) => {
-        const {email, password, rememberMe} = formData
-        logIn(email, password, rememberMe)
-    }
 
     if (isAuth) {
         return <Redirect to={'/profile'}/>
@@ -29,50 +18,64 @@ const Login = (props: AllPropsType) => {
 
     return <div>
         <h2>Login</h2>
-        <LoginFormRedux onSubmit={onSubmit}/>
+        <LoginForm logIn={logIn}/>
     </div>
 }
 
-const minLengthCreator6 = minLengthCreator(6)
+const LoginForm: React.FC<MDTPType> = ({logIn}) => {
 
-const LoginForm: React.FC<InjectedFormProps<FormDataType>> = ({handleSubmit, error}) => {
+    const formik = useFormik({
+        initialValues: {
+            email: '',
+            password: '',
+            rememberMe: false,
+        },
+        validationSchema: Yup.object({
+            email: Yup.string().email('Invalid email address').required('Required'),
+            password: Yup.string().min(6, 'Must be 6 characters or more').required('Required')
+        }),
+        onSubmit: values => {
+            const {email, password, rememberMe} = values
+            logIn(email, password, rememberMe)
+            formik.resetForm()
+        },
+    });
+
     return (
-        <form onSubmit={handleSubmit}>
-            {fieldCreator('email', Input, 'e-mail', [required])}
-            {fieldCreator('password', Input, 'password', [required, minLengthCreator6], 'password')}
-            {/*<div>*/}
-            {/*    <Field name={'email'}*/}
-            {/*           placeholder={'e-mail'}*/}
-            {/*           validate={[required]}*/}
-            {/*           component={Input}/>*/}
-            {/*</div>*/}
-            {/*<div>*/}
-            {/*    <Field name={'password'}*/}
-            {/*           type={'password'}*/}
-            {/*           placeholder={'password'}*/}
-            {/*           validate={[required, minLengthCreator6]}*/}
-            {/*           component={Input}/>*/}
-            {/*</div>*/}
-            {error && <div className={s.commonErrorMessage}>
-                {error}
-            </div>
-            }
-            {fieldCreator('rememberMe', Input, undefined, undefined, 'checkbox', 'Remember me')}
-            {/*<div>
-                <Field name={'rememberMe'}
-                       type='checkbox'
-                       component={Input}/> Remember me
-            </div>*/}
+        <form onSubmit={formik.handleSubmit}>
             <div>
-                <button type={"submit"}>Login</button>
+                <input
+                    id="email"
+                    type="email"
+                    {...formik.getFieldProps('email')}
+                />
+                {formik.errors.email && formik.touched.email &&
+                    <div className={s2.commonErrorMessage}>{formik.errors.email}</div>}
+            </div>
+            <div>
+                <input
+                    id="password"
+                    type="password"
+                    {...formik.getFieldProps('password')}
+                />
+                {formik.errors.password && formik.touched.password &&
+                    <div className={s2.commonErrorMessage}>{formik.errors.password}</div>}
+            </div>
+            <div>
+                <input id="rememberMe"
+                       type="checkbox"
+                       checked={formik.values.rememberMe}
+                       {...formik.getFieldProps('rememberMe')}
+                />
+                Remember Me
+            </div>
+
+            <div>
+                <button type="submit">Login</button>
             </div>
         </form>
     )
 }
-
-const LoginFormRedux = reduxForm<FormDataType>({
-    form: 'login'
-})(LoginForm)
 
 
 type AllPropsType = MDTPType & MSTPType
