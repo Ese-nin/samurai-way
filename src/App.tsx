@@ -1,7 +1,7 @@
 import React, {ComponentType} from 'react';
 import './App.css';
 import Navbar from "./Components/Navbar/Navbar";
-import {Route, withRouter} from "react-router-dom";
+import {BrowserRouter, Route, withRouter} from "react-router-dom";
 import Music from "./Components/Music/Music";
 import News from './Components/News/News';
 import Settings from "./Components/Settings/Settings";
@@ -11,9 +11,9 @@ import ProfileContainer from "./Components/Profile/ProfileContainer";
 import HeaderContainer from "./Components/Header/HeaderContainer";
 import Login from "./Components/Login/Login";
 import {compose} from "redux";
-import {connect} from "react-redux";
+import {connect, Provider} from "react-redux";
 import {initializeAppTC} from "./Redux/Reducers/app-reducer";
-import {AppRootStateType} from "./Redux/redux-store";
+import {AppRootStateType, store} from "./Redux/redux-store";
 import {Preloader} from "./Components/common/Preloader/Preloader";
 
 class App extends React.Component<AllPropsType> {
@@ -67,7 +67,19 @@ const mstp = (state: AppRootStateType): MSTPType => {
     }
 }
 
-export default compose<ComponentType>(
+const AppContainer =  compose<ComponentType>(
     withRouter,
     connect(mstp, {initializeAppTC})
 )(App);
+
+const MainApp = () => {
+    return (
+      <BrowserRouter>
+          <Provider store={store}>
+              <AppContainer/>
+          </Provider>
+      </BrowserRouter>
+    )
+}
+
+export default MainApp;
