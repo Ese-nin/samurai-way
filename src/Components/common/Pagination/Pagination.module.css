@@ -1,4 +1,13 @@
+.page {
+    padding: 0 1px;
+    margin: 0 1px;
+    border: 1px black solid;
+}
+
 .selectedPage {
+    padding: 0 1px;
+    margin: 0 1px;
+    border: 1px black solid;
     font-weight: bold;
 }
 
