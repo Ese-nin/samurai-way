@@ -8,7 +8,7 @@ const Header = (props: AllPropsType) => {
 
     return <div className={s.header}>
         <img
-            src={'https://playapkmod.com/files/2021/10/Download-Logo-Maker-Create-Logos-and-Icon-Design-Creator.png'}
+            src={'https://img.freepik.com/premium-vector/star-logo_713663-134.jpg?w=826'}
             alt={''}/>
 
         <div className={s.loginBlock}>
