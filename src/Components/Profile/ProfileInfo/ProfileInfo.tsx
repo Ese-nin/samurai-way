@@ -17,7 +17,7 @@ const ProfileInfo: React.FC<ProfileInfoPropsType> = ({profile, status, updateSta
         return <Preloader/>
     }
 
-    const profilePhoto = profile.photos.large ? profile.photos.large : profileLogo
+    const profilePhoto = profile.photos.large || profileLogo
 
     return (
         <div>
@@ -25,6 +25,7 @@ const ProfileInfo: React.FC<ProfileInfoPropsType> = ({profile, status, updateSta
                 <div>
                     <img className={s.avatar}
                          src={profilePhoto} alt={''}/>
+
                 </div>
                 <span><strong>{profile?.fullName}</strong></span>
                 <ProfileStatusWithHooks status={status}

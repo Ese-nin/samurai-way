@@ -14,7 +14,7 @@ type ProfileContainerPropsType = RouteComponentProps<PathParamsType> & allPropsT
 
 class ProfileContainer extends Component<ProfileContainerPropsType> {
 
-    componentDidMount() {
+    refreshProfile() {
         let userID = '';
         let chosenUserID = this.props.match.params.userId
         if (this.props.authorizedUserID) {
@@ -22,6 +22,16 @@ class ProfileContainer extends Component<ProfileContainerPropsType> {
         }
         this.props.getProfile(userID)
         this.props.getUserStatus(userID)
+    }
+
+    componentDidMount() {
+        this.refreshProfile()
+    }
+
+    componentDidUpdate(prevProps: Readonly<ProfileContainerPropsType>, prevState: Readonly<{}>) {
+        if (this.props.match.params.userId !== prevProps.match.params.userId) {
+            this.refreshProfile()
+        }
     }
 
     render() {
