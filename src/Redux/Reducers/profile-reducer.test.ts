@@ -8,14 +8,14 @@ beforeEach(()=>{
         profile: {
             aboutMe: "я круто чувак 1001%",
             contacts: {
-                /*"facebook": "facebook.com",
+                "facebook": "facebook.com",
                 "website": null,
                 "vk": "vk.com/dimych",
                 "twitter": "https://twitter.com/@sdf",
                 "instagram": "instagra.com/sds",
                 "youtube": null,
                 "github": "github.com",
-                "mainLink": null*/
+                "mainLink": null
             },
             lookingForAJob: true,
             lookingForAJobDescription: "не ищу, а дурачусь",

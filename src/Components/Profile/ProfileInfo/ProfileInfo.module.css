@@ -10,3 +10,15 @@
 .changeAvatarInput {
 
 }
+
+.contact {
+    padding-left: 10px;
+}
+
+.profileForm {
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    gap: 3px;
+    align-items: baseline;
+}

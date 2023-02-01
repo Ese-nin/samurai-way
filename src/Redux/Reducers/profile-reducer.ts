@@ -1,6 +1,8 @@
 import {v1} from "uuid";
 import {Dispatch} from "redux";
 import {profileAPI, ResultCodes} from "../../api/api";
+import {FormikValues} from "../../Components/Profile/ProfileInfo/ProfileInfo";
+import {AppRootStateType, ThunkAppDispatchType} from "../redux-store";
 
 
 const initialState = {
@@ -86,6 +88,14 @@ export const savePhoto = (file: File) => async (dispatch: Dispatch) => {
     }
 }
 
+export const saveProfile = (profile: FormikValues) => async (dispatch: ThunkAppDispatchType, getState: () => AppRootStateType) => {
+    const userId = getState().auth.id
+    const data = await profileAPI.saveProfile(profile, userId!)
+    if (data.resultCode === ResultCodes.SUCCESS) {
+        dispatch(getProfile(userId!))
+    }
+}
+
 // types
 
 type postsDataType = {
@@ -103,7 +113,16 @@ export type profilePageType = {
 
 export type ProfileType = {
     aboutMe: string
-    contacts: {}
+    contacts: {
+        github: string | null
+        vk: string | null
+        facebook: string | null
+        instagram: string | null
+        twitter: string | null
+        website: string | null
+        youtube: string | null
+        mainLink: string | null
+    }
     lookingForAJob: boolean
     lookingForAJobDescription: string
     fullName: string

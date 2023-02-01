@@ -1,4 +1,5 @@
 import axios from "axios";
+import {FormikValues} from "../Components/Profile/ProfileInfo/ProfileInfo";
 
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
@@ -44,6 +45,10 @@ export const profileAPI = {
                 'Content-Type': 'multipart/form-data'
             }
         })
+            .then(res => res.data)
+    },
+    saveProfile: (profile: FormikValues, userId: string) => {
+        return instance.put(`profile`, {...profile, userId})
             .then(res => res.data)
     }
 }

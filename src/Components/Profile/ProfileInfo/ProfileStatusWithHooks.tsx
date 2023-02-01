@@ -38,7 +38,7 @@ export const ProfileStatusWithHooks = (props: ProfileStatusPropsType) => {
             </div>
             :
             <div>
-                <span onDoubleClick={onEditMode}>{props.status || "Status is not defined"}</span>
+                <b>Status: </b><span onDoubleClick={onEditMode}>{props.status || "Status is not defined"}</span>
             </div>
     );
 }

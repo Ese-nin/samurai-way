@@ -5,13 +5,14 @@ import {
     getProfile,
     getUserStatus,
     ProfileType,
-    savePhoto,
+    savePhoto, saveProfile,
     updateUserStatus
 } from "../../Redux/Reducers/profile-reducer";
 import {AppRootStateType} from "../../Redux/redux-store";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {compose} from "redux";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+import {FormikValues} from "./ProfileInfo/ProfileInfo";
 
 type PathParamsType = {
     userId: string
@@ -47,7 +48,8 @@ class ProfileContainer extends Component<ProfileContainerPropsType> {
                      status={this.props.status}
                      updateStatus={this.props.updateUserStatus}
                      isOwner={!this.props.match.params.userId}
-                     savePhoto={this.props.savePhoto}/>
+                     savePhoto={this.props.savePhoto}
+                     saveProfile={this.props.saveProfile}/>
         )
     }
 }
@@ -66,6 +68,7 @@ type mapDispatchToPropsType = {
     getUserStatus: (userID: string) => void
     updateUserStatus: (status: string) => void
     savePhoto: (file: File) => void
+    saveProfile: (profile: FormikValues) => void
 }
 
 
@@ -77,7 +80,7 @@ const mapStateToProps = (state: AppRootStateType): mapStateToPropsType => ({
 });
 
 export default compose<ComponentType>(
-    connect(mapStateToProps, {getProfile, getUserStatus, updateUserStatus, savePhoto}),
+    connect(mapStateToProps, {getProfile, getUserStatus, updateUserStatus, savePhoto, saveProfile}),
     withRouter,
     withAuthRedirect
 )(ProfileContainer)
