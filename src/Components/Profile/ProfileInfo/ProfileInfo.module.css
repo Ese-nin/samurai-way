@@ -1,7 +1,12 @@
 .avatar {
-    width: 350px;
+    width: 250px;
+    border-radius: 50%;
 }
 
 .descriptionBlock {
     padding: 10px;
+}
+
+.changeAvatarInput {
+
 }
