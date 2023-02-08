@@ -5,44 +5,40 @@ import usersReducer, {
     setUsers,
     toggleIsFetching, toggleIsFollowing,
     unfollowSuccess,
-    UsersType
 } from "./users-reducer";
+import {UsersType} from "../../api/api";
 
 let startState: InitialStateType
 
 beforeEach(()=>{
     startState = {users: [
             {
-                id: '1',
+                id: 1,
                 photos: {small: '', large: ''},
                 followed: false,
                 name: "Egorka",
                 status: "Hello",
-                location: {country: "Belarus", city: "Minsk"},
             },
             {
-                id: '2',
+                id: 2,
                 photos: {small: '', large: ''},
                 followed: false,
                 name: "Tatyanka",
                 status: "Bla-bla-bla",
-                location: {country: "Russia", city: "St. Petersburg"},
             },
             {
-                id: '3',
+                id: 3,
                 photos: {small: '', large: ''},
                 followed: false,
                 name: "Timurka",
                 status: "Hey, where is my team?",
-                location: {country: "Tridevyatoe Tsarstvo", city: "Kitegh"},
             },
             {
-                id: '4',
+                id: 4,
                 photos: {small: '', large: ''},
                 followed: false,
                 name: "Antoshka",
                 status: "Don't touch me, please",
-                location: {country: "Ukraine", city: "Kiev"},
             }
         ],
         pageSize: 3,
@@ -57,20 +53,18 @@ test('users should be added', () => {
 
     const newUsers: Array<UsersType> = [
         {
-            id: '666',
+            id: 666,
             photos: {small: '', large: ''},
             followed: false,
             name: "Tatyanka",
             status: "Bla-bla-bla",
-            location: {country: "Russia", city: "St. Petersburg"},
         },
         {
-            id: '94657',
+            id: 94657,
             photos: {small: '', large: ''},
             followed: false,
             name: "Timurka",
             status: "Hey, where is my team?",
-            location: {country: "Tridevyatoe Tsarstvo", city: "Kitegh"},
         },
     ]
 

@@ -2,10 +2,10 @@ import React from "react";
 import s from "./Profile.module.css"
 import ProfileInfo, {FormikValues} from "./ProfileInfo/ProfileInfo";
 import MyPostsContainer from "./MyPosts/MyPostsContainer";
-import {ProfileType} from "../../Redux/Reducers/profile-reducer";
+import {DomainProfileDataType} from "api/api";
 
 type ProfilePropsType = {
-    profile: ProfileType | null
+    profile: DomainProfileDataType | null
     status: string
     updateStatus: (status: string) => void
     isOwner: boolean

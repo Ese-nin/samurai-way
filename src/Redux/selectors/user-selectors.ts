@@ -1,5 +1,5 @@
 import {AppRootStateType} from "../redux-store";
-import {UsersType} from "../Reducers/users-reducer";
+import {UsersType} from "api/api";
 
 export const getUsers = (state: AppRootStateType): Array<UsersType> => {
     return state.usersPage.users

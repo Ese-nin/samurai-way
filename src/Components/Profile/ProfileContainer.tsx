@@ -4,15 +4,15 @@ import {connect} from "react-redux";
 import {
     getProfile,
     getUserStatus,
-    ProfileType,
     savePhoto, saveProfile,
     updateUserStatus
-} from "../../Redux/Reducers/profile-reducer";
-import {AppRootStateType} from "../../Redux/redux-store";
+} from "Redux/Reducers/profile-reducer";
+import {AppRootStateType} from "Redux/redux-store";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {compose} from "redux";
-import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+import {withAuthRedirect} from "hoc/withAuthRedirect";
 import {FormikValues} from "./ProfileInfo/ProfileInfo";
+import {DomainProfileDataType} from "api/api";
 
 type PathParamsType = {
     userId: string
@@ -57,7 +57,7 @@ class ProfileContainer extends Component<ProfileContainerPropsType> {
 type allPropsType = mapStateToPropsType & mapDispatchToPropsType
 
 type mapStateToPropsType = {
-    profile: ProfileType | null
+    profile: DomainProfileDataType | null
     status: string
     authorizedUserID: string | null
     isAuth: boolean

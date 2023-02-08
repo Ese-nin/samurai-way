@@ -1,13 +1,13 @@
 import React, {ChangeEvent, FC, useState} from 'react';
 import s from "./ProfileInfo.module.css";
-import profileLogo from "../../../assets/images/logo_1.png"
-import {ProfileType} from "../../../Redux/Reducers/profile-reducer";
+import profileLogo from "assets/images/logo_1.png"
 import {Preloader} from "../../common/Preloader/Preloader";
 import {ProfileStatusWithHooks} from "./ProfileStatusWithHooks";
 import {ProfileDataForm} from "./ProfileDataForm";
+import {ContactsType, DomainProfileDataType} from "api/api";
 
 type ProfileInfoPropsType = {
-    profile: ProfileType | null
+    profile: DomainProfileDataType | null
     status: string
     updateStatus: (status: string) => void
     isOwner: boolean
@@ -19,7 +19,7 @@ const ProfileInfo: React.FC<ProfileInfoPropsType> = ({profile, status, updateSta
 
     const [editMode, setEditMode] = useState(false)
 
-    if (profile === null) {
+    if (!profile) {
         return <Preloader/>
     }
 
@@ -66,17 +66,6 @@ export default ProfileInfo;
 // @ts-ignore
 export type FormikValues = Pick<ProfileDataType, 'aboutMe' | 'lookingForAJob' | 'lookingForAJobDescription' | 'fullName'> & ContactsType
 
-export type ContactsType = {
-    github: string | null
-    vk: string | null
-    facebook: string | null
-    instagram: string | null
-    twitter: string | null
-    website: string | null
-    youtube: string | null
-    mainLink: string | null
-}
-
 export type ProfileDataType = {
     profile: {
         aboutMe: string
@@ -110,7 +99,7 @@ const ProfileData: FC<ProfileDataType> = ({profile, isOwner, activateEditMode}) 
         <div>
             <b>Contacts:</b> {Object.keys(profile.contacts).map(key => {
             // @ts-ignore
-            return <Contact key={key} title={key + ' '} value={profile.contacts[key]}/>
+            return <Contact key={key} title={key} value={profile.contacts[key]}/>
         })}
         </div>
     </div>
@@ -119,5 +108,5 @@ const ProfileData: FC<ProfileDataType> = ({profile, isOwner, activateEditMode}) 
 type ContactProps = { title: string, value: string | null }
 
 const Contact: FC<ContactProps> = ({title, value}) => {
-    return <div className={s.contact}><b>{title}:</b>{value}</div>
+    return <div className={s.contact}><b>{title}:</b>{' ' + value}</div>
 }

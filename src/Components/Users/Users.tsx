@@ -1,7 +1,7 @@
 import React from 'react';
-import {UsersType} from "../../Redux/Reducers/users-reducer";
 import {Pagination} from "../common/Pagination/Pagination";
 import {User} from "./User";
+import {UsersType} from "api/api";
 
 type UsersPropsType = {
   totalUsersCount: number

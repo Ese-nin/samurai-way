@@ -1,4 +1,4 @@
-import {ResultCodes, usersAPI} from "../../api/api";
+import {ResultCodes, UsersType, usersAPI} from "api/api";
 import {Dispatch} from "redux";
 
 
@@ -17,7 +17,7 @@ const usersReducer = (state: InitialStateType = initialState, action: ActionType
         case UNFOLLOW:
             return {
                 ...state,
-                users: state.users.map(el => el.id === action.userID
+                users: state.users.map(el => el.id === +action.userID
                     ? {...el, followed: action.followed}
                     : el)
             }
@@ -126,25 +126,11 @@ const followUnfollowFlow = async (apiMethod: any, userID: string,
 
 export const follow = (userID: string) => async (dispatch: Dispatch) => {
     let apiMethod = usersAPI.follow.bind(usersAPI)
-
-    // dispatch(toggleIsFollowing(true, userID))
-    // const data = await usersAPI.follow(userID)
-    // if (data.resultCode === ResultCodes.SUCCESS) {
-    //     dispatch(followSuccess(userID))
-    // }
-    // dispatch(toggleIsFollowing(false, userID))
     followUnfollowFlow(apiMethod, userID, followSuccess, dispatch)
 }
 
 export const unfollow = (userID: string) => async (dispatch: Dispatch) => {
     let apiMethod = usersAPI.unfollow.bind(usersAPI)
-
-    // dispatch(toggleIsFollowing(true, userID))
-    // const data = await apiMethod(userID)
-    // if (data.resultCode === ResultCodes.SUCCESS) {
-    //     dispatch(ActionCreator(userID))
-    // }
-    // dispatch(toggleIsFollowing(false, userID))
     followUnfollowFlow(apiMethod, userID, unfollowSuccess, dispatch)
 }
 
@@ -157,18 +143,6 @@ export type InitialStateType = {
     currentPage: number
     isFetching: boolean
     followingInProgress: string[]
-}
-type PhotosType = {
-    small: string
-    large: string
-}
-export type UsersType = {
-    id: string
-    photos: PhotosType
-    followed: boolean
-    name: string
-    status: string
-    location: { country: string, city: string }
 }
 
 type FollowSuccessActionType = ReturnType<typeof followSuccess>

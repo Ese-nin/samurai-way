@@ -16,33 +16,44 @@ const Login = (props: AllPropsType) => {
         return <Redirect to={'/profile'}/>
     }
 
-    return <div>
+    return <div style={{margin: "25px"}}>
         <h2>Login</h2>
-        <LoginForm logIn={logIn}/>
+        <LoginForm logIn={logIn} captchaUrl={props.captchaUrl}/>
     </div>
 }
 
-const LoginForm: React.FC<MDTPType> = ({logIn}) => {
+const LoginForm: React.FC<MDTPType & { captchaUrl: string | null }> = ({logIn, captchaUrl}) => {
 
     const formik = useFormik({
         initialValues: {
             email: '',
             password: '',
             rememberMe: false,
+            captcha: '',
         },
         validationSchema: Yup.object({
             email: Yup.string().email('Invalid email address').required('Required'),
             password: Yup.string().min(6, 'Must be 6 characters or more').required('Required')
         }),
         onSubmit: values => {
-            const {email, password, rememberMe} = values
-            logIn(email, password, rememberMe)
+            const {email, password, rememberMe, captcha} = values
+            logIn(email, password, rememberMe, captcha)
             formik.resetForm()
         },
     });
 
     return (
-        <form onSubmit={formik.handleSubmit}>
+        <form style={{display: "flex", flexDirection: "column"}} onSubmit={formik.handleSubmit}>
+            <div>
+                <p>To log in get registered
+                    <a href={'https://social-network.samuraijs.com/'}
+                       target={'_blank'}> here
+                    </a>
+                </p>
+                <p>or use common test account credentials:</p>
+                <p>Email: free@samuraijs.com</p>
+                <p>Password: free</p>
+            </div>
             <div>
                 <input
                     id="email"
@@ -70,6 +81,16 @@ const LoginForm: React.FC<MDTPType> = ({logIn}) => {
                 Remember Me
             </div>
 
+            {
+                captchaUrl &&
+                <div>
+                    <img width="200px" src={captchaUrl} alt="captcha"/><br/>
+                    <input id="captcha"
+                           {...formik.getFieldProps('captcha')}
+                    />
+                </div>
+            }
+
             <div>
                 <button type="submit">Login</button>
             </div>
@@ -81,14 +102,17 @@ const LoginForm: React.FC<MDTPType> = ({logIn}) => {
 type AllPropsType = MDTPType & MSTPType
 
 type MDTPType = {
-    logIn: (email: string, password: string, rememberMe: boolean) => void
+    logIn: (email: string, password: string, rememberMe: boolean, captcha: string | null) => void
 }
 type MSTPType = {
     isAuth: boolean
+    captchaUrl: string | null
 }
 
 const mstp = (state: AppRootStateType): MSTPType => ({
-    isAuth: state.auth.isAuth
+    isAuth: state.auth.isAuth,
+    captchaUrl: state.auth.captchaUrl
 })
 
+// @ts-ignore
 export default connect(mstp, {logIn})(Login)

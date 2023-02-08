@@ -1,12 +1,12 @@
 import React from "react";
 import {connect} from "react-redux";
-import {AppRootStateType} from "../../Redux/redux-store";
+import {AppRootStateType} from "Redux/redux-store";
 import {
     follow,
     setCurrentPage,
     unfollow,
-    UsersType, toggleIsFollowing, requestUsers
-} from "../../Redux/Reducers/users-reducer";
+    toggleIsFollowing, requestUsers
+} from "Redux/Reducers/users-reducer";
 import {Users} from "./Users";
 import {Preloader} from "../common/Preloader/Preloader";
 import {
@@ -15,7 +15,8 @@ import {
     getPageSize,
     getTotalUsersCount,
     getUsers
-} from "../../Redux/selectors/user-selectors";
+} from "Redux/selectors/user-selectors";
+import {UsersType} from "api/api";
 
 class UsersAPIComponent extends React.Component<MapDispatchPropsType & MapStatePropsType> {
 

@@ -1,18 +1,27 @@
 import {TOGGLE_IS_FETCHING, toggleIsFetching} from "./users-reducer";
-import {authAPI, ResultCodes} from "../../api/api";
+import {authAPI, ResultCodes, securityAPI} from "api/api";
 import {Dispatch} from "redux";
 import {ThunkAppDispatchType} from "../redux-store";
 import {stopSubmit} from "redux-form";
+import {getProfile} from "./profile-reducer";
 
+const initialState: InitialStateType = {
+    id: null,
+    email: null,
+    login: null,
+    isFetching: false,
+    isAuth: false,
+    captchaUrl: null
+}
 
 const authReducer = (state = initialState, action: ActionTypes): InitialStateType => {
     switch (action.type) {
-        case SET_USER_DATA: {
+        case SET_USER_DATA:
+        case SET_CAPTCHA_URL_SUCCESS:
             return {
                 ...state,
                 ...action.payload
             }
-        }
         case TOGGLE_IS_FETCHING:
             return {
                 ...state, isFetching: action.isFetching
@@ -23,6 +32,7 @@ const authReducer = (state = initialState, action: ActionTypes): InitialStateTyp
 }
 
 const SET_USER_DATA = "auth/SET_USER_DATA";
+const SET_CAPTCHA_URL_SUCCESS = 'SET_CAPTCHA_URL_SUCCESS';
 
 // actions
 export const setUserData = (id: string | null, login: string | null, email: string | null, isAuth: boolean) => {
@@ -34,20 +44,27 @@ export const setUserData = (id: string | null, login: string | null, email: stri
     } as const
 }
 
+const setCaptchaUrlSuccess = (captchaUrl: string) => {
+    return {type: SET_CAPTCHA_URL_SUCCESS, payload: {captchaUrl}} as const
+}
+
 // thunks
-export const authMe = () => async (dispatch: Dispatch) => {
+export const authMe = () => async (dispatch: ThunkAppDispatchType) => {
     const data = await authAPI.authMe();
     if (data.resultCode === ResultCodes.SUCCESS) {
         const {id, login, email} = data.data
         dispatch(setUserData(id.toString(), login, email, true))
+        dispatch(getProfile(id.toString()))
     }
 }
 
 
-export const logIn = (email: string, password: string, rememberMe: boolean) => async (dispatch: ThunkAppDispatchType) => {
-    const data = await authAPI.logIn(email, password, rememberMe);
+export const logIn = (email: string, password: string, rememberMe: boolean, captcha?: string) => async (dispatch: ThunkAppDispatchType) => {
+    const data = await authAPI.logIn(email, password, rememberMe, captcha);
     if (data.resultCode === ResultCodes.SUCCESS) {
         await dispatch(authMe())
+    } else if (data.resultCode === ResultCodes.CAPTCHA) {
+        dispatch(getCaptchaUrl())
     } else {
         const message = data.messages.length > 0 ? data.messages[0] : 'Some error'
         dispatch(stopSubmit('login', {_error: message}))
@@ -61,6 +78,12 @@ export const logOut = () => async (dispatch: Dispatch) => {
     }
 }
 
+export const getCaptchaUrl = () => async (dispatch: Dispatch) => {
+    const data = await securityAPI.getCaptchaUrl();
+    const captcha = data.url
+    dispatch(setCaptchaUrlSuccess(captcha))
+}
+
 // types
 
 type InitialStateType = {
@@ -69,18 +92,12 @@ type InitialStateType = {
     login: string | null
     isFetching: boolean
     isAuth: boolean
-}
-
-const initialState: InitialStateType = {
-    id: null,
-    email: null,
-    login: null,
-    isFetching: false,
-    isAuth: false
+    captchaUrl: string | null
 }
 
 type ActionTypes = ReturnType<typeof setUserData>
     | ReturnType<typeof toggleIsFetching>
+    | ReturnType<typeof setCaptchaUrlSuccess>
 
 
 export default authReducer;

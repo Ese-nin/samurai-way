@@ -1,7 +1,7 @@
 import {v1} from "uuid";
 import {Dispatch} from "redux";
-import {profileAPI, ResultCodes} from "../../api/api";
-import {FormikValues} from "../../Components/Profile/ProfileInfo/ProfileInfo";
+import {DomainProfileDataType, profileAPI, ResultCodes} from "../../api/api";
+import {FormikValues} from "Components/Profile/ProfileInfo/ProfileInfo";
 import {AppRootStateType, ThunkAppDispatchType} from "../redux-store";
 
 
@@ -16,7 +16,6 @@ const initialState = {
 };
 
 const profileReducer = (state: profilePageType = initialState, action: ActionsType): profilePageType => {
-
     switch (action.type) {
         case ADD_POST:
             const newPost = {
@@ -51,13 +50,13 @@ const SAVE_PHOTO_SUCCESS = "profile/SAVE_PHOTO_SUCCESS"
 export const addPostAC = (postText: string) => {
     return {type: ADD_POST, payLoad: {newPostText: postText}} as const
 }
-export const setUserProfile = (profile: ProfileType) => {
+export const setUserProfile = (profile: DomainProfileDataType) => {
     return {type: SET_USER_PROFILE, profile} as const
 }
 export const setUserStatus = (status: string) => {
     return {type: SET_USER_STATUS, status} as const
 }
-export const savePhotoSuccess = (photos: { large: string, small: string }) => {
+export const savePhotoSuccess = (photos: { large: string | null, small: string | null }) => {
     return {type: SAVE_PHOTO_SUCCESS, photos} as const
 }
 
@@ -90,47 +89,23 @@ export const savePhoto = (file: File) => async (dispatch: Dispatch) => {
 
 export const saveProfile = (profile: FormikValues) => async (dispatch: ThunkAppDispatchType, getState: () => AppRootStateType) => {
     const userId = getState().auth.id
-    const data = await profileAPI.saveProfile(profile, userId!)
-    if (data.resultCode === ResultCodes.SUCCESS) {
-        dispatch(getProfile(userId!))
-    }
+    await profileAPI.saveProfile(profile, userId!)
+    dispatch(getProfile(userId!))
+
 }
 
 // types
 
-type postsDataType = {
+type PostsDataType = {
     id: string
     message: string
     likesCount: number
 }
-type postsType = Array<postsDataType>
 
 export type profilePageType = {
-    posts: postsType
-    profile: ProfileType | null
+    posts: PostsDataType[]
+    profile: DomainProfileDataType | null
     status: string
-}
-
-export type ProfileType = {
-    aboutMe: string
-    contacts: {
-        github: string | null
-        vk: string | null
-        facebook: string | null
-        instagram: string | null
-        twitter: string | null
-        website: string | null
-        youtube: string | null
-        mainLink: string | null
-    }
-    lookingForAJob: boolean
-    lookingForAJobDescription: string
-    fullName: string
-    userId: number
-    photos: {
-        small: string
-        large: string
-    }
 }
 
 type ActionsType =
