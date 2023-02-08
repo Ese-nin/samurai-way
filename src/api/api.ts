@@ -15,11 +15,11 @@ export const usersAPI = {
             .then(res => res.data)
     },
     unfollow: (userID: string) => {
-        return instance.delete<ResponseType<{}>>(`follow/${userID}`)
+        return instance.delete<ResponseType>(`follow/${userID}`)
             .then(res => res.data)
     },
     follow: (userID: string) => {
-        return instance.post<ResponseType<{}>>(`follow/${userID}`)
+        return instance.post<ResponseType>(`follow/${userID}`)
             .then(res => res.data)
     }
 }
@@ -34,7 +34,7 @@ export const profileAPI = {
             .then(res => res.data)
     },
     updateProfileStatus: (status: string) => {
-        return instance.put<ResponseType<{}>>(`profile/status`, {status: status})
+        return instance.put<ResponseType>(`profile/status`, {status: status})
             .then(res => res.data)
     },
     savePhoto: (file: File) => {
@@ -48,7 +48,7 @@ export const profileAPI = {
             .then(res => res.data)
     },
     saveProfile: (profile: FormikValues, userId: string) => {
-        return instance.put<ResponseType<{}>>(`profile`, {...profile, userId})
+        return instance.put<ResponseType>(`profile`, {...profile, userId})
             .then(res => res.data)
     }
 }
@@ -63,7 +63,7 @@ export const authAPI = {
             .then(res => res.data)
     },
     logOut() {
-        return instance.delete<ResponseType<{}>>(`auth/login`)
+        return instance.delete<ResponseType>(`auth/login`)
             .then(res => res.data)
     }
 }
@@ -84,7 +84,7 @@ export enum ResultCodes {
     CAPTCHA = 10
 }
 
-type ResponseType<D> = {
+type ResponseType<D = {}> = {
     data: D
     fieldsErrors: string[]
     messages: string[]
