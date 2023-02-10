@@ -2,6 +2,7 @@
     padding: 0 1px;
     margin: 0 1px;
     border: 1px black solid;
+    border-radius: 15px;
 }
 
 .selectedPage {
@@ -9,6 +10,7 @@
     margin: 0 1px;
     border: 1px black solid;
     font-weight: bold;
+    border-radius: 15px;
 }
 
 .pagination {

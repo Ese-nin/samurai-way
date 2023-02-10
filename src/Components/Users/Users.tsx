@@ -2,6 +2,7 @@ import React from 'react';
 import {Pagination} from "../common/Pagination/Pagination";
 import {User} from "./User";
 import {UsersType} from "api/api";
+import s from './users.module.css'
 
 type UsersPropsType = {
   totalUsersCount: number
@@ -27,7 +28,7 @@ export const Users: React.FC<UsersPropsType> = (
   }) => {
 
   return (
-    <div>
+    <div className={s.container}>
       {<Pagination totalItemsCount={totalUsersCount}
                    pageSize={pageSize}
                    currentPage={currentPage}
