@@ -1,7 +1,6 @@
 import {TOGGLE_IS_FETCHING, toggleIsFetching} from "./users-reducer";
 import {authAPI, ResultCodes, securityAPI} from "api/api";
-import {Dispatch} from "redux";
-import {ThunkAppDispatchType} from "../redux-store";
+import {AppThunk, ThunkAppDispatchType} from "../redux-store";
 import {stopSubmit} from "redux-form";
 import {getProfile} from "./profile-reducer";
 
@@ -14,7 +13,7 @@ const initialState: InitialStateType = {
     captchaUrl: null
 }
 
-const authReducer = (state = initialState, action: ActionTypes): InitialStateType => {
+const authReducer = (state = initialState, action: AuthActionsType): InitialStateType => {
     switch (action.type) {
         case SET_USER_DATA:
         case SET_CAPTCHA_URL_SUCCESS:
@@ -59,7 +58,7 @@ export const authMe = () => async (dispatch: ThunkAppDispatchType) => {
 }
 
 
-export const logIn = (email: string, password: string, rememberMe: boolean, captcha?: string) => async (dispatch: ThunkAppDispatchType) => {
+export const logIn = (email: string, password: string, rememberMe: boolean, captcha?: string): AppThunk => async (dispatch) => {
     const data = await authAPI.logIn(email, password, rememberMe, captcha);
     if (data.resultCode === ResultCodes.SUCCESS) {
         await dispatch(authMe())
@@ -71,14 +70,14 @@ export const logIn = (email: string, password: string, rememberMe: boolean, capt
     }
 }
 
-export const logOut = () => async (dispatch: Dispatch) => {
+export const logOut = (): AppThunk => async (dispatch) => {
     const data = await authAPI.logOut();
     if (data.resultCode === ResultCodes.SUCCESS) {
         dispatch(setUserData(null, null, null, false))
     }
 }
 
-export const getCaptchaUrl = () => async (dispatch: Dispatch) => {
+export const getCaptchaUrl = (): AppThunk => async (dispatch) => {
     const data = await securityAPI.getCaptchaUrl();
     const captcha = data.url
     dispatch(setCaptchaUrlSuccess(captcha))
@@ -95,7 +94,7 @@ type InitialStateType = {
     captchaUrl: string | null
 }
 
-type ActionTypes = ReturnType<typeof setUserData>
+export type AuthActionsType = ReturnType<typeof setUserData>
     | ReturnType<typeof toggleIsFetching>
     | ReturnType<typeof setCaptchaUrlSuccess>
 

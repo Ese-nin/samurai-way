@@ -19,7 +19,7 @@ const initialState = {
     ]
 };
 
-const dialogsReducer = (state: messagesPageType = initialState, action: ActionsType): messagesPageType => {
+const dialogsReducer = (state: messagesPageType = initialState, action: DialogsActionsType): messagesPageType => {
 
     switch (action.type) {
         case ADD_MESSAGE:
@@ -66,6 +66,6 @@ export type messagesPageType = {
     dialogs: dialogsType
 }
 
-type ActionsType = ReturnType<typeof addMessageAC>
+export type DialogsActionsType = ReturnType<typeof addMessageAC>
 
 export default dialogsReducer;

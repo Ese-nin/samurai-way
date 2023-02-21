@@ -1,8 +1,7 @@
 import {v1} from "uuid";
-import {Dispatch} from "redux";
 import {DomainProfileDataType, profileAPI, ResultCodes} from "../../api/api";
 import {FormikValues} from "Components/Profile/ProfileInfo/ProfileInfo";
-import {AppRootStateType, ThunkAppDispatchType} from "../redux-store";
+import {AppThunk} from "../redux-store";
 
 
 const initialState = {
@@ -15,7 +14,7 @@ const initialState = {
     status: ""
 };
 
-const profileReducer = (state: profilePageType = initialState, action: ActionsType): profilePageType => {
+const profileReducer = (state: profilePageType = initialState, action: ProfileActionsType): profilePageType => {
     switch (action.type) {
         case ADD_POST:
             const newPost = {
@@ -63,31 +62,31 @@ export const savePhotoSuccess = (photos: { large: string | null, small: string |
 
 // thunks
 
-export const getProfile = (userID: string) => async (dispatch: Dispatch) => {
+export const getProfile = (userID: string): AppThunk => async (dispatch) => {
     const data = await profileAPI.getProfile(userID)
     dispatch(setUserProfile(data));
 }
 
-export const getUserStatus = (userID: string) => async (dispatch: Dispatch) => {
+export const getUserStatus = (userID: string): AppThunk => async (dispatch) => {
     const data = await profileAPI.getProfileStatus(userID);
     dispatch(setUserStatus(data))
 }
 
-export const updateUserStatus = (status: string) => async (dispatch: Dispatch) => {
+export const updateUserStatus = (status: string): AppThunk => async (dispatch) => {
     const data = await profileAPI.updateProfileStatus(status);
     if (data.resultCode === ResultCodes.SUCCESS) {
         dispatch(setUserStatus(status))
     }
 }
 
-export const savePhoto = (file: File) => async (dispatch: Dispatch) => {
+export const savePhoto = (file: File): AppThunk => async (dispatch) => {
     const data = await profileAPI.savePhoto(file)
     if (data.resultCode === ResultCodes.SUCCESS) {
         dispatch(savePhotoSuccess(data.data.photos))
     }
 }
 
-export const saveProfile = (profile: FormikValues) => async (dispatch: ThunkAppDispatchType, getState: () => AppRootStateType) => {
+export const saveProfile = (profile: FormikValues): AppThunk => async (dispatch, getState) => {
     const userId = getState().auth.id
     await profileAPI.saveProfile(profile, userId!)
     dispatch(getProfile(userId!))
@@ -108,7 +107,7 @@ export type profilePageType = {
     status: string
 }
 
-type ActionsType =
+export type ProfileActionsType =
     ReturnType<typeof addPostAC>
     | ReturnType<typeof setUserProfile>
     | ReturnType<typeof setUserStatus>
