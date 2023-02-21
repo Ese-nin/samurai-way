@@ -1,9 +1,8 @@
 import React, {FC} from "react";
 import {FormikValues, ProfileDataType} from "./ProfileInfo";
 import s from "./ProfileInfo.module.css";
-import {getIn, useFormik} from 'formik';
+import {useFormik} from 'formik';
 import * as Yup from 'yup'
-import {logger} from "@storybook/node-logger";
 
 type ProfileDataFormType = Omit<ProfileDataType, 'isOwner' | 'activateEditMode'> & {
     onSubmit: (values: FormikValues) => void
