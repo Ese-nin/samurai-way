@@ -1,8 +1,9 @@
 import React, {FC} from "react";
 import {FormikValues, ProfileDataType} from "./ProfileInfo";
 import s from "./ProfileInfo.module.css";
-import {useFormik} from 'formik';
-import * as Yup from "yup";
+import {getIn, useFormik} from 'formik';
+import * as Yup from 'yup'
+import {logger} from "@storybook/node-logger";
 
 type ProfileDataFormType = Omit<ProfileDataType, 'isOwner' | 'activateEditMode'> & {
     onSubmit: (values: FormikValues) => void
@@ -11,37 +12,42 @@ type ProfileDataFormType = Omit<ProfileDataType, 'isOwner' | 'activateEditMode'>
 export const ProfileDataForm: FC<ProfileDataFormType> = ({profile, onSubmit}) => {
 
     const formik = useFormik({
-        initialValues: {
-            fullName: profile.fullName,
-            aboutMe: profile.aboutMe,
-            lookingForAJob: profile.lookingForAJob,
-            lookingForAJobDescription: profile.lookingForAJobDescription,
-            contacts: {
-                facebook: profile.contacts.facebook,
-                website: profile.contacts.website,
-                vk: profile.contacts.vk,
-                twitter: profile.contacts.twitter,
-                instagram: profile.contacts.instagram,
-                youtube: profile.contacts.youtube,
-                github: profile.contacts.github,
-                mainLink: profile.contacts.mainLink
-            }
-        },
-        validationSchema: Yup.object({
-                'contacts.facebook': Yup.string().url(),
-                'contacts.website': Yup.string().url(),
-                'contacts.vk': Yup.string().url(),
-                'contacts.twitter': Yup.string().url(),
-                'contacts.instagram': Yup.string().url(),
-                'contacts.youtube': Yup.string().url(),
-                'contacts.github': Yup.string().url(),
-                'contacts.mainLink': Yup.string().url()
-        }),
-        onSubmit: values => {
-            // @ts-ignore
-            onSubmit(values)
-        },
-    });
+            initialValues: {
+                fullName: profile.fullName,
+                aboutMe: profile.aboutMe,
+                lookingForAJob: profile.lookingForAJob,
+                lookingForAJobDescription: profile.lookingForAJobDescription,
+                contacts: {
+                    facebook: profile.contacts.facebook,
+                    website: profile.contacts.website,
+                    vk: profile.contacts.vk,
+                    twitter: profile.contacts.twitter,
+                    instagram: profile.contacts.instagram,
+                    youtube: profile.contacts.youtube,
+                    github: profile.contacts.github,
+                    mainLink: profile.contacts.mainLink
+                }
+            },
+            validationSchema:
+
+                Yup.object().shape({
+                    contacts: Yup.object().shape({
+                        facebook: Yup.string().url(),
+                        website: Yup.string().url(),
+                        vk: Yup.string().url(),
+                        twitter: Yup.string().url(),
+                        instagram: Yup.string().url(),
+                        youtube: Yup.string().url(),
+                        github: Yup.string().url(),
+                        mainLink: Yup.string().url(),
+                    })
+                }),
+            onSubmit: values => {
+                // @ts-ignore
+                onSubmit(values)
+            },
+        })
+    ;
     return (
         <form className={s.profileForm} onSubmit={formik.handleSubmit}>
             <label htmlFor="fullName">Full name </label>

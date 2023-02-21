@@ -15,7 +15,7 @@ const mstp = (state: AppRootStateType): mstpType => {
 
 
 
-export function withAuthRedirect<T>(Component: ComponentType<T>) {
+export function withAuthRedirect<T extends JSX.IntrinsicAttributes>(Component: ComponentType<T>) {
 
     const RedirectComponent = (props: mstpType) => {
 
