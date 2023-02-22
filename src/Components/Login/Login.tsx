@@ -114,5 +114,5 @@ const mstp = (state: AppRootStateType): MSTPType => ({
     captchaUrl: state.auth.captchaUrl
 })
 
-// @ts-ignore
+
 export default connect(mstp, {logIn})(Login)

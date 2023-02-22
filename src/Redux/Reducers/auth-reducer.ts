@@ -58,7 +58,7 @@ export const authMe = () => async (dispatch: ThunkAppDispatchType) => {
 }
 
 
-export const logIn = (email: string, password: string, rememberMe: boolean, captcha?: string): AppThunk => async (dispatch) => {
+export const logIn = (email: string, password: string, rememberMe: boolean, captcha: string | null): AppThunk => async (dispatch) => {
     const data = await authAPI.logIn(email, password, rememberMe, captcha);
     if (data.resultCode === ResultCodes.SUCCESS) {
         await dispatch(authMe())
