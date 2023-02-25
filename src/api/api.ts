@@ -120,14 +120,14 @@ export type DomainProfileDataType = {
 export type UsersType = {
     name: string;
     id: number;
-    uniqueUrlName?: any;
+    uniqueUrlName?: string;
     photos: Photos;
-    status?: any;
+    status?: string;
     followed: boolean;
 }
 
 export type UsersResponseType = {
     items: UsersType[];
     totalCount: number;
-    error?: any;
+    error?: string;
 }

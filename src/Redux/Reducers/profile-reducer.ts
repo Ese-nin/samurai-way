@@ -1,7 +1,7 @@
 import {v1} from "uuid";
 import {DomainProfileDataType, profileAPI, ResultCodes} from "../../api/api";
 import {FormikValues} from "Components/Profile/ProfileInfo/ProfileInfo";
-import {AppThunk} from "../redux-store";
+import {AppThunk} from "../store";
 
 
 const initialState = {

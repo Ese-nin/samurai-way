@@ -67,9 +67,7 @@ const AddMessageForm: React.FC<{ addNewMessage: (formData: FormDataType) => void
             </div>
             <div>
                 <button type='submit'>
-                    <img width={"17px"}
-                         src={"https://toppng.com/uploads/preview/paper-airplane-symbol-11549404798w6cibysc3j.png"}
-                         alt={""}/>
+                    Send
                 </button>
             </div>
         </form>

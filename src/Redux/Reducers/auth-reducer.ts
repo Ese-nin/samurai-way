@@ -1,6 +1,6 @@
 import {TOGGLE_IS_FETCHING, toggleIsFetching} from "./users-reducer";
 import {authAPI, ResultCodes, securityAPI} from "api/api";
-import {AppThunk, ThunkAppDispatchType} from "../redux-store";
+import {AppThunk, ThunkAppDispatchType} from "../store";
 import {stopSubmit} from "redux-form";
 import {getProfile} from "./profile-reducer";
 

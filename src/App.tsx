@@ -10,7 +10,7 @@ import Login from "./Components/Login/Login";
 import {compose} from "redux";
 import {connect, Provider} from "react-redux";
 import {initializeAppTC} from "./Redux/Reducers/app-reducer";
-import {AppRootStateType, store} from "./Redux/redux-store";
+import {AppRootStateType, store} from "./Redux/store";
 import {Preloader} from "./Components/common/Preloader/Preloader";
 
 const DialogsContainer = lazy(() => import('./Components/Dialogs/DialogsContainer'));
@@ -19,8 +19,16 @@ const ProfileContainer = lazy(() => import('./Components/Profile/ProfileContaine
 
 class App extends React.Component<AllPropsType> {
 
+    catchAllUnhandledErrors = () => {
+        alert('Some error occured')
+    }
+
     componentDidMount() {
         this.props.initializeAppTC()
+        window.addEventListener('unhandledrejection', this.catchAllUnhandledErrors)
+    }
+    componentWillUnmount() {
+        window.removeEventListener('unhandledrejection', this.catchAllUnhandledErrors)
     }
 
     render() {

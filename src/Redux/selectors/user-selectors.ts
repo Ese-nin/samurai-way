@@ -1,4 +1,4 @@
-import {AppRootStateType} from "../redux-store";
+import {AppRootStateType} from "../store";
 import {UsersType} from "api/api";
 
 export const getUsers = (state: AppRootStateType): Array<UsersType> => {

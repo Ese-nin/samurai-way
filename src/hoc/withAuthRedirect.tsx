@@ -1,7 +1,7 @@
 import React, {ComponentType} from 'react'
 import {Redirect} from "react-router-dom";
 import {connect} from "react-redux";
-import {AppRootStateType} from "../Redux/redux-store";
+import {AppRootStateType} from "../Redux/store";
 
 type mstpType = {
     isAuth: boolean

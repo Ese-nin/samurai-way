@@ -7,7 +7,7 @@ import {
     savePhoto, saveProfile,
     updateUserStatus
 } from "Redux/Reducers/profile-reducer";
-import {AppRootStateType} from "Redux/redux-store";
+import {AppRootStateType} from "Redux/store";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {compose} from "redux";
 import {withAuthRedirect} from "hoc/withAuthRedirect";

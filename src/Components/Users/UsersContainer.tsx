@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import {AppRootStateType} from "Redux/redux-store";
+import {AppRootStateType} from "Redux/store";
 import {
     follow,
     setCurrentPage,

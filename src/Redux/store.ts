@@ -1,95 +1,41 @@
-// import {addPostAC} from "./Reducers/profile-reducer";
-// import {addMessageAC} from "./Reducers/dialogs-reducer";
-//
-// type messagesDataType = {
-//     id: string
-//     message: string
-// }
-// type dialogsDataType = {
-//     id: string
-//     name: string
-// }
-// type postsDataType = {
-//     id: string
-//     message: string
-//     likesCount: number
-// }
-//
-// type postsType = Array<postsDataType>
-// type dialogsType = Array<dialogsDataType>
-// type messagesType = Array<messagesDataType>
-//
-// type profilePageType = {
-//     posts: postsType
-//     newPostText: string
-// }
-//
-// type messagesPageType = {
-//     messages: messagesType
-//     dialogs: dialogsType
-//     newMessageText: string
-// }
+import dialogsReducer, {DialogsActionsType} from "./Reducers/dialogs-reducer";
+import profileReducer, {ProfileActionsType} from "./Reducers/profile-reducer";
+import {AnyAction, applyMiddleware, combineReducers, compose, legacy_createStore as createStore} from "redux";
+import usersReducer, {UsersActionTypes} from "./Reducers/users-reducer";
+import authReducer, {AuthActionsType} from "./Reducers/auth-reducer";
+import thunkMiddleware, {ThunkAction, ThunkDispatch} from "redux-thunk"
+import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
+import appReducer, {AppActionTypes} from "./Reducers/app-reducer";
 
-// type RootStateType = {
-//     profilePage: profilePageType
-//     messagesPage: messagesPageType
-// }
-// type StoreType = {
-//     _state: RootStateType
-//     _onChange: () => void
-//     subscribe: (callback: () => void) => void
-//     getState: () => RootStateType
-//     dispatch: (action: ActionTypes) => void
-// }
+export type RootState = typeof rootReducer
+export type AppRootStateType = ReturnType<RootState>
+type RootActionsType = AppActionTypes | AuthActionsType | DialogsActionsType | ProfileActionsType | UsersActionTypes
 
-// type ActionTypes = ReturnType<typeof addPostAC> | ReturnType<typeof addMessageAC>
+const rootReducer = combineReducers({
+    profilePage: profileReducer,
+    messagesPage: dialogsReducer,
+    usersPage: usersReducer,
+    auth: authReducer,
+    app: appReducer
+})
+// @ts-ignore
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+export const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunkMiddleware)));
+
+export type ThunkAppDispatchType = ThunkDispatch<AppRootStateType, any, AnyAction>
+
+export const useAppDispatch = () => useDispatch<ThunkAppDispatchType>()
+export const useAppSelector: TypedUseSelectorHook<AppRootStateType> = useSelector
+
+export type AppThunk<ReturnType = void> = ThunkAction<
+    ReturnType,
+    AppRootStateType,
+    unknown,
+    RootActionsType
+>;
+
+// @ts-ignore
+window.store = store
 
 
-/*
-const store: StoreType = {
-    _state: {
-        profilePage: {
-            posts: [
-                {id: v1(), message: "Hallo, mein freund", likesCount: 3},
-                {id: v1(), message: "It's my first post", likesCount: 45},
-                {id: v1(), message: "Good bye", likesCount: 1792}
-            ],
-            newPostText: "IT-Kamasutra"
-        },
-        messagesPage: {
-            dialogs: [
-                {id: v1(), name: "Leonid"},
-                {id: v1(), name: "Victoria"},
-                {id: v1(), name: "Tamara"},
-                {id: v1(), name: "Stepan"},
-                {id: v1(), name: "George"},
-                {id: v1(), name: "Kate"},
-                {id: v1(), name: "Maria"}
-            ],
-            messages: [
-                {id: v1(), message: "Hi, how are you?"},
-                {id: v1(), message: "I'm busy"},
-                {id: v1(), message: "Where you from?"},
-                {id: v1(), message: "A-a-a-a-a-a"}
-            ],
-            newMessageText: "it-incubator",
-        },
-    },
-    _onChange() {
-    },
 
-    subscribe(observer) {
-        this._onChange = observer
-    },
-    getState() {
-        return this._state
-    },
-
-    dispatch(action) {
-
-       // this._state.profilePage = profileReducer(this._state.profilePage, action);
-       // this._state.messagesPage = dialogsReducer(this._state.messagesPage, action);
-
-        this._onChange();
-    },
-}*/

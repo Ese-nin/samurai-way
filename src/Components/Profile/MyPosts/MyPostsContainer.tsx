@@ -2,7 +2,7 @@ import React from "react";
 import {addPostAC} from "../../../Redux/Reducers/profile-reducer";
 import {MyPosts, PostType} from "./MyPosts";
 import {connect} from "react-redux";
-import {AppRootStateType} from "../../../Redux/redux-store";
+import {AppRootStateType} from "../../../Redux/store";
 import {Dispatch} from "redux";
 
 

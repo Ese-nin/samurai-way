@@ -1,5 +1,5 @@
 import {authMe} from "./auth-reducer";
-import {AppThunk} from "../redux-store";
+import {AppThunk} from "../store";
 
 
 const initialState: InitialStateType = {
