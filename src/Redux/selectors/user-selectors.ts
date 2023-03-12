@@ -1,5 +1,6 @@
 import {AppRootStateType} from "../store";
 import {UsersType} from "api/api";
+import {FilterType} from "../Reducers/users-reducer";
 
 export const getUsers = (state: AppRootStateType): Array<UsersType> => {
     return state.usersPage.users
@@ -23,4 +24,8 @@ export const getIsFetching = (state: AppRootStateType): boolean => {
 
 export const getFollowingInProgress = (state: AppRootStateType): string[] => {
     return state.usersPage.followingInProgress
+}
+
+export const getUsersFilter = (state: AppRootStateType): FilterType => {
+    return state.usersPage.filter
 }

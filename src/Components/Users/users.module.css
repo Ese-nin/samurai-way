@@ -1,9 +1,17 @@
 .container {
     margin: 10px 0 0 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
 .userPhoto {
     width: 95px;
     height: 95px;
     border-radius: 40px;
+}
+
+.searchForm {
+    display: flex;
+    gap: 10px;
 }

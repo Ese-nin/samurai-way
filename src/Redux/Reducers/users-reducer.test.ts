@@ -1,17 +1,20 @@
 import usersReducer, {
-    followSuccess, InitialStateType,
+    followSuccess,
+    InitialStateType,
     setCurrentPage,
     setTotalUsersCount,
     setUsers,
-    toggleIsFetching, toggleIsFollowing,
+    toggleIsFetching,
+    toggleIsFollowing,
     unfollowSuccess,
 } from "./users-reducer";
 import {UsersType} from "api/api";
 
 let startState: InitialStateType
 
-beforeEach(()=>{
-    startState = {users: [
+beforeEach(() => {
+    startState = {
+        users: [
             {
                 id: 1,
                 photos: {small: '', large: ''},
@@ -45,7 +48,11 @@ beforeEach(()=>{
         totalUsersCount: 25,
         currentPage: 1,
         isFetching: false,
-        followingInProgress: []
+        followingInProgress: [],
+        filter: {
+            term: '',
+            friend: null
+        }
     }
 })
 

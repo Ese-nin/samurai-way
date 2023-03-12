@@ -1,4 +1,4 @@
-import {TOGGLE_IS_FETCHING, toggleIsFetching} from "./users-reducer";
+import {toggleIsFetching} from "./users-reducer";
 import {authAPI, ResultCodes, securityAPI} from "api/api";
 import {AppThunk, ThunkAppDispatchType} from "../store";
 import {stopSubmit} from "redux-form";
@@ -21,7 +21,7 @@ const authReducer = (state = initialState, action: AuthActionsType): InitialStat
                 ...state,
                 ...action.payload
             }
-        case TOGGLE_IS_FETCHING:
+        case 'users/TOGGLE_IS_FETCHING':
             return {
                 ...state, isFetching: action.isFetching
             }

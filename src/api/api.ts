@@ -10,8 +10,8 @@ const instance = axios.create({
 })
 
 export const usersAPI = {
-    getUsers: function (currentPage: number = 1, pageSize: number = 5) {
-        return instance.get<UsersResponseType>(`users?page=${currentPage}&count=${pageSize}`)
+    getUsers: function (currentPage: number = 1, pageSize: number = 5, term: string = '', friend: boolean | null = null) {
+        return instance.get<UsersResponseType>(`users?page=${currentPage}&count=${pageSize}&term=${term}` + (friend === null ? `` : `&friend=${friend}`))
             .then(res => res.data)
     },
     unfollow: (userID: string) => {
@@ -70,7 +70,7 @@ export const authAPI = {
 
 export const securityAPI = {
     getCaptchaUrl() {
-        return instance.get<{url: string}>('security/get-captcha-url')
+        return instance.get<{ url: string }>('security/get-captcha-url')
             .then(res => res.data)
     }
 }
