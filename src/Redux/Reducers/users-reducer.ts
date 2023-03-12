@@ -1,5 +1,6 @@
-import {ResultCodes, UsersType, usersAPI} from "api/api";
+import {ResponseType, ResultCodes, usersAPI, UsersType} from "api/api";
 import {Dispatch} from "redux";
+import {AppThunk} from "../store";
 
 
 const initialState = {
@@ -113,7 +114,7 @@ export const requestUsers = (page: number, pageSize: number) => async (dispatch:
 }
 
 
-const followUnfollowFlow = async (apiMethod: any, userID: string,
+const _followUnfollowFlow = async (apiMethod: (userId: string) => Promise<ResponseType>, userID: string,
                                   ActionCreator: (userID: string) => FollowSuccessActionType | UnfollowSuccessActionType,
                                   dispatch: Dispatch) => {
     dispatch(toggleIsFollowing(true, userID))
@@ -124,14 +125,14 @@ const followUnfollowFlow = async (apiMethod: any, userID: string,
     dispatch(toggleIsFollowing(false, userID))
 }
 
-export const follow = (userID: string) => async (dispatch: Dispatch) => {
+export const follow = (userID: string): AppThunk => async (dispatch) => {
     let apiMethod = usersAPI.follow.bind(usersAPI)
-    followUnfollowFlow(apiMethod, userID, followSuccess, dispatch)
+    await _followUnfollowFlow(apiMethod, userID, followSuccess, dispatch)
 }
 
-export const unfollow = (userID: string) => async (dispatch: Dispatch) => {
+export const unfollow = (userID: string): AppThunk => async (dispatch) => {
     let apiMethod = usersAPI.unfollow.bind(usersAPI)
-    followUnfollowFlow(apiMethod, userID, unfollowSuccess, dispatch)
+    await _followUnfollowFlow(apiMethod, userID, unfollowSuccess, dispatch)
 }
 
 // types

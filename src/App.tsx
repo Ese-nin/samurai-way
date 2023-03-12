@@ -27,6 +27,7 @@ class App extends React.Component<AllPropsType> {
         this.props.initializeAppTC()
         window.addEventListener('unhandledrejection', this.catchAllUnhandledErrors)
     }
+
     componentWillUnmount() {
         window.removeEventListener('unhandledrejection', this.catchAllUnhandledErrors)
     }
