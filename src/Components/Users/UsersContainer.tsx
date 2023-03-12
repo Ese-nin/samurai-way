@@ -26,18 +26,19 @@ class UsersAPIComponent extends React.Component<MapDispatchPropsType & MapStateP
 
     componentDidMount() {
         const {currentPage, pageSize, filter} = this.props
-        this.props.getUsers(currentPage, pageSize, filter.term, filter.friend)
+        this.props.getUsers(currentPage, pageSize, filter)
     }
 
     onPageChanged = (pageNumber: number) => {
         const {pageSize, filter} = this.props
         this.props.setCurrentPage(pageNumber);
-        this.props.getUsers(pageNumber, pageSize, filter.term, filter.friend)
+        this.props.getUsers(pageNumber, pageSize, filter)
     }
 
     onFilterChanged = (filter: FilterType) => {
+        console.log(filter)
         const {pageSize} = this.props
-        this.props.getUsers(1, pageSize, filter.term, filter.friend)
+        this.props.getUsers(1, pageSize, filter)
     }
 
     render() {
@@ -73,7 +74,7 @@ export type MapDispatchPropsType = {
     unfollow: (userID: string) => void
     setCurrentPage: (currentPage: number) => void
     toggleIsFollowing: (isFetching: boolean, userID: string) => void
-    getUsers: (currentPage: number, pageSize: number, term: string, friend: null | boolean) => void
+    getUsers: (currentPage: number, pageSize: number, filter: FilterType) => void
 }
 
 const mapStateToProps = (state: AppRootStateType): MapStatePropsType => {
