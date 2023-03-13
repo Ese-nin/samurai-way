@@ -14,7 +14,7 @@ import {AppRootStateType, store} from "./Redux/store";
 import {Preloader} from "./Components/common/Preloader/Preloader";
 
 const DialogsContainer = lazy(() => import('./Components/Dialogs/DialogsContainer'));
-const UsersContainer = lazy(() => import('./Components/Users/UsersContainer'));
+const UsersPage = lazy(() => import('./Components/Users/UsersContainer'));
 const ProfileContainer = lazy(() => import('./Components/Profile/ProfileContainer'));
 
 class App extends React.Component<AllPropsType> {
@@ -49,7 +49,7 @@ class App extends React.Component<AllPropsType> {
                         <Route path='/dialogs'
                                render={() => <DialogsContainer/>}/>
                         <Route path='/users'
-                               render={() => <UsersContainer/>}/>
+                               render={() => <UsersPage/>}/>
                         <Route path='/music'
                                render={() => <Music/>}/>
                         <Route path='/news'

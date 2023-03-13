@@ -1,7 +1,7 @@
 import {FilterType} from "Redux/Reducers/users-reducer";
 import React, {ChangeEvent, useEffect, useState} from "react";
 import s from './users.module.css'
-import {useDebounce} from "../../hooks/useDebounce";
+import {useDebounce} from "hooks/useDebounce";
 
 type PropsType = {
     onFilterChanged: (filter: FilterType) => void

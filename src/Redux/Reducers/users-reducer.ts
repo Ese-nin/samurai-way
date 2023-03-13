@@ -131,12 +131,12 @@ const _followUnfollowFlow = async (apiMethod: (userId: string) => Promise<Respon
     dispatch(toggleIsFollowing(false, userID))
 }
 
-export const follow = (userID: string): AppThunk => async (dispatch) => {
+export const followUser = (userID: string): AppThunk => async (dispatch) => {
     let apiMethod = usersAPI.follow.bind(usersAPI)
     await _followUnfollowFlow(apiMethod, userID, followSuccess, dispatch)
 }
 
-export const unfollow = (userID: string): AppThunk => async (dispatch) => {
+export const unfollowUser = (userID: string): AppThunk => async (dispatch) => {
     let apiMethod = usersAPI.unfollow.bind(usersAPI)
     await _followUnfollowFlow(apiMethod, userID, unfollowSuccess, dispatch)
 }
