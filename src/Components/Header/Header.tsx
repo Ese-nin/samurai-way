@@ -1,10 +1,21 @@
 import React from "react";
 import s from "./Header.module.css"
 import {NavLink} from "react-router-dom";
-import {AllPropsType} from "./HeaderContainer";
+import {useAppDispatch, useAppSelector} from "Redux/store";
+import {logOut} from "Redux/Reducers/auth-reducer";
+import {getIsAuth, getLogin} from "Redux/selectors/auth-selectors";
 
 
-const Header = (props: AllPropsType) => {
+export const Header: React.FC = () => {
+
+    const isAuth = useAppSelector(getIsAuth)
+    const login = useAppSelector(getLogin)
+
+    const dispatch = useAppDispatch()
+
+    const logout = () => {
+        dispatch(logOut())
+    }
 
     return <div className={s.header}>
         <img
@@ -12,12 +23,10 @@ const Header = (props: AllPropsType) => {
             alt={''}/>
 
         <div className={s.loginBlock}>
-            {props.isAuth
-                ? <div>{props.login} <button onClick={props.logOut}>LogOut</button></div>
+            {isAuth
+                ? <div>{login} <button onClick={logout}>LogOut</button></div>
                 : <NavLink to={'/login'}>Login</NavLink>}
         </div>
 
     </div>
 }
-
-export default Header;

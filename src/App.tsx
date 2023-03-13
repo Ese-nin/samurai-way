@@ -1,17 +1,17 @@
 import React, {ComponentType, lazy, Suspense} from 'react';
 import './App.css';
-import Navbar from "./Components/Navbar/Navbar";
+import {Navbar} from "./Components/Navbar/Navbar";
 import {HashRouter, Route, withRouter} from "react-router-dom";
 import Music from "./Components/Music/Music";
 import News from './Components/News/News';
 import Settings from "./Components/Settings/Settings";
-import HeaderContainer from "./Components/Header/HeaderContainer";
-import Login from "./Components/Login/Login";
+import {LoginPage} from "./Components/Login/Login";
 import {compose} from "redux";
 import {connect, Provider} from "react-redux";
 import {initializeAppTC} from "./Redux/Reducers/app-reducer";
 import {AppRootStateType, store} from "./Redux/store";
 import {Preloader} from "./Components/common/Preloader/Preloader";
+import {Header} from "./Components/Header/Header";
 
 const DialogsContainer = lazy(() => import('./Components/Dialogs/DialogsContainer'));
 const UsersPage = lazy(() => import('./Components/Users/UsersContainer'));
@@ -40,7 +40,7 @@ class App extends React.Component<AllPropsType> {
 
         return (
             <div className={'app-wrapper'}>
-                <HeaderContainer/>
+                <Header/>
                 <Navbar/>
                 <div className={"app-wrapper-content"}>
                     <Suspense fallback={<Preloader/>}>
@@ -57,7 +57,7 @@ class App extends React.Component<AllPropsType> {
                         <Route path='/settings'
                                render={() => <Settings/>}/>
                         <Route path='/login'
-                               render={() => <Login/>}/>
+                               render={() => <LoginPage/>}/>
                     </Suspense>
                 </div>
             </div>
