@@ -15,6 +15,11 @@
 
 }
 
+.commonErrorMessage {
+    color: crimson;
+    font-weight: bold;
+}
+
 .dialogItem .active {
     color: #f30d38;
 }

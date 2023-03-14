@@ -1,21 +1,21 @@
 import React, {lazy, Suspense, useEffect} from 'react';
-import './App.css';
-import {Navbar} from "./Components/Navbar/Navbar";
+import 'App.css';
+import {Navbar} from "Components/Navbar/Navbar";
 import {HashRouter, Route, withRouter} from "react-router-dom";
-import Music from "./Components/Music/Music";
-import News from './Components/News/News';
-import Settings from "./Components/Settings/Settings";
-import {LoginPage} from "./Components/Login/Login";
+import Music from "Components/Music/Music";
+import News from 'Components/News/News';
+import Settings from "Components/Settings/Settings";
+import {LoginPage} from "Components/Login/Login";
 import {Provider} from "react-redux";
-import {store, useAppDispatch, useAppSelector} from "./Redux/store";
-import {Preloader} from "./Components/common/Preloader/Preloader";
-import {Header} from "./Components/Header/Header";
-import {getInitializedSuccess} from "./Redux/selectors/app-selectors";
-import {initializeAppTC} from "./Redux/Reducers/app-reducer";
+import {store, useAppDispatch, useAppSelector} from "Redux/store";
+import {Preloader} from "Components/common/Preloader/Preloader";
+import {Header} from "Components/Header/Header";
+import {getInitializedSuccess} from "Redux/selectors/app-selectors";
+import {initializeAppTC} from "Redux/Reducers/app-reducer";
 
-const DialogsContainer = lazy(() => import('./Components/Dialogs/DialogsContainer'));
-const UsersPage = lazy(() => import('./Components/Users/UsersContainer'));
-const ProfileContainer = lazy(() => import('./Components/Profile/ProfileContainer'));
+const Dialogs = lazy(() => import('Components/Dialogs/Dialogs'));
+const UsersPage = lazy(() => import('Components/Users/UsersContainer'));
+const ProfileContainer = lazy(() => import('Components/Profile/ProfileContainer'));
 
 const App: React.FC = () => {
 
@@ -49,7 +49,7 @@ const App: React.FC = () => {
                     <Route path='/profile/:userId?'
                            render={() => <ProfileContainer/>}/>
                     <Route path='/dialogs'
-                           render={() => <DialogsContainer/>}/>
+                           render={() => <Dialogs/>}/>
                     <Route path='/users'
                            render={() => <UsersPage/>}/>
                     <Route path='/music'

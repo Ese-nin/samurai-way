@@ -1,7 +1,7 @@
 import React from "react";
 import {useFormik} from "formik";
 import * as Yup from "yup";
-import s2 from "../common/FormsControls/FormControl.module.css";
+import s2 from "../Dialogs/Dialogs.module.css";
 
 type PropsType = {
     logIn: (email: string, password: string, rememberMe: boolean, captcha: string | null) => void

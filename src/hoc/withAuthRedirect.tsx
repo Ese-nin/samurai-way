@@ -1,30 +1,17 @@
 import React, {ComponentType} from 'react'
 import {Redirect} from "react-router-dom";
-import {connect} from "react-redux";
-import {AppRootStateType} from "../Redux/store";
-
-type mstpType = {
-    isAuth: boolean
-}
-
-const mstp = (state: AppRootStateType): mstpType => {
-    return {
-        isAuth: state.auth.isAuth
-    }
-}
-
+import {useAppSelector} from "Redux/store";
+import {getIsAuth} from "Redux/selectors/auth-selectors";
 
 
 export function withAuthRedirect<T extends JSX.IntrinsicAttributes>(Component: ComponentType<T>) {
 
-    const RedirectComponent = (props: mstpType) => {
+    return (props: T) => {
 
-        const {isAuth, ...restProps} = props
+        const isAuth = useAppSelector(getIsAuth)
 
         if (!isAuth) return <Redirect to='/login'/>
 
-        return <Component {...restProps as T}/>
-    };
-
-    return connect(mstp)(RedirectComponent)
+        return <Component {...props}/>
+    }
 }

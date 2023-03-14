@@ -49,17 +49,17 @@ export const addMessageAC = (messageText: string) => {
 
 // types
 
-type messagesDataType = {
+export type MessagesDataType = {
     id: string
     message: string
 }
-type dialogsDataType = {
+export type DialogsDataType = {
     id: string
     name: string
 }
 
-export type dialogsType = Array<dialogsDataType>
-export type messagesType = Array<messagesDataType>
+export type dialogsType = DialogsDataType[]
+export type messagesType = MessagesDataType[]
 
 export type messagesPageType = {
     messages: messagesType
