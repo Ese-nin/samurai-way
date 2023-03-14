@@ -1,4 +1,4 @@
-import React, {ComponentType, lazy, Suspense} from 'react';
+import React, {lazy, Suspense, useEffect} from 'react';
 import './App.css';
 import {Navbar} from "./Components/Navbar/Navbar";
 import {HashRouter, Route, withRouter} from "react-router-dom";
@@ -6,83 +6,67 @@ import Music from "./Components/Music/Music";
 import News from './Components/News/News';
 import Settings from "./Components/Settings/Settings";
 import {LoginPage} from "./Components/Login/Login";
-import {compose} from "redux";
-import {connect, Provider} from "react-redux";
-import {initializeAppTC} from "./Redux/Reducers/app-reducer";
-import {AppRootStateType, store} from "./Redux/store";
+import {Provider} from "react-redux";
+import {store, useAppDispatch, useAppSelector} from "./Redux/store";
 import {Preloader} from "./Components/common/Preloader/Preloader";
 import {Header} from "./Components/Header/Header";
+import {getInitializedSuccess} from "./Redux/selectors/app-selectors";
+import {initializeAppTC} from "./Redux/Reducers/app-reducer";
 
 const DialogsContainer = lazy(() => import('./Components/Dialogs/DialogsContainer'));
 const UsersPage = lazy(() => import('./Components/Users/UsersContainer'));
 const ProfileContainer = lazy(() => import('./Components/Profile/ProfileContainer'));
 
-class App extends React.Component<AllPropsType> {
+const App: React.FC = () => {
 
-    catchAllUnhandledErrors = () => {
+    const initializedSuccess = useAppSelector(getInitializedSuccess)
+
+    const dispatch = useAppDispatch()
+
+    const catchAllUnhandledErrors = () => {
         alert('Some error occured')
     }
 
-    componentDidMount() {
-        this.props.initializeAppTC()
-        window.addEventListener('unhandledrejection', this.catchAllUnhandledErrors)
-    }
+    useEffect(()=>{
+        dispatch(initializeAppTC())
+        window.addEventListener('unhandledrejection', catchAllUnhandledErrors)
 
-    componentWillUnmount() {
-        window.removeEventListener('unhandledrejection', this.catchAllUnhandledErrors)
-    }
-
-    render() {
-
-        if (!this.props.initializedSuccess) {
-            return <Preloader/>
+        return ()=>{
+            window.removeEventListener('unhandledrejection', catchAllUnhandledErrors)
         }
+    }, [])
 
-        return (
-            <div className={'app-wrapper'}>
-                <Header/>
-                <Navbar/>
-                <div className={"app-wrapper-content"}>
-                    <Suspense fallback={<Preloader/>}>
-                        <Route path='/profile/:userId?'
-                               render={() => <ProfileContainer/>}/>
-                        <Route path='/dialogs'
-                               render={() => <DialogsContainer/>}/>
-                        <Route path='/users'
-                               render={() => <UsersPage/>}/>
-                        <Route path='/music'
-                               render={() => <Music/>}/>
-                        <Route path='/news'
-                               render={() => <News/>}/>
-                        <Route path='/settings'
-                               render={() => <Settings/>}/>
-                        <Route path='/login'
-                               render={() => <LoginPage/>}/>
-                    </Suspense>
-                </div>
+    if (!initializedSuccess) {
+        return <Preloader/>
+    }
+
+    return (
+        <div className={'app-wrapper'}>
+            <Header/>
+            <Navbar/>
+            <div className={"app-wrapper-content"}>
+                <Suspense fallback={<Preloader/>}>
+                    <Route path='/profile/:userId?'
+                           render={() => <ProfileContainer/>}/>
+                    <Route path='/dialogs'
+                           render={() => <DialogsContainer/>}/>
+                    <Route path='/users'
+                           render={() => <UsersPage/>}/>
+                    <Route path='/music'
+                           render={() => <Music/>}/>
+                    <Route path='/news'
+                           render={() => <News/>}/>
+                    <Route path='/settings'
+                           render={() => <Settings/>}/>
+                    <Route path='/login'
+                           render={() => <LoginPage/>}/>
+                </Suspense>
             </div>
-        );
-    }
+        </div>
+    );
 }
 
-type AllPropsType = MDTPType & MSTPType
-type MDTPType = {
-    initializeAppTC: () => void
-}
-type MSTPType = {
-    initializedSuccess: boolean
-}
-
-const mstp = (state: AppRootStateType): MSTPType => {
-    return {
-        initializedSuccess: state.app.initializedSuccess
-    }
-}
-
-const AppContainer = compose<ComponentType>(
-    withRouter,
-    connect(mstp, {initializeAppTC})
-)(App);
+const AppContainer = withRouter(App);
 
 const MainApp = () => {
     return (

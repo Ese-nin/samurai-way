@@ -4,18 +4,20 @@ import profileLogo from "assets/images/logo_1.png"
 import {Preloader} from "../../common/Preloader/Preloader";
 import {ProfileStatusWithHooks} from "./ProfileStatusWithHooks";
 import {ProfileDataForm} from "./ProfileDataForm";
-import {ContactsType, DomainProfileDataType} from "api/api";
+import {ContactsType} from "api/api";
+import {useAppDispatch, useAppSelector} from "Redux/store";
+import {getProfileSelector} from "Redux/selectors/profile-selectors";
+import {savePhoto, saveProfile} from "Redux/Reducers/profile-reducer";
 
 type ProfileInfoPropsType = {
-    profile: DomainProfileDataType | null
-    status: string
-    updateStatus: (status: string) => void
     isOwner: boolean
-    savePhoto: (file: File) => void
-    saveProfile: (profile: FormikValues) => void
 }
 
-const ProfileInfo: React.FC<ProfileInfoPropsType> = ({profile, status, updateStatus, isOwner, savePhoto, saveProfile}) => {
+export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({isOwner}) => {
+
+    const profile = useAppSelector(getProfileSelector)
+
+    const dispatch = useAppDispatch()
 
     const [editMode, setEditMode] = useState(false)
 
@@ -25,14 +27,14 @@ const ProfileInfo: React.FC<ProfileInfoPropsType> = ({profile, status, updateSta
 
     const onAvatarSelected = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length) {
-            savePhoto(e.target.files[0])
+            dispatch(savePhoto(e.target.files[0]))
         }
     }
 
     const profilePhoto = profile.photos.large || profileLogo
 
     const onSubmit = (values: FormikValues) => {
-        saveProfile(values)
+        dispatch(saveProfile(values))
         setEditMode(false)
     }
 
@@ -51,20 +53,20 @@ const ProfileInfo: React.FC<ProfileInfoPropsType> = ({profile, status, updateSta
 
                 {editMode
                     ? <ProfileDataForm profile={profile} onSubmit={onSubmit}/>
-                    : <ProfileData isOwner={isOwner} profile={profile} activateEditMode={()=>setEditMode(true)}/>}
+                    : <ProfileData isOwner={isOwner} profile={profile} activateEditMode={() => setEditMode(true)}/>}
 
 
-                <ProfileStatusWithHooks status={status}
-                                        updateStatus={updateStatus}/>
+                <ProfileStatusWithHooks />
             </div>
         </div>
     );
 };
 
-export default ProfileInfo;
-
 // @ts-ignore
-export type FormikValues = Pick<ProfileDataType, 'aboutMe' | 'lookingForAJob' | 'lookingForAJobDescription' | 'fullName'> & ContactsType
+export type FormikValues = Pick<ProfileDataType, 'aboutMe'
+    | 'lookingForAJob'
+    | 'lookingForAJobDescription'
+    | 'fullName'> & ContactsType
 
 export type ProfileDataType = {
     profile: {

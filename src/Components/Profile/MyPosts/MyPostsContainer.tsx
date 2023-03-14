@@ -1,11 +1,15 @@
 import React from "react";
-import {addPostAC} from "../../../Redux/Reducers/profile-reducer";
-import {MyPosts, PostType} from "./MyPosts";
+import {addPostAC} from "Redux/Reducers/profile-reducer";
+import {MyPosts} from "./MyPosts";
 import {connect} from "react-redux";
-import {AppRootStateType} from "../../../Redux/store";
+import {AppRootStateType} from "Redux/store";
 import {Dispatch} from "redux";
 
-
+type PostType = {
+    id: string
+    message: string
+    likesCount: number
+}
 type MapStatePropsType = {
     postsData: Array<PostType>
 }
@@ -13,7 +17,7 @@ type MapDispatchPropsType = {
     addPost: (text: string) => void
 }
 
-export type MyPostPropsType = MapStatePropsType & MapDispatchPropsType
+// export type MyPostPropsType = MapStatePropsType & MapDispatchPropsType
 
 const mapStateToProps = (state: AppRootStateType): MapStatePropsType => {
     return {

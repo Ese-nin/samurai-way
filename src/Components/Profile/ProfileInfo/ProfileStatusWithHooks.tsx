@@ -1,14 +1,16 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
+import {updateUserStatus} from "Redux/Reducers/profile-reducer";
+import {useAppDispatch, useAppSelector} from "Redux/store";
+import {getProfileStatusSelector} from "Redux/selectors/profile-selectors";
 
-type ProfileStatusPropsType = {
-    status: string
-    updateStatus: (status: string) => void
-}
-
-export const ProfileStatusWithHooks = (props: ProfileStatusPropsType) => {
+export const ProfileStatusWithHooks: React.FC = () => {
 
     const [editMode, setEditMode] = useState(false)
     const [localStatus, setLocalStatus] = useState('')
+
+    const status = useAppSelector(getProfileStatusSelector)
+
+    const dispatch = useAppDispatch()
 
     const onChangeStatus = (e: ChangeEvent<HTMLInputElement>) => {
         setLocalStatus(e.currentTarget.value)
@@ -20,12 +22,12 @@ export const ProfileStatusWithHooks = (props: ProfileStatusPropsType) => {
 
     const offEditMode = () => {
         setEditMode(false)
-        props.updateStatus(localStatus)
+        dispatch(updateUserStatus(localStatus))
     }
 
     useEffect(()=>{
-        setLocalStatus(props.status)
-    }, [props.status])
+        setLocalStatus(status)
+    }, [status])
 
     return (
         editMode
@@ -38,7 +40,7 @@ export const ProfileStatusWithHooks = (props: ProfileStatusPropsType) => {
             </div>
             :
             <div>
-                <b>Status: </b><span onDoubleClick={onEditMode}>{props.status || "Status is not defined"}</span>
+                <b>Status: </b><span onDoubleClick={onEditMode}>{status || "Status is not defined"}</span>
             </div>
     );
 }

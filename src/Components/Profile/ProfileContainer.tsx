@@ -1,86 +1,42 @@
-import React, {Component, ComponentType} from "react";
-import Profile from "./Profile";
-import {connect} from "react-redux";
-import {
-    getProfile,
-    getUserStatus,
-    savePhoto, saveProfile,
-    updateUserStatus
-} from "Redux/Reducers/profile-reducer";
-import {AppRootStateType} from "Redux/store";
+import React, {ComponentType, useEffect} from "react";
+import {Profile} from "./Profile";
+import {getProfile, getUserStatus} from "Redux/Reducers/profile-reducer";
+import {useAppDispatch, useAppSelector} from "Redux/store";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {compose} from "redux";
 import {withAuthRedirect} from "hoc/withAuthRedirect";
-import {FormikValues} from "./ProfileInfo/ProfileInfo";
-import {DomainProfileDataType} from "api/api";
+import {getProfileId} from "../../Redux/selectors/auth-selectors";
 
 type PathParamsType = {
     userId: string
 }
-type ProfileContainerPropsType = RouteComponentProps<PathParamsType> & allPropsType
+type ProfileContainerPropsType = RouteComponentProps<PathParamsType>
 
-class ProfileContainer extends Component<ProfileContainerPropsType> {
+const ProfileContainer: React.FC<ProfileContainerPropsType> = ({match}) => {
 
-    refreshProfile() {
+    const authorizedUserID = useAppSelector(getProfileId)
+
+    const dispatch = useAppDispatch()
+
+    const refreshProfile = () => {
         let userID = '';
-        let chosenUserID = this.props.match.params.userId
-        if (this.props.authorizedUserID) {
-            userID = chosenUserID ? chosenUserID : this.props.authorizedUserID
+        let chosenUserID = match.params.userId
+        if (authorizedUserID) {
+            userID = chosenUserID ? chosenUserID : authorizedUserID
         }
-        this.props.getProfile(userID)
-        this.props.getUserStatus(userID)
+        dispatch(getProfile(userID))
+        dispatch(getUserStatus(userID))
     }
 
-    componentDidMount() {
-        this.refreshProfile()
-    }
+    useEffect(()=>{
+        refreshProfile()
+    })
 
-    componentDidUpdate(prevProps: Readonly<ProfileContainerPropsType>, prevState: Readonly<{}>) {
-        if (this.props.match.params.userId !== prevProps.match.params.userId) {
-            this.refreshProfile()
-        }
-    }
 
-    render() {
         return (
-            <Profile {...this.props}
-                     profile={this.props.profile}
-                     status={this.props.status}
-                     updateStatus={this.props.updateUserStatus}
-                     isOwner={!this.props.match.params.userId}
-                     savePhoto={this.props.savePhoto}
-                     saveProfile={this.props.saveProfile}/>
+            <Profile isOwner={!match.params.userId}/>
         )
-    }
+
 }
 
-type allPropsType = mapStateToPropsType & mapDispatchToPropsType
-
-type mapStateToPropsType = {
-    profile: DomainProfileDataType | null
-    status: string
-    authorizedUserID: string | null
-    isAuth: boolean
-}
-
-type mapDispatchToPropsType = {
-    getProfile: (userID: string) => void
-    getUserStatus: (userID: string) => void
-    updateUserStatus: (status: string) => void
-    savePhoto: (file: File) => void
-    saveProfile: (profile: FormikValues) => void
-}
-
-
-const mapStateToProps = (state: AppRootStateType): mapStateToPropsType => ({
-    profile: state.profilePage.profile,
-    status: state.profilePage.status,
-    authorizedUserID: state.auth.id,
-    isAuth: state.auth.isAuth,
-});
-
-export default compose<ComponentType>(
-    connect(mapStateToProps, {getProfile, getUserStatus, updateUserStatus, savePhoto, saveProfile}),
-    withRouter,
-    withAuthRedirect
-)(ProfileContainer)
+export default compose<ComponentType>(withRouter, withAuthRedirect)(ProfileContainer)

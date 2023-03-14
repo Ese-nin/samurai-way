@@ -1,28 +1,26 @@
-import React from "react";
+import React, {useCallback} from "react";
 import s from "./MyPosts.module.css";
-import s2 from "../../common/FormsControls/FormControl.module.css";
 import Post from "./Post/Post";
-import {MyPostPropsType} from "./MyPostsContainer";
-import {useFormik} from "formik";
-import * as Yup from 'yup';
+import {AddPostForm, FormDataType} from "./AddPostForm";
+import {useAppDispatch, useAppSelector} from "Redux/store";
+import {getPostsSelector} from "Redux/selectors/profile-selectors";
+import {addPostAC} from "Redux/Reducers/profile-reducer";
 
-export type PostType = {
-    id: string
-    message: string
-    likesCount: number
-}
+export const MyPosts: React.FC = React.memo(() => {
 
-export const MyPosts = React.memo((props: MyPostPropsType) => {
+    const postsData = useAppSelector(getPostsSelector)
 
-    const posts = props.postsData.map(p =>
+    const dispatch = useAppDispatch()
+
+    const posts = postsData.map(p =>
         <Post key={p.id} message={p.message} likesCount={p.likesCount}/>
     )
 
-    const addNewPost = (values: FormDataType) => {
+    const addNewPost = useCallback((values: FormDataType) => {
         if (values.newPostBody.trim() !== '') {
-            props.addPost(values.newPostBody)
+            dispatch(addPostAC(values.newPostBody))
         }
-    }
+    }, [addPostAC])
 
     return <div className={s.content}>
         <div>
@@ -34,40 +32,3 @@ export const MyPosts = React.memo((props: MyPostPropsType) => {
         {posts}
     </div>
 })
-
-export type FormDataType = {
-    newPostBody: string
-}
-
-const AddPostForm: React.FC<{ addNewPost: (value: FormDataType) => void }> = ({addNewPost}) => {
-
-    const formik = useFormik({
-        initialValues: {
-            newPost: ''
-        },
-        validationSchema: Yup.object({
-            newPost: Yup.string().max(30, 'Must be 30 characters or less')
-        }),
-        onSubmit: values => {
-            addNewPost({newPostBody: values.newPost})
-            formik.resetForm()
-        }
-    })
-
-    return (
-        <form onSubmit={formik.handleSubmit}>
-            <div>
-                <textarea
-                    id="newPost"
-                    placeholder={'Enter your text'}
-                    {...formik.getFieldProps('newPost')}
-                />
-                {formik.errors.newPost && formik.touched.newPost &&
-                    <div className={s2.commonErrorMessage}>{formik.errors.newPost}</div>}
-            </div>
-            <div>
-                <button type='submit'>New post</button>
-            </div>
-        </form>
-    )
-}

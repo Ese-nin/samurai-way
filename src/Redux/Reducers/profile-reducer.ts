@@ -5,7 +5,7 @@ import {AppThunk} from "../store";
 
 
 const initialState = {
-    profile: null,
+    profile: null as DomainProfileDataType | null,
     posts: [
         {id: v1(), message: "Hallo, mein freund", likesCount: 3},
         {id: v1(), message: "It's my first post", likesCount: 45},
@@ -14,7 +14,9 @@ const initialState = {
     status: ""
 };
 
-const profileReducer = (state: profilePageType = initialState, action: ProfileActionsType): profilePageType => {
+type InitialStateType = typeof initialState
+
+const profileReducer = (state: InitialStateType = initialState, action: ProfileActionsType): InitialStateType => {
     switch (action.type) {
         case ADD_POST:
             const newPost = {
@@ -95,7 +97,7 @@ export const saveProfile = (profile: FormikValues): AppThunk => async (dispatch,
 
 // types
 
-type PostsDataType = {
+export type PostsDataType = {
     id: string
     message: string
     likesCount: number
