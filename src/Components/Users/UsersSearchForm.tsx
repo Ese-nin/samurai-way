@@ -2,6 +2,8 @@ import {FilterType} from "Redux/Reducers/users-reducer";
 import React, {ChangeEvent, useEffect, useState} from "react";
 import s from './users.module.css'
 import {useDebounce} from "hooks/useDebounce";
+import {useAppSelector} from "Redux/store";
+import {getUsersFilter} from "Redux/selectors/user-selectors";
 
 type PropsType = {
     onFilterChanged: (filter: FilterType) => void
@@ -9,8 +11,15 @@ type PropsType = {
 
 export const UsersSearchForm: React.FC<PropsType> = ({onFilterChanged}) => {
 
+    const filter = useAppSelector(getUsersFilter)
+
     const [term, setTerm] = useState('')
     const [friend, setFriend] = useState<null | boolean>(null)
+
+    useEffect(()=>{
+        setTerm(filter.term)
+        setFriend(filter.friend)
+    }, [filter])
 
     const debouncedFilterChange = useDebounce(term, 800)
 
@@ -32,7 +41,7 @@ export const UsersSearchForm: React.FC<PropsType> = ({onFilterChanged}) => {
         <div className={s.searchForm}>
             Find:
             <input value={term} onChange={onChangeTermHandler}/>
-            <select onChange={onChangeSelectHandler}>
+            <select value={String(friend)} onChange={onChangeSelectHandler}>
                 <option value="null">All</option>
                 <option value="true">Only followed</option>
                 <option value="false">Only unfollowed</option>

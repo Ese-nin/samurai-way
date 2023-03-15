@@ -1,7 +1,7 @@
 import React, {lazy, Suspense, useEffect} from 'react';
 import 'App.css';
 import {Navbar} from "Components/Navbar/Navbar";
-import {HashRouter, Route, withRouter} from "react-router-dom";
+import {BrowserRouter, Route, withRouter} from "react-router-dom";
 import Music from "Components/Music/Music";
 import News from 'Components/News/News';
 import Settings from "Components/Settings/Settings";
@@ -70,11 +70,11 @@ const AppContainer = withRouter(App);
 
 const MainApp = () => {
     return (
-        <HashRouter>
+        <BrowserRouter>
             <Provider store={store}>
                 <AppContainer/>
             </Provider>
-        </HashRouter>
+        </BrowserRouter>
     )
 }
 

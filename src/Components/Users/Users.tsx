@@ -13,7 +13,8 @@ import {
     getUsers,
     getUsersFilter
 } from "Redux/selectors/user-selectors";
-
+import {useHistory} from "react-router-dom";
+import * as querystring from "querystring";
 
 
 export const Users: React.FC = () => {
@@ -26,10 +27,31 @@ export const Users: React.FC = () => {
     const filter = useAppSelector(getUsersFilter)
 
     const dispatch = useAppDispatch()
+    const history = useHistory()
 
-    useEffect(()=>{
-        dispatch(requestUsers(currentPage, pageSize, {term: '', friend: null}))
+    useEffect(() => {
+        debugger
+        const {page, friend, term} = querystring.parse(history.location.search.substr(1)) as { term: string, friend: string, page: string }
+
+        let actualPage = currentPage
+        let actualFilter = filter
+
+        if (!!page) actualPage = +page
+        if (!!term) actualFilter = {...actualFilter, term: term}
+        if (!!friend) actualFilter = {
+            ...actualFilter,
+            friend: friend === 'null' ? null : friend === 'true'
+        }
+
+        dispatch(requestUsers(actualPage, pageSize, actualFilter))
     }, [])
+
+    useEffect(() => {
+        history.push({
+            pathname: '/users',
+            search: `?term=${filter.term}&friend=${filter.friend}&page=${currentPage}`
+        })
+    }, [filter, currentPage])
 
     const onFilterChanged = (filter: FilterType) => {
         dispatch(requestUsers(1, pageSize, filter))
