@@ -30,8 +30,11 @@ export const Users: React.FC = () => {
     const history = useHistory()
 
     useEffect(() => {
-        debugger
-        const {page, friend, term} = querystring.parse(history.location.search.substr(1)) as { term: string, friend: string, page: string }
+        const {
+            page,
+            friend,
+            term
+        } = querystring.parse(history.location.search.substr(1)) as { term: string, friend: string, page: string }
 
         let actualPage = currentPage
         let actualFilter = filter
@@ -46,10 +49,20 @@ export const Users: React.FC = () => {
         dispatch(requestUsers(actualPage, pageSize, actualFilter))
     }, [])
 
+    let finalUrlSearch = ``
+    if (filter.term === "") finalUrlSearch = `?friend=${filter.friend}&page=${currentPage}`
+    if (filter.friend === null) finalUrlSearch = `?term=${filter.term}&page=${currentPage}`
+    if (currentPage === 1) finalUrlSearch = `?term=${filter.term}&friend=${filter.friend}`
+
+    if (filter.term === "" && filter.friend === null) finalUrlSearch = `?page=${currentPage}`
+    if (filter.term === "" && currentPage === 1) finalUrlSearch = `?friend=${filter.friend}`
+    if (filter.friend === null && currentPage === 1) finalUrlSearch = `?term=${filter.term}`
+    if (filter.term === "" && filter.friend === null && currentPage === 1) finalUrlSearch = ``
+
     useEffect(() => {
         history.push({
             pathname: '/users',
-            search: `?term=${filter.term}&friend=${filter.friend}&page=${currentPage}`
+            search: finalUrlSearch
         })
     }, [filter, currentPage])
 
@@ -72,11 +85,11 @@ export const Users: React.FC = () => {
     return (
         <div className={s.container}>
             <UsersSearchForm onFilterChanged={onFilterChanged}/>
-            {<Pagination totalItemsCount={totalUsersCount}
-                         pageSize={pageSize}
-                         currentPage={currentPage}
-                         onPageChanged={onPageChanged}
-                         portionSize={10}/>}
+            <Pagination totalItemsCount={totalUsersCount}
+                        pageSize={pageSize}
+                        currentPage={currentPage}
+                        onPageChanged={onPageChanged}
+                        portionSize={10}/>
             {users.map(u =>
                 <User key={u.id}
                       user={u}

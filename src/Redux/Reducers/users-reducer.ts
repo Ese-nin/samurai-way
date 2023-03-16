@@ -113,8 +113,9 @@ export const toggleIsFollowing = (isFetching: boolean, userID: string) => {
 export const requestUsers = (page: number, pageSize: number, filter: FilterType) => async (dispatch: Dispatch) => {
     dispatch(toggleIsFetching(true))
     const data = await usersAPI.getUsers(page, pageSize, filter.term, filter.friend)
-    dispatch(setFilter(filter))
     dispatch(toggleIsFetching(false))
+    dispatch(setFilter(filter))
+    dispatch(setCurrentPage(page))
     dispatch(setUsers(data.items));
     dispatch(setTotalUsersCount(data.totalCount))
 }
