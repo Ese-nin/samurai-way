@@ -112,35 +112,6 @@ const App: React.FC = () => {
             </Content>
             <Footer style={{textAlign: 'center'}}>Samurai-Way ©2023</Footer>
         </Layout>
-
-        // <div className={'app-wrapper'}>
-        //     <Header/>
-        //     <Navbar/>
-        //     <div className={"app-wrapper-content"}>
-        //         <Suspense fallback={<Preloader/>}>
-        //             <Switch>
-        //                 <Route exact path='/'
-        //                        render={() => <Redirect to={'/profile'}/>}/>
-        //                 <Route path='/profile/:userId?'
-        //                        render={() => <ProfileContainer/>}/>
-        //                 <Route path='/dialogs'
-        //                        render={() => <Dialogs/>}/>
-        //                 <Route path='/users'
-        //                        render={() => <UsersPage/>}/>
-        //                 <Route path='/music'
-        //                        render={() => <Music/>}/>
-        //                 <Route path='/news'
-        //                        render={() => <News/>}/>
-        //                 <Route path='/settings'
-        //                        render={() => <Settings/>}/>
-        //                 <Route path='/login'
-        //                        render={() => <LoginPage/>}/>
-        //                 <Route path='*'
-        //                        render={() => <div>404 PAGE NOT FOUND</div>}/>
-        //             </Switch>
-        //         </Suspense>
-        //     </div>
-        // </div>
     );
 }
 
