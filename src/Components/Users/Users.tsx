@@ -1,9 +1,8 @@
 import React, {useEffect} from 'react';
-import {Pagination} from "../common/Pagination/Pagination";
 import {User} from "./User";
 import s from './users.module.css'
 import {UsersSearchForm} from "./UsersSearchForm";
-import {FilterType, followUser, requestUsers, setCurrentPage, unfollowUser} from "Redux/Reducers/users-reducer";
+import {FilterType, followUser, requestUsers, unfollowUser} from "Redux/Reducers/users-reducer";
 import {useAppDispatch, useAppSelector} from "Redux/store";
 import {
     getCurrentPage,
@@ -15,6 +14,7 @@ import {
 } from "Redux/selectors/user-selectors";
 import {useHistory} from "react-router-dom";
 import * as querystring from "querystring";
+import {Pagination, PaginationProps} from 'antd';
 
 
 export const Users: React.FC = () => {
@@ -71,7 +71,6 @@ export const Users: React.FC = () => {
     }
 
     const onPageChanged = (pageNumber: number) => {
-        dispatch(setCurrentPage(pageNumber));
         dispatch(requestUsers(pageNumber, pageSize, filter))
     }
 
@@ -82,14 +81,22 @@ export const Users: React.FC = () => {
         dispatch(unfollowUser(userId))
     }
 
+    const onShowSizeChange: PaginationProps['onShowSizeChange'] = (current, pageSize) => {
+        dispatch(requestUsers(current, pageSize, filter))
+    };
+
     return (
         <div className={s.container}>
             <UsersSearchForm onFilterChanged={onFilterChanged}/>
-            <Pagination totalItemsCount={totalUsersCount}
-                        pageSize={pageSize}
-                        currentPage={currentPage}
-                        onPageChanged={onPageChanged}
-                        portionSize={10}/>
+            <Pagination showSizeChanger
+                        onChange={onPageChanged}
+                        onShowSizeChange={onShowSizeChange}
+                        pageSizeOptions={[5, 10, 15, 25, 50, 100]}
+                        defaultPageSize={pageSize}
+                        defaultCurrent={1}
+                        current={currentPage}
+                        total={totalUsersCount}
+            />
             {users.map(u =>
                 <User key={u.id}
                       user={u}

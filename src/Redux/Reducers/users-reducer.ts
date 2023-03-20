@@ -49,6 +49,10 @@ const usersReducer = (state: InitialStateType = initialState, action: UsersActio
             return {
                 ...state, filter: action.filter
             }
+        case "users/SET_PAGE_SIZE":
+            return {
+                ...state, pageSize: action.pageSize
+            }
 
         default:
             return state
@@ -61,27 +65,27 @@ const usersReducer = (state: InitialStateType = initialState, action: UsersActio
 export const followSuccess = (userID: string) => {
     return {
         type: "users/FOLLOW",
-        userID: userID,
+        userID,
         followed: true
     } as const
 }
 export const unfollowSuccess = (userID: string) => {
     return {
         type: "users/UNFOLLOW",
-        userID: userID,
+        userID,
         followed: false
     } as const
 }
 export const setUsers = (users: Array<UsersType>) => {
     return {
         type: "users/SET_USERS",
-        users: users
+        users
     } as const
 }
 export const setFilter = (filter: FilterType) => {
     return {
         type: "users/SET_FILTER",
-        filter: filter
+        filter
     } as const
 }
 export const setCurrentPage = (currentPage: number) => {
@@ -97,13 +101,19 @@ export const setTotalUsersCount = (totalUsersCount: number) => {
 export const toggleIsFetching = (isFetching: boolean) => {
     return {
         type: 'users/TOGGLE_IS_FETCHING',
-        isFetching: isFetching
+        isFetching
     } as const
 }
 export const toggleIsFollowing = (isFetching: boolean, userID: string) => {
     return {
         type: 'users/TOGGLE_IS_FOLLOWING',
         isFetching, userID
+    } as const
+}
+export const setPageSize = (pageSize: number) => {
+    return {
+        type: 'users/SET_PAGE_SIZE',
+        pageSize
     } as const
 }
 
@@ -116,14 +126,15 @@ export const requestUsers = (page: number, pageSize: number, filter: FilterType)
     dispatch(toggleIsFetching(false))
     dispatch(setFilter(filter))
     dispatch(setCurrentPage(page))
+    dispatch(setPageSize(pageSize))
     dispatch(setUsers(data.items));
     dispatch(setTotalUsersCount(data.totalCount))
 }
 
 
 const _followUnfollowFlow = async (apiMethod: (userId: string) => Promise<ResponseType>, userID: string,
-                                  ActionCreator: (userID: string) => FollowSuccessActionType | UnfollowSuccessActionType,
-                                  dispatch: Dispatch) => {
+                                   ActionCreator: (userID: string) => FollowSuccessActionType | UnfollowSuccessActionType,
+                                   dispatch: Dispatch) => {
     dispatch(toggleIsFollowing(true, userID))
     const data = await apiMethod(userID)
     if (data.resultCode === ResultCodes.SUCCESS) {
@@ -170,5 +181,6 @@ export type UsersActionTypes = FollowSuccessActionType
     | ReturnType<typeof toggleIsFetching>
     | ReturnType<typeof toggleIsFollowing>
     | ReturnType<typeof setFilter>
+    | ReturnType<typeof setPageSize>
 
 export default usersReducer;
