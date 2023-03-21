@@ -3,6 +3,7 @@ import s from "./users.module.css";
 import userPhoto from "assets/images/user.png";
 import {NavLink} from "react-router-dom";
 import {UsersType} from "api/api";
+import {Button} from "antd";
 
 type UserPropsType = {
     user: UsersType
@@ -32,13 +33,13 @@ export const User: React.FC<UserPropsType> = (
                     <div>
                         {user.followed
 
-                            ? <button disabled={followingInProgress.some(f => +f === user.id)}
+                            ? <Button disabled={followingInProgress.some(f => +f === user.id)}
                                       onClick={() => unfollow(user.id.toString())
-                                      }>Unfollow</button>
+                                      }>Unfollow</Button>
 
-                            : <button disabled={followingInProgress.some(f => +f === user.id)}
+                            : <Button disabled={followingInProgress.some(f => +f === user.id)}
                                       onClick={() => follow(user.id.toString())
-                                      }>Follow</button>
+                                      }>Follow</Button>
                         }
                     </div>
 

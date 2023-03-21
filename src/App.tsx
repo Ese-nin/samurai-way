@@ -23,6 +23,7 @@ const {Content, Footer, Sider} = Layout;
 const Dialogs = lazy(() => import('Components/Dialogs/Dialogs'));
 const UsersPage = lazy(() => import('Components/Users/UsersContainer'));
 const ProfileContainer = lazy(() => import('Components/Profile/ProfileContainer'));
+const ChatPageLazy = lazy(() => import('pages/chatPage/ChatPage'));
 
 const App: React.FC = () => {
 
@@ -72,7 +73,7 @@ const App: React.FC = () => {
                             </SubMenu>
                             <SubMenu key="sub2" icon={<LaptopOutlined/>} title="Users">
                                 <Menu.Item key="5"><Link to='/users'>Users</Link></Menu.Item>
-                                {/*<Menu.Item key="6">option 6</Menu.Item>*/}
+                                <Menu.Item key="6"><Link to='/chatPage'>Chat</Link></Menu.Item>
                                 {/*<Menu.Item key="7">option 7</Menu.Item>*/}
                                 {/*<Menu.Item key="8">option 8</Menu.Item>*/}
                             </SubMenu>
@@ -103,6 +104,8 @@ const App: React.FC = () => {
                                        render={() => <Settings/>}/>
                                 <Route path='/login'
                                        render={() => <LoginPage/>}/>
+                                <Route path='/chatPage'
+                                       render={() => <ChatPageLazy/>}/>
                                 <Route path='*'
                                        render={() => <div>404 PAGE NOT FOUND</div>}/>
                             </Switch>
