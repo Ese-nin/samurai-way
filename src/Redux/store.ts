@@ -6,17 +6,25 @@ import authReducer, {AuthActionsType} from "./Reducers/auth-reducer";
 import thunkMiddleware, {ThunkAction, ThunkDispatch} from "redux-thunk"
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 import appReducer, {AppActionTypes} from "./Reducers/app-reducer";
+import chatReducer, {ChatActionsType} from "./Reducers/chat-reducer";
 
 export type RootState = typeof rootReducer
 export type AppRootStateType = ReturnType<RootState>
-type RootActionsType = AppActionTypes | AuthActionsType | DialogsActionsType | ProfileActionsType | UsersActionTypes
+type RootActionsType =
+    AppActionTypes
+    | AuthActionsType
+    | DialogsActionsType
+    | ProfileActionsType
+    | UsersActionTypes
+    | ChatActionsType
 
 const rootReducer = combineReducers({
     profilePage: profileReducer,
     messagesPage: dialogsReducer,
     usersPage: usersReducer,
     auth: authReducer,
-    app: appReducer
+    app: appReducer,
+    chat: chatReducer
 })
 // @ts-ignore
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
@@ -27,6 +35,7 @@ export type ThunkAppDispatchType = ThunkDispatch<AppRootStateType, any, AnyActio
 export const useAppDispatch = () => useDispatch<ThunkAppDispatchType>()
 export const useAppSelector: TypedUseSelectorHook<AppRootStateType> = useSelector
 
+export type InferActionsTypes<T> = T extends { [keys: string]: (...args: any[]) => infer U } ? U : never
 export type AppThunk<ReturnType = void> = ThunkAction<
     ReturnType,
     AppRootStateType,
