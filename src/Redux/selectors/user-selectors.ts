@@ -1,5 +1,5 @@
 import {AppRootStateType} from "../store";
-import {UsersType} from "api/api";
+import {UsersType} from "api/users-api";
 import {FilterType} from "../Reducers/users-reducer";
 
 export const getUsers = (state: AppRootStateType): Array<UsersType> => {

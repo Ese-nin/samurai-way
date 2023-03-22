@@ -4,10 +4,10 @@ import profileLogo from "assets/images/logo_1.png"
 import {Preloader} from "../../common/Preloader/Preloader";
 import {ProfileStatusWithHooks} from "./ProfileStatusWithHooks";
 import {ProfileDataForm} from "./ProfileDataForm";
-import {ContactsType} from "api/api";
 import {useAppDispatch, useAppSelector} from "Redux/store";
 import {getProfileSelector} from "Redux/selectors/profile-selectors";
 import {savePhoto, saveProfile} from "Redux/Reducers/profile-reducer";
+import {ContactsType} from "api/profile-api";
 
 type ProfileInfoPropsType = {
     isOwner: boolean

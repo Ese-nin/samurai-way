@@ -2,8 +2,8 @@ import React from 'react';
 import s from "./users.module.css";
 import userPhoto from "assets/images/user.png";
 import {NavLink} from "react-router-dom";
-import {UsersType} from "api/api";
 import {Button} from "antd";
+import {UsersType} from "api/users-api";
 
 type UserPropsType = {
     user: UsersType

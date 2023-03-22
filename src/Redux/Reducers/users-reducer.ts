@@ -1,6 +1,7 @@
-import {ResponseType, ResultCodes, usersAPI, UsersType} from "api/api";
+import {ResponseType, ResultCodes} from "api/api";
 import {Dispatch} from "redux";
 import {AppThunk} from "../store";
+import {usersAPI, UsersType} from "api/users-api";
 
 
 const initialState = {

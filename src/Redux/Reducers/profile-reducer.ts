@@ -1,7 +1,8 @@
 import {v1} from "uuid";
-import {DomainProfileDataType, profileAPI, ResultCodes} from "../../api/api";
+import {ResultCodes} from "api/api";
 import {FormikValues} from "Components/Profile/ProfileInfo/ProfileInfo";
 import {AppThunk} from "../store";
+import {DomainProfileDataType, profileAPI} from "api/profile-api";
 
 
 const initialState = {
