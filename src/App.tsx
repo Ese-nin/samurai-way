@@ -4,7 +4,6 @@ import {BrowserRouter, Link, Redirect, Route, Switch, withRouter} from "react-ro
 import {Provider} from "react-redux";
 import {store, useAppDispatch, useAppSelector} from "Redux/store";
 import {Preloader} from "Components/common/Preloader/Preloader";
-// import {Header} from "Components/Header/Header";
 import {getInitializedSuccess} from "Redux/selectors/app-selectors";
 import {initializeAppTC} from "Redux/Reducers/app-reducer";
 import Music from "./Components/Music/Music";
