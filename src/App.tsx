@@ -89,6 +89,8 @@ const App: React.FC = () => {
                             <Switch>
                                 <Route exact path='/'
                                        render={() => <Redirect to={'/profile'}/>}/>
+                                <Route path='/samurai-way'
+                                       render={() => <Redirect to={'/profile'}/>}/>
                                 <Route path='/profile/:userId?'
                                        render={() => <ProfileContainer/>}/>
                                 <Route path='/dialogs'
