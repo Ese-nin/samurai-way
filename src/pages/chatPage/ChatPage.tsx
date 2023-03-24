@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
-import {ChatMessageType} from "api/chat-api";
-import {useAppDispatch, useAppSelector} from "../../Redux/store";
-import {sendMessage, startChatListening, stopChatListening} from "../../Redux/Reducers/chat-reducer";
+import React, {memo, useEffect, useRef, useState} from 'react';
+import {ChatMessageAPIType} from "api/chat-api";
+import {useAppDispatch, useAppSelector} from "Redux/store";
+import {sendMessage, startChatListening, stopChatListening} from "Redux/Reducers/chat-reducer";
 
 const ChatPage: React.FC = () => {
     return (
@@ -13,6 +13,7 @@ const ChatPage: React.FC = () => {
 
 const Chat: React.FC = () => {
 
+    const chatStatus = useAppSelector(state => state.chat.status)
     const dispatch = useAppDispatch()
 
     useEffect(() => {
@@ -22,36 +23,13 @@ const Chat: React.FC = () => {
         }
     }, [])
 
-    // const [wsChannel, setWsChannel] = useState<WebSocket | null>(null)
-    //
-    // useEffect(() => {
-    //
-    //     let ws: WebSocket;
-    //     const closeHandler = () => {
-    //         console.log('WebSocket close')
-    //         setTimeout(createChannel, 3000)
-    //     }
-    //
-    //     function createChannel() {
-    //         ws?.removeEventListener('close', closeHandler)
-    //         ws?.close()
-    //         ws = new WebSocket('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx')
-    //         ws.addEventListener('close', closeHandler)
-    //         setWsChannel(ws)
-    //     }
-    //
-    //     createChannel()
-    //
-    //     return () => {
-    //         ws.removeEventListener('close', closeHandler)
-    //         ws.close()
-    //     }
-    // }, [])
-
     return (
         <div>
-            <Messages/>
-            <AddMessage/>
+            {chatStatus === 'error' && <div>Reconnect failed. Refresh a page</div>}
+                <>
+                    <Messages/>
+                    <AddMessage/>
+                </>
         </div>
     )
 }
@@ -59,15 +37,33 @@ const Chat: React.FC = () => {
 const Messages: React.FC = () => {
 
     const messages = useAppSelector(state => state.chat.messages)
+    const messagesAnchorRef = useRef<HTMLDivElement>(null)
+    const [isAutoScroll, setIsAutoScroll] = useState(true)
+
+    useEffect(()=>{
+        isAutoScroll && messagesAnchorRef.current?.scrollIntoView({behavior: 'smooth'})
+    }, [messages])
+
+    const scrollHandler = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
+        const element = e.currentTarget
+        if (Math.abs((element.scrollHeight - element.scrollTop) - element.clientHeight) < 50) {
+            !isAutoScroll && setIsAutoScroll(true)
+        } else {
+            isAutoScroll && setIsAutoScroll(false)
+        }
+    }
 
     return (
-        <div style={{height: '450px', overflowY: 'auto'}}>
-            {messages.map((m: ChatMessageType, index) => <Message key={index} message={m}/>)}
+        <div style={{height: '450px', overflowY: 'auto'}} onScroll={scrollHandler}>
+            {messages.map((m: ChatMessageAPIType, index) => <Message key={index} message={m}/>)}
+            <div ref={messagesAnchorRef}></div>
         </div>
     )
 }
 
-const Message: React.FC<{ message: ChatMessageType }> = ({message}) => {
+const Message: React.FC<{ message: ChatMessageAPIType }> = memo(({message}) => {
+
+    console.log('==============')
 
     return (
         <div>
@@ -77,42 +73,36 @@ const Message: React.FC<{ message: ChatMessageType }> = ({message}) => {
             <hr/>
         </div>
     )
-}
+})
 
-const AddMessage: React.FC<{}> = () => {
+const AddMessage: React.FC = () => {
 
     const [text, setText] = useState('')
-    const [readyStatus, setReadyStatus] = useState<'pending' | 'ready'>('pending')
+
+    const chatStatus = useAppSelector(state => state.chat.status)
     const dispatch = useAppDispatch()
-    // useEffect(() => {
-    //
-    //     const openHandler = () => {
-    //         setReadyStatus("ready")
-    //     }
-    //
-    //     wsChannel?.addEventListener('open', openHandler)
-    //
-    //     return () => {
-    //         wsChannel?.removeEventListener('open', openHandler)
-    //     }
-    // }, [wsChannel])
 
     const sendMessageHandler = () => {
         if (!text) {
             return
         }
         dispatch(sendMessage(text))
-        // wsChannel?.send(text)
         setText('')
+    }
+
+    const onKeyDownHandler = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+        if (e.shiftKey && e.key === 'Enter') {
+            sendMessageHandler()
+        }
     }
 
     return (
         <div>
             <div>
-                <textarea value={text} onChange={(e) => setText(e.currentTarget.value)}></textarea>
+                <textarea onKeyDown={onKeyDownHandler} value={text} onChange={(e) => setText(e.currentTarget.value)}></textarea>
             </div>
             <div>
-                <button onClick={sendMessageHandler}>Send
+                <button disabled={chatStatus !== 'ready'} onClick={sendMessageHandler}>Send
                 </button>
             </div>
         </div>
