@@ -9,12 +9,12 @@ import {initializeAppTC} from "Redux/Reducers/app-reducer";
 import Music from "./Components/Music/Music";
 import News from "./Components/News/News";
 import Settings from "./Components/Settings/Settings";
-import {LoginPage} from "./Components/Login/Login";
+import {LoginPage} from "Components/Login/Login";
 
 import {Breadcrumb, Layout, Menu} from 'antd';
 import {LaptopOutlined, NotificationOutlined, UserOutlined} from '@ant-design/icons';
 import 'antd/dist/reset.css';
-import {Header} from "./Components/Header/Header";
+import {Header} from "Components/Header/Header";
 
 const {SubMenu} = Menu
 const {Content, Footer, Sider} = Layout;

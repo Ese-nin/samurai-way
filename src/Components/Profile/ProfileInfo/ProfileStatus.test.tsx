@@ -26,7 +26,7 @@ describe("ProfileStatus component", () => {
     }).toThrow();
   });
 
-  test("after creation <span> should be showed", () => {
+  test("after creation <span> should contain correct status", () => {
     const component = create(<ProfileStatus status="New status for component" updateStatus={()=>{}}/>);
     const root = component.root;
     let span = root.findByType('span')
