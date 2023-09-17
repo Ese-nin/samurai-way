@@ -8,7 +8,7 @@ import usersReducer, {
     toggleIsFollowing,
     unfollowSuccess,
 } from "./users-reducer";
-import {UsersType} from "../../api/users-api";
+import {UsersType} from "api/users-api";
 
 let startState: InitialStateType
 
