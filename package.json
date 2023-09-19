@@ -2,6 +2,9 @@
   "name": "samurai-way",
   "version": "0.1.0",
   "private": true,
+  "jest": {
+    "transformIgnorePatterns": ["node_modules/(?!axios)/"]
+  },
   "homepage": "https://ese-nin.github.io/samurai-way",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.3",
@@ -32,7 +35,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!axios)/\"",
+    "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
