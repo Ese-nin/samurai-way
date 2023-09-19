@@ -63,8 +63,6 @@ const Messages: React.FC = () => {
 
 const Message: React.FC<{ message: ChatMessageAPIType }> = memo(({message}) => {
 
-    console.log('==============')
-
     return (
         <div>
             <img width={'30px'} src={message.photo} alt='avatar'/> <b>{message.userName}</b>
