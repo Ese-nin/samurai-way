@@ -121,7 +121,7 @@ export const setPageSize = (pageSize: number) => {
 
 // thunks
 
-export const requestUsers = (page: number, pageSize: number, filter: FilterType) => async (dispatch: Dispatch) => {
+export const requestUsers = (page: number, pageSize: number, filter: FilterType): AppThunk => async (dispatch: Dispatch) => {
     dispatch(toggleIsFetching(true))
     const data = await usersAPI.getUsers(page, pageSize, filter.term, filter.friend)
     dispatch(toggleIsFetching(false))
@@ -144,12 +144,12 @@ const _followUnfollowFlow = async (apiMethod: (userId: string) => Promise<Respon
     dispatch(toggleIsFollowing(false, userID))
 }
 
-export const followUser = (userID: string): AppThunk => async (dispatch) => {
+export const followUser = (userID: string): AppThunk => async (dispatch: Dispatch) => {
     let apiMethod = usersAPI.follow.bind(usersAPI)
     await _followUnfollowFlow(apiMethod, userID, followSuccess, dispatch)
 }
 
-export const unfollowUser = (userID: string): AppThunk => async (dispatch) => {
+export const unfollowUser = (userID: string): AppThunk => async (dispatch: Dispatch) => {
     let apiMethod = usersAPI.unfollow.bind(usersAPI)
     await _followUnfollowFlow(apiMethod, userID, unfollowSuccess, dispatch)
 }
